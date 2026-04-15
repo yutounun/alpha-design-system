@@ -24,7 +24,7 @@
     ],
     "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
     "importOrderTypeScriptVersion": "5.6.3",
-    "tailwindStylesheet": "./src/index.css",
+    "tailwindStylesheet": "./src/styles/index.css",
     "tailwindFunctions": ["cn", "cva"],
     "plugins": [
         "@ianvs/prettier-plugin-sort-imports",
