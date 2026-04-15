@@ -1,0 +1,81 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as ButtonStories from "./button.stories"
+
+<Meta of={ButtonStories} />
+
+<Title />
+
+The **Button** triggers actions and navigation. It supports multiple visual variants, sizes, and can render as a native `<button>` or compose another element (for example an anchor) via `asChild`.
+
+## Usage
+
+Import the component from the button module and pass standard button props plus `variant` and `size`:
+
+```tsx
+import { Button } from "@/components/button"
+
+export function Example() {
+    return <Button variant="default">Save</Button>
+}
+```
+
+## Variants and sizes
+
+Use **variant** for emphasis and context (primary actions, destructive flows, low-emphasis actions, links). Use **size** for density in layouts and toolbars. Icon-only buttons should include an accessible name with `aria-label`.
+
+See **All sizes** in the stories list for a full size matrix.
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={ButtonStories.Default} />
+
+## Variant examples
+
+### Outline
+
+<Canvas of={ButtonStories.Outline} />
+
+### Secondary
+
+<Canvas of={ButtonStories.Secondary} />
+
+### Ghost
+
+<Canvas of={ButtonStories.Ghost} />
+
+### Destructive
+
+<Canvas of={ButtonStories.Destructive} />
+
+### Link
+
+<Canvas of={ButtonStories.Link} />
+
+### All sizes
+
+<Canvas of={ButtonStories.AllSizes} />
+
+### With icons
+
+<Canvas of={ButtonStories.WithIcon} />
+
+### As child (composition)
+
+Use `asChild` when the control should be a link or another element while keeping button styles.
+
+<Canvas of={ButtonStories.AsChild} />
+
+### Disabled
+
+<Canvas of={ButtonStories.Disabled} />
