@@ -10,27 +10,30 @@
 @theme {
     /* Font Variant: Stripe-inspired */
     --font-*: initial;
-    --font-display: "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
-    --font-heading: "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
-    --font-body: "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
+    --font-display:
+        "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
+    --font-heading:
+        "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
+    --font-body:
+        "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
     --font-mono: "Source Code Pro", "SFMono-Regular", "SF Mono", monospace;
 
     /* Type Scale — based on DESIGN.md */
-    --text-3xs: 0.5rem;   /* 8px  — Nano */
+    --text-3xs: 0.5rem; /* 8px  — Nano */
     --text-3xs--line-height: 1.07;
     --text-2xs: 0.625rem; /* 10px — Micro */
     --text-2xs--line-height: 1.15;
-    --text-xs: 0.75rem;   /* 12px — Caption / Code */
-    --text-sm: 0.875rem;  /* 14px — Caption / Link / Button Small */
-    --text-md: 1rem;      /* 16px — Body / Button */
-    --text-lg: 1.125rem;  /* 18px — Body Large */
-    --text-xl: 1.375rem;  /* 22px — Sub-heading */
+    --text-xs: 0.75rem; /* 12px — Caption / Code */
+    --text-sm: 0.875rem; /* 14px — Caption / Link / Button Small */
+    --text-md: 1rem; /* 16px — Body / Button */
+    --text-lg: 1.125rem; /* 18px — Body Large */
+    --text-xl: 1.375rem; /* 22px — Sub-heading */
     --text-2xl: 1.625rem; /* 26px — Sub-heading Large */
-    --text-3xl: 2rem;     /* 32px — Section Heading */
-    --text-4xl: 3rem;     /* 48px — Display Large */
-    --text-5xl: 3.5rem;   /* 56px — Display Hero */
-    --text-6xl: 2.5rem;   /* (kept for compatibility) */
-    --text-7xl: 2.75rem;  /* (kept for compatibility) */
+    --text-3xl: 2rem; /* 32px — Section Heading */
+    --text-4xl: 3rem; /* 48px — Display Large */
+    --text-5xl: 3.5rem; /* 56px — Display Hero */
+    --text-6xl: 2.5rem; /* (kept for compatibility) */
+    --text-7xl: 2.75rem; /* (kept for compatibility) */
 
     /* Border Radius — Stripe is conservative (4px–8px, no pills on interactive elements) */
     --radius-full: 1000rem;
@@ -52,9 +55,9 @@
     --color-brand: #1c1e54; /* Brand Dark — deep indigo for dark sections */
 
     /* Foreground / Text */
-    --color-foreground-high: #061b31;   /* Deep Navy — primary headings */
+    --color-foreground-high: #061b31; /* Deep Navy — primary headings */
     --color-foreground-medium: #273951; /* Dark Slate — labels, secondary headings */
-    --color-foreground-low: #64748d;    /* Slate — body text, descriptions */
+    --color-foreground-low: #64748d; /* Slate — body text, descriptions */
 
     /* Inverse foreground (for dark brand sections) */
     --color-inv-foreground-high: #ffffff;
@@ -62,14 +65,14 @@
     --color-inv-foreground-low: rgba(255, 255, 255, 0.5);
 
     /* Borders */
-    --color-border-high: #273951;   /* Dark Slate — high-contrast border */
+    --color-border-high: #273951; /* Dark Slate — high-contrast border */
     --color-border-medium: #d6d9fc; /* Border Soft Purple */
-    --color-border-low: #e5edf5;    /* Border Default — standard dividers */
+    --color-border-low: #e5edf5; /* Border Default — standard dividers */
 
     /* Fills / Surfaces */
-    --color-fill-high: #b9b9f9;   /* Purple Light — strong tint fill */
+    --color-fill-high: #b9b9f9; /* Purple Light — strong tint fill */
     --color-fill-medium: #eef0ff; /* Light purple tint */
-    --color-fill-low: #f6f9fc;    /* Near-white fill */
+    --color-fill-low: #f6f9fc; /* Near-white fill */
 
     /* Focus Ring */
     --color-focus: #533afd; /* Stripe Purple — 2px solid focus ring */
@@ -130,8 +133,8 @@
     --color-skeleton: rgba(6, 27, 49, 0.06);
 
     /* === Interaction Tokens === */
-    --color-primary-hover: #4434d4;              /* Purple Hover */
-    --color-primary-active: #2e2b8c;             /* Purple Deep */
+    --color-primary-hover: #4434d4; /* Purple Hover */
+    --color-primary-active: #2e2b8c; /* Purple Deep */
     --color-success-muted-hover: rgba(21, 190, 83, 0.3);
     --color-success-muted-active: rgba(21, 190, 83, 0.4);
     --color-warning-muted-hover: rgba(155, 104, 41, 0.15);
@@ -164,14 +167,19 @@
     --color-inv-foreground-high-active: rgba(255, 255, 255, 0.8);
 
     /* Surface & Shadow */
-    --color-surface-deep: #0d253d;               /* Dark Navy — maximum depth */
-    --shadow-sm-top: rgba(0, 55, 112, 0.08);     /* Top-edge shadow for sticky elements */
+    --color-surface-deep: #0d253d; /* Dark Navy — maximum depth */
+    --shadow-sm-top: rgba(
+        0,
+        55,
+        112,
+        0.08
+    ); /* Top-edge shadow for sticky elements */
 }
 
 .dark {
     /* Dark Brand sections (#1c1e54 background) */
-    --color-background-1: #1c1e54;  /* Brand Dark */
-    --color-background-2: #0d253d;  /* Surface Deep */
+    --color-background-1: #1c1e54; /* Brand Dark */
+    --color-background-2: #0d253d; /* Surface Deep */
     --color-badge-blue: #b9b9f9;
     --color-badge-purple: #b9b9f9;
     --color-border-high: rgba(255, 255, 255, 0.4);
@@ -180,14 +188,14 @@
     --color-brand: #533afd; /* Purple as brand accent on dark bg */
     --color-card-1: rgba(255, 255, 255, 0.06);
     --color-card-2: rgba(255, 255, 255, 0.1);
-    --color-danger: #ff7fa8;          /* Lighter Ruby for dark bg */
+    --color-danger: #ff7fa8; /* Lighter Ruby for dark bg */
     --color-danger-foreground: #1c1e54;
     --color-danger-muted: rgba(234, 34, 97, 0.2);
     --color-danger-text: #ffaac5;
     --color-fill-high: rgba(255, 255, 255, 0.2);
     --color-fill-low: rgba(255, 255, 255, 0.06);
     --color-fill-medium: rgba(255, 255, 255, 0.1);
-    --color-focus: #b9b9f9;           /* Purple Light focus on dark bg */
+    --color-focus: #b9b9f9; /* Purple Light focus on dark bg */
     --color-foreground-high: #ffffff;
     --color-foreground-low: rgba(255, 255, 255, 0.5);
     --color-foreground-medium: rgba(255, 255, 255, 0.7);
@@ -201,8 +209,8 @@
     --color-inv-foreground-high: #061b31;
     --color-inv-foreground-low: rgba(6, 27, 49, 0.5);
     --color-inv-foreground-medium: rgba(6, 27, 49, 0.7);
-    --color-link: #b9b9f9;            /* Purple Light for dark bg links */
-    --color-primary: #665efd;         /* Purple Mid — brighter on dark bg */
+    --color-link: #b9b9f9; /* Purple Light for dark bg links */
+    --color-primary: #665efd; /* Purple Mid — brighter on dark bg */
     --color-primary-foreground: #ffffff;
     --color-primary-muted: rgba(83, 58, 253, 0.25);
     --color-primary-text: #b9b9f9;
@@ -211,7 +219,7 @@
     --color-success-muted: rgba(21, 190, 83, 0.2);
     --color-success-text: #7fd9a0;
     --color-visited: #b9b9f9;
-    --color-warning: #c8a060;         /* Lighter Lemon for dark bg */
+    --color-warning: #c8a060; /* Lighter Lemon for dark bg */
     --color-warning-foreground: #1c1e54;
     --color-warning-muted: rgba(155, 104, 41, 0.25);
     --color-warning-text: #e0c080;
@@ -262,4 +270,8 @@
 
 .focus-ring-input {
     @apply outline-none focus-visible:border-focus focus-visible:ring-[3px] focus-visible:ring-focus/40;
+}
+
+body {
+    @apply font-body text-foreground-high;
 }
