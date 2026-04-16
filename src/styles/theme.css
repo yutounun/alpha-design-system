@@ -82,7 +82,7 @@
 
     /* Secondary — Magenta */
     --color-secondary: #f96bee;
-    --color-secondary-foreground: #ffffff;
+    --color-secondary-foreground: #061b31; /* Dark Navy — contrast ratio ~6.5:1 against #f96bee (WCAG AA pass) */
     --color-secondary-muted: #ffd7ef; /* Magenta Light — muted surface */
     --color-secondary-text: #f96bee;
 
