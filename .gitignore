@@ -25,3 +25,8 @@ storybook-static
 *.njsproj
 *.sln
 *.sw?
+
+# storybook
+.storybook-static/*
+.cursor/*
+.agents/*
