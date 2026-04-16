@@ -190,9 +190,9 @@
 }
 
 .dark {
-    /* Dark Brand sections (#1c1e54 background) */
-    --color-background-1: #1c1e54;
-    --color-background-2: #0d253d;
+    /* Dark surfaces — deeper than previous navy for canvas + layered UI */
+    --color-background-1: #0a0c18;
+    --color-background-2: #04050c;
     --color-badge-blue: #b9b9f9;
     --color-badge-purple: #b9b9f9;
     --color-border-high: rgba(255, 255, 255, 0.4);
@@ -289,6 +289,7 @@
     --color-inv-foreground-high-hover: #273951;
     --color-inv-foreground-high-active: #1a2940;
     --color-skeleton: rgba(255, 255, 255, 0.08);
+    --color-surface-deep: #020308;
 }
 
 .focus-ring {
@@ -306,5 +307,5 @@
 }
 
 body {
-    @apply font-body text-foreground-high;
+    @apply bg-background-1 font-body text-foreground-high;
 }

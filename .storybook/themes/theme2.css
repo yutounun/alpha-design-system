@@ -1,0 +1,278 @@
+/**
+ * Storybook-only Theme 2: full token overrides (colors, radius, typography).
+ * Loaded from preview; production default remains Theme 1 in src/styles/theme.css.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+
+[data-theme="theme2"] {
+    /* Font — soft rounded sans */
+    --font-display: "Nunito", system-ui, sans-serif;
+    --font-heading: "Nunito", system-ui, sans-serif;
+    --font-body: "Nunito", system-ui, sans-serif;
+    --font-mono: "Source Code Pro", "SFMono-Regular", "SF Mono", monospace;
+
+    /* Type scale — slightly roomier */
+    --text-3xs: 0.5rem;
+    --text-3xs--line-height: 1.1;
+    --text-2xs: 0.625rem;
+    --text-2xs--line-height: 1.18;
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-md: 1.0625rem;
+    --text-lg: 1.1875rem;
+    --text-xl: 1.4375rem;
+    --text-2xl: 1.6875rem;
+    --text-3xl: 2.125rem;
+    --text-4xl: 3.125rem;
+    --text-5xl: 3.625rem;
+    --text-6xl: 2.625rem;
+    --text-7xl: 2.875rem;
+
+    /* Radius — rounded / soft */
+    --radius-full: 1000rem;
+    --radius-action-1: 12px;
+    --radius-action-2: 16px;
+
+    /* Backgrounds */
+    --color-background: #fff7f7;
+    --color-background-1: #fff7f7;
+    --color-background-2: #ffe4e6;
+
+    /* Cards */
+    --color-card-1: #ffffff;
+    --color-card-2: #ffe4e6;
+
+    /* Brand */
+    --color-brand: #881337;
+
+    /* Foreground */
+    --color-foreground-high: #450a0a;
+    --color-foreground-medium: #7f1d1d;
+    --color-foreground-low: #9f1239;
+
+    --color-inv-foreground-high: #ffffff;
+    --color-inv-foreground-medium: rgba(255, 255, 255, 0.78);
+    --color-inv-foreground-low: rgba(255, 255, 255, 0.55);
+
+    /* Borders */
+    --color-border-high: #7f1d1d;
+    --color-border-medium: #fecdd3;
+    --color-border-low: #ffe4e6;
+    --color-border-danger: rgba(225, 29, 72, 0.35);
+    --color-border-danger-hover: rgba(225, 29, 72, 0.55);
+    --color-border-danger-focus: rgba(225, 29, 72, 0.45);
+    --color-border-invalid: #e11d48;
+    --color-border-invalid-muted: rgba(225, 29, 72, 0.55);
+
+    /* Fills */
+    --color-fill-high: #fda4af;
+    --color-fill-medium: #ffe4e6;
+    --color-fill-low: #fff1f2;
+    --color-fill-danger-hover: rgba(225, 29, 72, 0.18);
+
+    /* Focus */
+    --color-focus: #db2777;
+    --color-focus-ring: rgba(219, 39, 119, 0.45);
+    --color-focus-ring-soft: rgba(219, 39, 119, 0.35);
+
+    /* Primary — rose */
+    --color-primary: #db2777;
+    --color-primary-foreground: #ffffff;
+    --color-primary-muted: rgba(219, 39, 119, 0.1);
+    --color-primary-text: #be185d;
+
+    /* Secondary — coral */
+    --color-secondary: #f97316;
+    --color-secondary-foreground: #ffffff;
+    --color-secondary-muted: #ffedd5;
+    --color-secondary-text: #ea580c;
+    --color-secondary-hover: #ea580c;
+    --color-secondary-active: #c2410c;
+
+    /* Danger */
+    --color-danger: #e11d48;
+    --color-danger-foreground: #ffffff;
+    --color-danger-muted: rgba(225, 29, 72, 0.12);
+    --color-danger-text: #be123c;
+    --color-danger-ring: rgba(225, 29, 72, 0.25);
+
+    /* Success */
+    --color-success: #059669;
+    --color-success-foreground: #ffffff;
+    --color-success-muted: rgba(5, 150, 105, 0.18);
+    --color-success-text: #047857;
+
+    /* Warning */
+    --color-warning: #b45309;
+    --color-warning-foreground: #ffffff;
+    --color-warning-muted: rgba(180, 83, 9, 0.12);
+    --color-warning-text: #b45309;
+
+    /* Informative */
+    --color-informative: #0d9488;
+    --color-informative-foreground: #ffffff;
+    --color-informative-muted: rgba(13, 148, 136, 0.12);
+
+    /* Link */
+    --color-link: #db2777;
+    --color-visited: #9d174d;
+
+    /* CTA */
+    --color-cta-1: #e11d48;
+    --color-cta-1-foreground: #ffffff;
+
+    /* Cancel */
+    --color-cancel: #9f1239;
+    --color-cancel-foreground: #ffffff;
+
+    /* Badges */
+    --color-badge-blue: #db2777;
+    --color-badge-navy: #450a0a;
+    --color-badge-purple: #f97316;
+
+    /* Skeleton */
+    --color-skeleton: rgba(69, 10, 10, 0.08);
+
+    /* Invalid */
+    --color-invalid-ring: rgba(225, 29, 72, 0.22);
+    --color-border-invalid-focus: #be123c;
+    --color-invalid-focus-ring: rgba(225, 29, 72, 0.38);
+
+    /* Interaction — light */
+    --color-primary-hover: #be185d;
+    --color-primary-active: #9d174d;
+    --color-success-muted-hover: rgba(5, 150, 105, 0.28);
+    --color-success-muted-active: rgba(5, 150, 105, 0.38);
+    --color-warning-muted-hover: rgba(180, 83, 9, 0.18);
+    --color-warning-muted-active: rgba(180, 83, 9, 0.24);
+    --color-inv-primary-hover: rgba(255, 255, 255, 0.12);
+    --color-inv-primary-active: rgba(255, 255, 255, 0.22);
+    --color-link-hover: #be185d;
+    --color-link-active: #9d174d;
+    --color-inv-link-hover: rgba(255, 255, 255, 0.92);
+    --color-inv-link-active: rgba(255, 255, 255, 0.75);
+    --color-fill-medium-hover: #fecdd3;
+    --color-fill-medium-active: #fda4af;
+    --color-inv-fill-medium-hover: rgba(255, 255, 255, 0.14);
+    --color-inv-fill-medium-active: rgba(255, 255, 255, 0.2);
+    --color-transparent-hover: rgba(69, 10, 10, 0.06);
+    --color-transparent-active: rgba(69, 10, 10, 0.11);
+    --color-inv-transparent-hover: rgba(255, 255, 255, 0.1);
+    --color-inv-transparent-active: rgba(255, 255, 255, 0.16);
+    --color-fill-low-hover: #ffe4e6;
+    --color-fill-low-active: #fecdd3;
+    --color-inv-fill-low-hover: rgba(255, 255, 255, 0.12);
+    --color-inv-fill-low-active: rgba(255, 255, 255, 0.18);
+    --color-primary-muted-hover: rgba(219, 39, 119, 0.16);
+    --color-primary-muted-active: rgba(219, 39, 119, 0.22);
+    --color-inv-primary-muted-hover: rgba(255, 255, 255, 0.14);
+    --color-inv-primary-muted-active: rgba(255, 255, 255, 0.2);
+    --color-foreground-high-hover: #7f1d1d;
+    --color-foreground-high-active: #450a0a;
+    --color-inv-foreground-high-hover: rgba(255, 255, 255, 0.92);
+    --color-inv-foreground-high-active: rgba(255, 255, 255, 0.82);
+
+    --color-surface-deep: #4c0519;
+    --shadow-sm-top: rgba(136, 19, 55, 0.1);
+}
+
+[data-theme="theme2"].dark {
+    --color-background-1: #140208;
+    --color-background-2: #070102;
+    --color-surface-deep: #030102;
+    --color-badge-blue: #fda4af;
+    --color-badge-purple: #fdba74;
+    --color-border-high: rgba(255, 255, 255, 0.42);
+    --color-border-low: rgba(255, 255, 255, 0.12);
+    --color-border-medium: rgba(255, 255, 255, 0.22);
+    --color-border-danger: rgba(251, 113, 133, 0.5);
+    --color-border-danger-hover: rgba(251, 113, 133, 0.68);
+    --color-border-danger-focus: rgba(251, 113, 133, 0.58);
+    --color-border-invalid: #fb7185;
+    --color-border-invalid-muted: rgba(251, 113, 133, 0.58);
+    --color-brand: #f43f5e;
+    --color-card-1: rgba(255, 255, 255, 0.07);
+    --color-card-2: rgba(255, 255, 255, 0.12);
+    --color-danger: #fb7185;
+    --color-danger-foreground: #4c0519;
+    --color-danger-muted: rgba(225, 29, 72, 0.22);
+    --color-danger-text: #fecdd3;
+    --color-fill-danger-hover: rgba(251, 113, 133, 0.32);
+    --color-danger-ring: rgba(251, 113, 133, 0.38);
+    --color-invalid-ring: rgba(251, 113, 133, 0.38);
+    --color-border-invalid-focus: #fecdd3;
+    --color-invalid-focus-ring: rgba(251, 113, 133, 0.48);
+    --color-fill-high: rgba(255, 255, 255, 0.22);
+    --color-fill-low: rgba(255, 255, 255, 0.07);
+    --color-fill-medium: rgba(255, 255, 255, 0.12);
+    --color-focus: #fda4af;
+    --color-focus-ring: rgba(253, 164, 175, 0.55);
+    --color-focus-ring-soft: rgba(253, 164, 175, 0.42);
+    --color-foreground-high: #fff1f2;
+    --color-foreground-low: rgba(255, 241, 242, 0.52);
+    --color-foreground-medium: rgba(255, 241, 242, 0.72);
+    --color-informative: #5eead4;
+    --color-informative-foreground: #4c0519;
+    --color-informative-muted: rgba(13, 148, 136, 0.28);
+    --color-inv-fill-high: #fda4af;
+    --color-inv-fill-low: rgba(244, 63, 94, 0.32);
+    --color-inv-fill-medium: rgba(244, 63, 94, 0.22);
+    --color-inv-focus: #fda4af;
+    --color-inv-foreground-high: #450a0a;
+    --color-inv-foreground-low: rgba(69, 10, 10, 0.52);
+    --color-inv-foreground-medium: rgba(69, 10, 10, 0.72);
+    --color-link: #fda4af;
+    --color-primary: #f43f5e;
+    --color-primary-foreground: #ffffff;
+    --color-primary-muted: rgba(244, 63, 94, 0.28);
+    --color-primary-text: #fda4af;
+    --color-success: #34d399;
+    --color-success-foreground: #4c0519;
+    --color-success-muted: rgba(52, 211, 153, 0.22);
+    --color-success-text: #a7f3d0;
+    --color-visited: #fda4af;
+    --color-warning: #fbbf24;
+    --color-warning-foreground: #4c0519;
+    --color-warning-muted: rgba(251, 191, 36, 0.28);
+    --color-warning-text: #fde68a;
+    --color-cancel: rgba(253, 164, 175, 0.65);
+    --color-cancel-foreground: #4c0519;
+    --color-secondary-hover: #fb923c;
+    --color-secondary-active: #f97316;
+
+    --color-primary-text-hover: #fecdd3;
+    --color-primary-text-active: #ffe4e6;
+    --color-success-muted-hover: rgba(52, 211, 153, 0.32);
+    --color-success-muted-active: rgba(52, 211, 153, 0.42);
+    --color-warning-muted-hover: rgba(251, 191, 36, 0.38);
+    --color-warning-muted-active: rgba(251, 191, 36, 0.48);
+    --color-warning-hover: #fcd34d;
+    --color-warning-active: #fde68a;
+    --color-success-text-hover: #bbf7d0;
+    --color-success-text-active: #d1fae5;
+    --color-warning-text-hover: #fef3c7;
+    --color-warning-text-active: #fffbeb;
+    --color-primary-hover: #fb7185;
+    --color-primary-active: #fda4af;
+    --color-inv-primary-hover: rgba(255, 255, 255, 0.12);
+    --color-inv-primary-active: rgba(255, 255, 255, 0.22);
+    --color-link-hover: #fecdd3;
+    --color-link-active: #ffe4e6;
+    --color-fill-medium-hover: rgba(255, 255, 255, 0.16);
+    --color-fill-medium-active: rgba(255, 255, 255, 0.24);
+    --color-transparent-hover: rgba(255, 255, 255, 0.1);
+    --color-transparent-active: rgba(255, 255, 255, 0.16);
+    --color-fill-low-hover: rgba(255, 255, 255, 0.12);
+    --color-fill-low-active: rgba(255, 255, 255, 0.18);
+    --color-inv-fill-low-hover: rgba(244, 63, 94, 0.42);
+    --color-inv-fill-low-active: rgba(244, 63, 94, 0.52);
+    --color-primary-muted-hover: rgba(244, 63, 94, 0.38);
+    --color-primary-muted-active: rgba(244, 63, 94, 0.48);
+    --color-inv-primary-muted-hover: rgba(255, 255, 255, 0.14);
+    --color-inv-primary-muted-active: rgba(255, 255, 255, 0.2);
+    --color-foreground-high-hover: rgba(255, 241, 242, 0.92);
+    --color-foreground-high-active: rgba(255, 241, 242, 0.82);
+    --color-inv-foreground-high-hover: #7f1d1d;
+    --color-inv-foreground-high-active: #450a0a;
+    --color-skeleton: rgba(255, 241, 242, 0.1);
+}
