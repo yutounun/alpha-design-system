@@ -5,7 +5,7 @@ import { expect, fn, userEvent, within } from "storybook/test"
 import { Button } from "./button"
 
 const variantOptions = [
-    "default",
+    "primary",
     "outline",
     "secondary",
     "ghost",
@@ -14,9 +14,9 @@ const variantOptions = [
 ] as const
 
 const sizeOptions = [
-    "default",
     "xs",
     "sm",
+    "md",
     "lg",
     "icon",
     "icon-xs",
@@ -45,7 +45,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const Primary: Story = {
     args: {
         children: "Submit",
         onClick: fn(),
@@ -112,10 +112,10 @@ export const AllSizes: Story = {
                 Text sizes
             </p>
             <div className="flex flex-wrap items-center gap-2">
-                <Button size="xs">Extra small</Button>
-                <Button size="sm">Small</Button>
-                <Button size="default">Default</Button>
-                <Button size="lg">Large</Button>
+                <Button size="xs">Get Started</Button>
+                <Button size="sm">Get Started</Button>
+                <Button size="md">Get Started</Button>
+                <Button size="lg">Get Started</Button>
             </div>
             <p className="text-sm font-medium text-foreground-medium">
                 Icon sizes
@@ -127,7 +127,7 @@ export const AllSizes: Story = {
                 <Button size="icon-sm" aria-label="Add (sm)">
                     <Plus />
                 </Button>
-                <Button size="icon" aria-label="Add (default)">
+                <Button size="icon-md" aria-label="Add (md)">
                     <Plus />
                 </Button>
                 <Button size="icon-lg" aria-label="Add (lg)">
@@ -161,7 +161,7 @@ export const WithIcon: Story = {
         </Button>
     ),
     args: {
-        variant: "default",
+        variant: "primary",
     },
 }
 

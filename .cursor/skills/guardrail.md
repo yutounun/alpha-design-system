@@ -1,6 +1,6 @@
 ---
 name: guardrail
-description: Design-system styling rules for alpha-design-system. Apply when implementing or reviewing UI. No opacity /N in className; no dark: in className; no hardcoded colors, radius, text size, or font weight; use theme.css tokens and Tailwind primitives only.
+description: Design-system styling rules for alpha-design-system. Apply when implementing or reviewing UI. No opacity /N in className; no dark: in className; no hardcoded colors, radius, text size, or font weight; max 7 Tailwind classes per string literal line; use theme.css tokens and Tailwind primitives only.
 version: 1.0.0
 source: project-convention
 ---
@@ -147,6 +147,43 @@ Do **not** prefix utilities with `dark:` (e.g. `dark:bg-card-1`). Semantic color
 
 ---
 
+## 8. Tailwind classes: max 7 per string literal line
+
+Do **not** put **8 or more** space-separated Tailwind utility tokens in a **single** string literal on one line. Split by concern (layout, shape, typography, interaction states, etc.) so each string stays readable and diff-friendly.
+
+**Bad**
+
+```ts
+"inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent text-sm font-medium whitespace-nowrap transition-all outline-none select-none"
+```
+
+**Good** (`cva` accepts arrays of `ClassValue`)
+
+```ts
+[
+    "inline-flex shrink-0 items-center justify-center",
+    "rounded-lg border border-transparent",
+    "text-sm font-medium whitespace-nowrap",
+    "transition-all outline-none select-none",
+]
+```
+
+**Good** (`cn` with multiple arguments)
+
+```tsx
+className={cn(
+    "inline-flex shrink-0 items-center justify-center",
+    "rounded-lg border border-transparent",
+    variant === "primary" && "bg-primary text-primary-foreground",
+)}
+```
+
+**Counting**: Each token separated by whitespace is one class (including arbitrary variants like `[&_svg]:size-4` and prefixed utilities like `focus-visible:ring-3`).
+
+**Why**: Long one-line class strings are hard to review and merge; grouping by concern keeps styling intent clear.
+
+---
+
 ## Implementation checklist
 
 | Check                                     | Pass criteria                                     |
@@ -158,6 +195,7 @@ Do **not** prefix utilities with `dark:` (e.g. `dark:bg-card-1`). Semantic color
 | `text-[...]` for font size                | Not used                                          |
 | `font-[...]`                              | Not used                                          |
 | `dark:*` in `className`                   | Not used (`.dark` retokens in `theme.css`)        |
+| 8+ Tailwind classes in one string literal | Split strings or use `cva` arrays / `cn` args     |
 | Redundant `font-body` on body copy        | Not added                                         |
 | Missing token                             | Do not implement ad hoc; add to `theme.css` first |
 
@@ -166,4 +204,5 @@ Do **not** prefix utilities with `dark:` (e.g. `dark:bg-card-1`). Semantic color
 ## Notes for agents
 
 - When reviewing new components, stories, or MDX, validate `className` against the table above.
+- For long `cva` / `className` strings, apply rule 8 (split into multiple string literals or arrays).
 - Legacy code may violate these rules; refactor in a separate change (e.g. replace `/80` with `*-hover` / `*-muted` tokens; replace `text-[...]` with `text-sm` or a theme step).

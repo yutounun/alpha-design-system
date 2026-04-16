@@ -92,8 +92,8 @@
     --color-primary-text: #533afd;
 
     /* Secondary — Magenta */
-    --color-secondary: #f96bee;
-    --color-secondary-foreground: #061b31;
+    --color-secondary: #9967ff;
+    --color-secondary-foreground: #ffffff;
     --color-secondary-muted: #ffd7ef;
     --color-secondary-text: #f96bee;
     /* Secondary solid hover/active (no color-mix; hand-tuned from #f96bee + black) */

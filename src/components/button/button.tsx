@@ -5,46 +5,65 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-    "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-focus focus-visible:ring-3 focus-visible:ring-focus-ring active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-border-invalid aria-invalid:ring-3 aria-invalid:ring-invalid-ring dark:aria-invalid:border-border-invalid-muted dark:aria-invalid:ring-invalid-ring [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+    [
+        "group/button inline-flex shrink-0 items-center justify-center",
+        "rounded-lg border border-transparent",
+        "text-sm font-medium whitespace-nowrap",
+        "transition-all outline-none select-none",
+        "focus-visible:border-focus focus-visible:ring-3 focus-visible:ring-focus-ring",
+        "disabled:pointer-events-none disabled:opacity-50",
+        "aria-invalid:border-border-invalid aria-invalid:ring-3 aria-invalid:ring-invalid-ring",
+        "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "cursor-pointer",
+    ],
     {
         variants: {
             variant: {
-                default:
-                    "bg-primary text-primary-foreground [a]:hover:bg-primary-hover",
-                outline:
-                    "border-border-low bg-background-1 hover:bg-fill-low hover:text-foreground-high aria-expanded:bg-fill-low aria-expanded:text-foreground-high dark:border-border-medium dark:bg-card-1 dark:hover:bg-fill-medium",
+                primary:
+                    "bg-primary text-primary-foreground hover:bg-primary-hover",
+                outline: [
+                    "border-border-low bg-background-1 hover:bg-fill-low hover:text-foreground-high",
+                    "aria-expanded:bg-fill-low aria-expanded:text-foreground-high",
+                ],
                 secondary:
-                    "bg-secondary text-secondary-foreground hover:bg-secondary-hover aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
-                ghost: "hover:bg-fill-low hover:text-foreground-high aria-expanded:bg-fill-low aria-expanded:text-foreground-high dark:hover:bg-transparent-hover",
-                destructive:
-                    "border-border-danger bg-danger-muted text-danger hover:border-border-danger-hover hover:bg-fill-danger-hover focus-visible:border-border-danger-focus focus-visible:ring-danger-ring dark:bg-danger-muted dark:hover:bg-fill-danger-hover dark:focus-visible:ring-danger-ring",
+                    "bg-secondary text-secondary-foreground hover:bg-secondary-hover",
+                ghost: "hover:bg-fill-low hover:text-foreground-high",
+                destructive: [
+                    "border-border-danger bg-danger-muted text-danger hover:border-border-danger-hover hover:bg-fill-danger-hover",
+                    "focus-visible:border-border-danger-focus focus-visible:ring-danger-ring",
+                ],
                 link: "text-primary underline-offset-4 hover:underline",
             },
             size: {
-                default:
-                    "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-                xs: "h-6 gap-1 rounded-action-1 px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-                sm: "h-7 gap-1 rounded-action-2 px-2.5 text-sm in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-                lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-                icon: "size-8",
+                xs: [
+                    "gap-1 px-2 py-1.5 text-xs in-data-[slot=button-group]:rounded-lg",
+                    "has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
+                ],
+                sm: [
+                    "gap-1 px-2.5 py-1.5 text-sm in-data-[slot=button-group]:rounded-lg",
+                    "has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
+                ],
+                md: "gap-1.5 px-4 py-2 text-md has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+                lg: "gap-1.5 px-3 py-3 text-lg has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
                 "icon-xs":
                     "size-6 rounded-action-1 in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
                 "icon-sm":
-                    "size-7 rounded-action-2 in-data-[slot=button-group]:rounded-lg",
-                "icon-lg": "size-9",
+                    "size-7 rounded-action-2 in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-4",
+                "icon-md": "size-8 [&_svg:not([class*='size-'])]:size-4",
+                "icon-lg": "size-9 [&_svg:not([class*='size-'])]:size-5",
             },
         },
         defaultVariants: {
-            variant: "default",
-            size: "default",
+            variant: "primary",
+            size: "md",
         },
     }
 )
 
 function Button({
     className,
-    variant = "default",
-    size = "default",
+    variant = "primary",
+    size = "md",
     asChild = false,
     ...props
 }: React.ComponentProps<"button"> &
