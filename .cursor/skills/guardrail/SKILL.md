@@ -1,8 +1,6 @@
 ---
 name: guardrail
 description: Design-system styling rules for alpha-design-system. Apply when implementing or reviewing UI. No opacity /N in className; no dark: in className; no hardcoded colors, radius, text size, or font weight; max 7 Tailwind classes per string literal line; use theme.css tokens and Tailwind primitives only.
-version: 1.0.0
-source: project-convention
 ---
 
 # Guardrail: styling rules

@@ -18,6 +18,17 @@ Use when the user is:
 - Implementing polymorphism or as-child patterns
 - Working with data attributes for styling/state
 
+## Project reference implementation
+
+When building a new component in this repository, use `src/components/button/` as the canonical reference:
+
+- `button.tsx` — component logic, CVA variants, TypeScript props, forwardRef pattern
+- `button.stories.tsx` — Storybook stories structure
+- `button.mdx` — component documentation format
+- `index.ts` — public export pattern
+
+Match the same file layout (`<name>.tsx`, `<name>.stories.tsx`, `<name>.mdx`, `index.ts`) and follow the same conventions for naming, variants, and exports.
+
 ## References
 
 - [definitions.mdx](./references/definitions.mdx) - Artifact taxonomy (primitives, components, blocks, templates)
