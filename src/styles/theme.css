@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500;700&display=swap");
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -9,207 +8,252 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    /* Font Variant: Base */
+    /* Font Variant: Stripe-inspired */
     --font-*: initial;
-    --font-display: "Montserrat";
-    --font-heading: "Montserrat";
-    --font-body: "Inter", "sans-serif";
+    --font-display: "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
+    --font-heading: "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
+    --font-body: "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
+    --font-mono: "Source Code Pro", "SFMono-Regular", "SF Mono", monospace;
 
-    --text-3xs: 0.5rem;
-    --text-3xs--line-height: 1.5rem;
-    --text-2xs: 0.625rem;
-    --text-2xs--line-height: 1.5rem;
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-md: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.75rem;
-    --text-4xl: 2rem;
-    --text-5xl: 2.25rem;
-    --text-6xl: 2.5rem;
-    --text-7xl: 2.75rem;
+    /* Type Scale — based on DESIGN.md */
+    --text-3xs: 0.5rem;   /* 8px  — Nano */
+    --text-3xs--line-height: 1.07;
+    --text-2xs: 0.625rem; /* 10px — Micro */
+    --text-2xs--line-height: 1.15;
+    --text-xs: 0.75rem;   /* 12px — Caption / Code */
+    --text-sm: 0.875rem;  /* 14px — Caption / Link / Button Small */
+    --text-md: 1rem;      /* 16px — Body / Button */
+    --text-lg: 1.125rem;  /* 18px — Body Large */
+    --text-xl: 1.375rem;  /* 22px — Sub-heading */
+    --text-2xl: 1.625rem; /* 26px — Sub-heading Large */
+    --text-3xl: 2rem;     /* 32px — Section Heading */
+    --text-4xl: 3rem;     /* 48px — Display Large */
+    --text-5xl: 3.5rem;   /* 56px — Display Hero */
+    --text-6xl: 2.5rem;   /* (kept for compatibility) */
+    --text-7xl: 2.75rem;  /* (kept for compatibility) */
 
+    /* Border Radius — Stripe is conservative (4px–8px, no pills on interactive elements) */
     --radius-full: 1000rem;
-    --radius-action-1: 1000rem;
-    --radius-action-2: 0.5rem;
+    --radius-action-1: 4px; /* Buttons, inputs, badges, cards */
+    --radius-action-2: 6px; /* Navigation, larger interactive elements */
 
-    --color-background: hsl(228 55.6% 94.7%);
-    --color-background-1: hsl(228 55.6% 94.7%);
-    --color-background-2: hsl(0 38.46% 97.45%);
-    --color-badge-blue: hsl(210 100% 56%);
-    --color-badge-navy: hsl(219 50% 47%);
-    --color-border-high: hsl(218 17% 19%);
-    --color-border-low: hsl(218 31% 90%);
-    --color-border-medium: hsl(221.54 19.4% 73.7%);
-    --color-brand: hsl(219 72% 20%);
-    --color-card-1: hsl(180 100% 100%);
-    --color-card-2: hsl(228 55.6% 94.7%);
-    --color-cta-1: hsl(0 100% 46%);
-    --color-cta-1-foreground: hsl(0 0% 100%);
-    --color-danger: hsl(0 100% 46%);
-    --color-danger-foreground: hsl(0 0% 100%);
-    --color-danger-muted: hsl(13 100% 98%);
-    --color-danger-text: hsl(0 100% 37%);
-    --color-fill-high: hsl(219 18% 62%);
-    --color-fill-low: hsl(214 37% 96%);
-    --color-fill-medium: hsl(215 33% 93%);
-    --color-focus: hsl(208, 83%, 62%);
-    --color-foreground-high: hsl(216, 18%, 11%);
-    --color-foreground-low: hsl(219 18% 62%);
-    --color-foreground-medium: hsl(219 15% 40%);
-    --color-informative: hsl(211 100% 50%);
-    --color-informative-foreground: hsl(0 0% 100%);
-    --color-informative-muted: hsl(204 100% 97%);
+    /* ===== Colors — Stripe palette ===== */
 
-    --color-link: hsl(211 100% 46%);
-    --color-primary: blue;
-    --color-badge-purple: hsl(260 48% 54%);
-    --color-primary-foreground: hsl(0 0% 100%);
-    --color-primary-muted: hsl(204 90% 94%);
-    --color-primary-text: hsl(211 100% 46%);
-    --color-secondary: #e600b4;
-    --color-secondary-foreground: #fff;
-    --color-secondary-muted: #e600b4;
-    --color-secondary-text: #e600b4;
-    --color-success: hsl(155.52 69.8% 35.1%);
-    --color-success-foreground: hsl(180 100% 100%);
-    --color-success-muted: hsl(96 62% 91%);
-    --color-success-text: hsl(98 100% 27%);
-    --color-visited: hsl(264 97% 62%);
-    --color-warning: hsl(45 100% 51%);
-    --color-warning-foreground: hsl(218 17% 19%);
-    --color-warning-muted: hsl(46 78% 90%);
-    --color-warning-text: hsl(34 98% 40%);
-    --color-cancel: hsl(162.86 0% 77.3%);
-    --color-cancel-foreground: hsl(0 0% 100%);
+    /* Backgrounds */
+    --color-background: #ffffff;
+    --color-background-1: #ffffff;
+    --color-background-2: #f6f9fc; /* Near-white surface */
 
-    --color-inv-foreground-high: hsl(0 0% 100%);
-    --color-inv-foreground-low: hsl(216, 18%, 72%);
-    --color-inv-foreground-medium: hsl(216, 35%, 83%);
+    /* Cards */
+    --color-card-1: #ffffff;
+    --color-card-2: #f6f9fc;
 
-    /* === Generated Interaction Tokens === */
-    --color-primary-hover: hsl(211.06 100% 55%);
-    --color-primary-active: hsl(211.06 100% 60%);
-    --color-success-muted-hover: hsl(96 58% 86%);
-    --color-success-muted-active: hsl(96 55% 80%);
-    --color-warning-muted-hover: hsl(46 72% 84%);
-    --color-warning-muted-active: hsl(46 68% 78%);
-    --color-inv-primary-hover: hsl(0 0% 10%);
-    --color-inv-primary-active: hsl(0 0% 20%);
-    --color-link-hover: hsl(211 100% 56%);
-    --color-link-active: hsl(211 100% 66%);
-    --color-inv-link-hover: hsl(206 100% 72%);
-    --color-inv-link-active: hsl(206 100% 62%);
-    --color-fill-medium-hover: hsl(215 33% 83%);
-    --color-fill-medium-active: hsl(215 33% 73%);
-    --color-inv-fill-medium-hover: hsl(218 75% 35%);
-    --color-inv-fill-medium-active: hsl(218 75% 45%);
-    --color-transparent-hover: hsl(214 37% 4% / 5%);
-    --color-transparent-active: hsl(214 37% 4% / 10%);
-    --color-inv-transparent-hover: hsl(211 100% 95% / 10%);
-    --color-inv-transparent-active: hsl(211 100% 95% / 20%);
-    --color-fill-low-hover: hsl(214 37% 86%);
-    --color-fill-low-active: hsl(214 37% 76%);
-    --color-inv-fill-low-hover: hsl(211 100% 42%);
-    --color-inv-fill-low-active: hsl(211 100% 52%);
-    --color-primary-muted-hover: hsl(204 90% 90%);
-    --color-primary-muted-active: hsl(203 90% 84%);
-    --color-inv-primary-muted-hover: hsl(211 100% 36%);
-    --color-inv-primary-muted-active: hsl(211 100% 46%);
-    --color-foreground-high-hover: hsl(215, 18%, 21%);
-    --color-foreground-high-active: hsl(217, 17%, 34%);
-    --color-inv-foreground-high-hover: hsl(0, 0%, 86%);
-    --color-inv-foreground-high-active: hsl(0 0% 80%);
-    --color-skeleton: hsla(220 11.39% 15.49% / 0.1);
+    /* Brand */
+    --color-brand: #1c1e54; /* Brand Dark — deep indigo for dark sections */
+
+    /* Foreground / Text */
+    --color-foreground-high: #061b31;   /* Deep Navy — primary headings */
+    --color-foreground-medium: #273951; /* Dark Slate — labels, secondary headings */
+    --color-foreground-low: #64748d;    /* Slate — body text, descriptions */
+
+    /* Inverse foreground (for dark brand sections) */
+    --color-inv-foreground-high: #ffffff;
+    --color-inv-foreground-medium: rgba(255, 255, 255, 0.7);
+    --color-inv-foreground-low: rgba(255, 255, 255, 0.5);
+
+    /* Borders */
+    --color-border-high: #273951;   /* Dark Slate — high-contrast border */
+    --color-border-medium: #d6d9fc; /* Border Soft Purple */
+    --color-border-low: #e5edf5;    /* Border Default — standard dividers */
+
+    /* Fills / Surfaces */
+    --color-fill-high: #b9b9f9;   /* Purple Light — strong tint fill */
+    --color-fill-medium: #eef0ff; /* Light purple tint */
+    --color-fill-low: #f6f9fc;    /* Near-white fill */
+
+    /* Focus Ring */
+    --color-focus: #533afd; /* Stripe Purple — 2px solid focus ring */
+
+    /* Primary — Stripe Purple */
+    --color-primary: #533afd;
+    --color-primary-foreground: #ffffff;
+    --color-primary-muted: rgba(83, 58, 253, 0.08); /* Ghost hover background */
+    --color-primary-text: #533afd;
+
+    /* Secondary — Magenta */
+    --color-secondary: #f96bee;
+    --color-secondary-foreground: #ffffff;
+    --color-secondary-muted: #ffd7ef; /* Magenta Light — muted surface */
+    --color-secondary-text: #f96bee;
+
+    /* Danger / Ruby */
+    --color-danger: #ea2261;
+    --color-danger-foreground: #ffffff;
+    --color-danger-muted: rgba(234, 34, 97, 0.1);
+    --color-danger-text: #c01c55;
+
+    /* Success */
+    --color-success: #15be53;
+    --color-success-foreground: #ffffff;
+    --color-success-muted: rgba(21, 190, 83, 0.2);
+    --color-success-text: #108c3d;
+
+    /* Warning / Lemon */
+    --color-warning: #9b6829;
+    --color-warning-foreground: #ffffff;
+    --color-warning-muted: rgba(155, 104, 41, 0.1);
+    --color-warning-text: #9b6829;
+
+    /* Informative — Info Blue */
+    --color-informative: #2874ad;
+    --color-informative-foreground: #ffffff;
+    --color-informative-muted: rgba(40, 116, 173, 0.1);
+
+    /* Link */
+    --color-link: #533afd;
+    --color-visited: #4434d4; /* Purple Hover */
+
+    /* CTA accent (Ruby) */
+    --color-cta-1: #ea2261;
+    --color-cta-1-foreground: #ffffff;
+
+    /* Cancel / Neutral */
+    --color-cancel: #64748d;
+    --color-cancel-foreground: #ffffff;
+
+    /* Badges */
+    --color-badge-blue: #533afd;
+    --color-badge-navy: #061b31;
+    --color-badge-purple: #533afd;
+
+    /* Skeleton */
+    --color-skeleton: rgba(6, 27, 49, 0.06);
+
+    /* === Interaction Tokens === */
+    --color-primary-hover: #4434d4;              /* Purple Hover */
+    --color-primary-active: #2e2b8c;             /* Purple Deep */
+    --color-success-muted-hover: rgba(21, 190, 83, 0.3);
+    --color-success-muted-active: rgba(21, 190, 83, 0.4);
+    --color-warning-muted-hover: rgba(155, 104, 41, 0.15);
+    --color-warning-muted-active: rgba(155, 104, 41, 0.2);
+    --color-inv-primary-hover: rgba(255, 255, 255, 0.1);
+    --color-inv-primary-active: rgba(255, 255, 255, 0.2);
+    --color-link-hover: #4434d4;
+    --color-link-active: #2e2b8c;
+    --color-inv-link-hover: rgba(255, 255, 255, 0.9);
+    --color-inv-link-active: rgba(255, 255, 255, 0.7);
+    --color-fill-medium-hover: #dde0ff;
+    --color-fill-medium-active: #c9ccff;
+    --color-inv-fill-medium-hover: rgba(255, 255, 255, 0.12);
+    --color-inv-fill-medium-active: rgba(255, 255, 255, 0.18);
+    --color-transparent-hover: rgba(6, 27, 49, 0.05);
+    --color-transparent-active: rgba(6, 27, 49, 0.1);
+    --color-inv-transparent-hover: rgba(255, 255, 255, 0.08);
+    --color-inv-transparent-active: rgba(255, 255, 255, 0.15);
+    --color-fill-low-hover: #e8edf5;
+    --color-fill-low-active: #d8e0eb;
+    --color-inv-fill-low-hover: rgba(255, 255, 255, 0.1);
+    --color-inv-fill-low-active: rgba(255, 255, 255, 0.15);
+    --color-primary-muted-hover: rgba(83, 58, 253, 0.12);
+    --color-primary-muted-active: rgba(83, 58, 253, 0.16);
+    --color-inv-primary-muted-hover: rgba(255, 255, 255, 0.12);
+    --color-inv-primary-muted-active: rgba(255, 255, 255, 0.18);
+    --color-foreground-high-hover: #273951;
+    --color-foreground-high-active: #1a2940;
+    --color-inv-foreground-high-hover: rgba(255, 255, 255, 0.9);
+    --color-inv-foreground-high-active: rgba(255, 255, 255, 0.8);
+
+    /* Surface & Shadow */
+    --color-surface-deep: #0d253d;               /* Dark Navy — maximum depth */
+    --shadow-sm-top: rgba(0, 55, 112, 0.08);     /* Top-edge shadow for sticky elements */
 }
 
 .dark {
-    --color-background-1: hsl(218 100% 5%);
-    --color-background-2: hsl(211 100% 10%);
-    --color-badge-blue: hsl(206 100% 82%);
-    --color-badge-purple: hsl(259 39% 72%);
-    --color-border-high: hsl(219 15% 51%);
-    --color-border-low: hsl(218 16% 29%);
-    --color-border-medium: hsl(219 15% 40%);
-    --color-brand: hsl(220 60% 95%);
-    --color-card-1: hsl(234, 46%, 14%);
-    --color-card-2: hsl(218 42% 12%);
-    --color-danger: hsl(0 100% 76%);
-    --color-danger-foreground: hsl(218 17% 19%);
-    --color-danger-muted: hsl(0 100% 26%);
-    --color-danger-text: hsl(1, 90%, 73%);
-    --color-fill-high: hsl(218 16% 29%);
-    --color-fill-low: hsl(218 17% 19%);
-    --color-fill-medium: hsl(219 16% 24%);
-    --color-focus: hsl(204 52.04% 56.67%);
-    --color-foreground-high: hsl(210, 40%, 98%);
-    --color-foreground-low: hsl(218 20% 68%);
-    --color-foreground-medium: hsl(218 28% 86%);
-    --color-informative: hsl(206 100% 82%);
-    --color-informative-foreground: hsl(218 17% 19%);
-    --color-informative-muted: hsl(211 100% 15%);
-    --color-inv-fill-high: hsl(211 100% 37%);
-    --color-inv-fill-low: hsl(211 100% 32%);
-    --color-inv-fill-medium: hsl(218 75% 25%);
-    --color-inv-focus: hsl(206 100% 82%);
-    --color-inv-foreground-high: hsl(216, 18%, 11%);
-    --color-inv-foreground-low: hsl(216, 18%, 72%);
-    --color-inv-foreground-medium: hsl(216, 35%, 83%);
-    --color-link: hsl(206 100% 82%);
-    --color-primary: hsl(211, 100%, 42%);
-    --color-badge-purple: hsl(260, 64%, 68%);
-    --color-primary-foreground: hsl(0 0% 100%);
-    --color-primary-muted: hsl(211, 60%, 23%);
-    --color-primary-text: hsl(211, 89%, 86%);
-    --color-success: hsl(113.4 40% 51%);
-    --color-success-foreground: hsl(218 17% 19%);
-    --color-success-muted: hsl(98 100% 22%);
-    --color-success-text: hsl(98 77% 66%);
-    --color-visited: hsl(260 70% 82%);
-    --color-warning: hsl(55 100% 67%);
-    --color-warning-foreground: hsl(218 17% 19%);
-    --color-warning-muted: hsl(54 97% 25%);
-    --color-warning-text: hsl(55 100% 67%);
-    --color-cancel: hsl(0, 2%, 45%);
-    --color-cancel-foreground: hsl(0 0% 100%);
+    /* Dark Brand sections (#1c1e54 background) */
+    --color-background-1: #1c1e54;  /* Brand Dark */
+    --color-background-2: #0d253d;  /* Surface Deep */
+    --color-badge-blue: #b9b9f9;
+    --color-badge-purple: #b9b9f9;
+    --color-border-high: rgba(255, 255, 255, 0.4);
+    --color-border-low: rgba(255, 255, 255, 0.1);
+    --color-border-medium: rgba(255, 255, 255, 0.2);
+    --color-brand: #533afd; /* Purple as brand accent on dark bg */
+    --color-card-1: rgba(255, 255, 255, 0.06);
+    --color-card-2: rgba(255, 255, 255, 0.1);
+    --color-danger: #ff7fa8;          /* Lighter Ruby for dark bg */
+    --color-danger-foreground: #1c1e54;
+    --color-danger-muted: rgba(234, 34, 97, 0.2);
+    --color-danger-text: #ffaac5;
+    --color-fill-high: rgba(255, 255, 255, 0.2);
+    --color-fill-low: rgba(255, 255, 255, 0.06);
+    --color-fill-medium: rgba(255, 255, 255, 0.1);
+    --color-focus: #b9b9f9;           /* Purple Light focus on dark bg */
+    --color-foreground-high: #ffffff;
+    --color-foreground-low: rgba(255, 255, 255, 0.5);
+    --color-foreground-medium: rgba(255, 255, 255, 0.7);
+    --color-informative: #7ec4e8;
+    --color-informative-foreground: #1c1e54;
+    --color-informative-muted: rgba(40, 116, 173, 0.25);
+    --color-inv-fill-high: #b9b9f9;
+    --color-inv-fill-low: rgba(83, 58, 253, 0.3);
+    --color-inv-fill-medium: rgba(83, 58, 253, 0.2);
+    --color-inv-focus: #b9b9f9;
+    --color-inv-foreground-high: #061b31;
+    --color-inv-foreground-low: rgba(6, 27, 49, 0.5);
+    --color-inv-foreground-medium: rgba(6, 27, 49, 0.7);
+    --color-link: #b9b9f9;            /* Purple Light for dark bg links */
+    --color-primary: #665efd;         /* Purple Mid — brighter on dark bg */
+    --color-primary-foreground: #ffffff;
+    --color-primary-muted: rgba(83, 58, 253, 0.25);
+    --color-primary-text: #b9b9f9;
+    --color-success: #15be53;
+    --color-success-foreground: #1c1e54;
+    --color-success-muted: rgba(21, 190, 83, 0.2);
+    --color-success-text: #7fd9a0;
+    --color-visited: #b9b9f9;
+    --color-warning: #c8a060;         /* Lighter Lemon for dark bg */
+    --color-warning-foreground: #1c1e54;
+    --color-warning-muted: rgba(155, 104, 41, 0.25);
+    --color-warning-text: #e0c080;
+    --color-cancel: rgba(100, 116, 141, 0.6);
+    --color-cancel-foreground: #ffffff;
 
-    --color-primary-text-hover: hsl(211 100% 60%);
-    --color-primary-text-active: hsl(211 100% 70%);
-    --color-success-muted-hover: hsl(98 100% 27%);
-    --color-success-muted-active: hsl(98 100% 30%);
-    --color-warning-muted-hover: hsl(55 100% 60%);
-    --color-warning-muted-active: hsl(55 100% 70%);
-    --color-warning-hover: hsl(55 100% 60%);
-    --color-warning-active: hsl(55 100% 70%);
-    --color-success-text-hover: hsl(98, 71%, 74%);
-    --color-success-text-active: hsl(98 77% 76%);
-    --color-warning-text-hover: hsl(55 100% 67%);
-    --color-warning-text-active: hsl(55 100% 77%);
-    --color-primary-hover: hsl(211, 100%, 52%);
-    --color-primary-active: hsl(211, 100%, 62%);
-    --color-inv-primary-hover: hsl(0 0% 10%);
-    --color-inv-primary-active: hsl(0 0% 20%);
-    --color-link-hover: hsl(206 100% 72%);
-    --color-link-active: hsl(206 100% 62%);
-    --color-fill-medium-hover: hsl(219 16% 34%);
-    --color-fill-medium-active: hsl(219 16% 44%);
-    --color-transparent-hover: hsl(218 100% 95% / 10%);
-    --color-transparent-active: hsl(218 100% 95% / 20%);
-    --color-fill-low-hover: hsl(218 17% 29%);
-    --color-fill-low-active: hsl(218 17% 39%);
-    --color-inv-fill-low-hover: hsl(211 100% 42%);
-    --color-inv-fill-low-active: hsl(211 100% 52%);
-    --color-primary-muted-hover: hsl(211, 60%, 28%);
-    --color-primary-muted-active: hsl(211, 60%, 33%);
-    --color-inv-primary-muted-hover: hsl(211 100% 36%);
-    --color-inv-primary-muted-active: hsl(211 100% 46%);
-    --color-foreground-high-hover: hsl(213, 38%, 87%);
-    --color-foreground-high-active: hsl(213, 38%, 80%);
-    --color-inv-foreground-high-hover: hsl(0 0% 90%);
-    --color-inv-foreground-high-active: hsl(0 0% 80%);
-    --color-skeleton: hsla(220 11.39% 15.49% / 0.68);
+    /* Interaction tokens (dark) */
+    --color-primary-text-hover: #c5bffd;
+    --color-primary-text-active: #d9d6fe;
+    --color-success-muted-hover: rgba(21, 190, 83, 0.3);
+    --color-success-muted-active: rgba(21, 190, 83, 0.4);
+    --color-warning-muted-hover: rgba(155, 104, 41, 0.35);
+    --color-warning-muted-active: rgba(155, 104, 41, 0.45);
+    --color-warning-hover: #d4ac6a;
+    --color-warning-active: #e0c080;
+    --color-success-text-hover: #94e4b4;
+    --color-success-text-active: #aaecc6;
+    --color-warning-text-hover: #e8cc88;
+    --color-warning-text-active: #f0d8a0;
+    --color-primary-hover: #7a6ffd;
+    --color-primary-active: #8f85fe;
+    --color-inv-primary-hover: rgba(255, 255, 255, 0.1);
+    --color-inv-primary-active: rgba(255, 255, 255, 0.2);
+    --color-link-hover: #c5bffd;
+    --color-link-active: #d9d6fe;
+    --color-fill-medium-hover: rgba(255, 255, 255, 0.15);
+    --color-fill-medium-active: rgba(255, 255, 255, 0.22);
+    --color-transparent-hover: rgba(255, 255, 255, 0.08);
+    --color-transparent-active: rgba(255, 255, 255, 0.15);
+    --color-fill-low-hover: rgba(255, 255, 255, 0.1);
+    --color-fill-low-active: rgba(255, 255, 255, 0.15);
+    --color-inv-fill-low-hover: rgba(83, 58, 253, 0.4);
+    --color-inv-fill-low-active: rgba(83, 58, 253, 0.5);
+    --color-primary-muted-hover: rgba(83, 58, 253, 0.35);
+    --color-primary-muted-active: rgba(83, 58, 253, 0.45);
+    --color-inv-primary-muted-hover: rgba(255, 255, 255, 0.12);
+    --color-inv-primary-muted-active: rgba(255, 255, 255, 0.18);
+    --color-foreground-high-hover: rgba(255, 255, 255, 0.9);
+    --color-foreground-high-active: rgba(255, 255, 255, 0.8);
+    --color-inv-foreground-high-hover: #273951;
+    --color-inv-foreground-high-active: #1a2940;
+    --color-skeleton: rgba(255, 255, 255, 0.08);
 }
 
 .focus-ring {
