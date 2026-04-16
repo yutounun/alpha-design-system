@@ -1,3 +1,4 @@
+import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { ChevronRight, Plus } from "lucide-react"
 import { expect, fn, userEvent, within } from "storybook/test"
@@ -38,6 +39,9 @@ const meta = {
         size: {
             control: "select",
             options: sizeOptions,
+        },
+        loading: {
+            control: "boolean",
         },
     },
 } satisfies Meta<typeof Button>
@@ -150,6 +154,30 @@ export const Disabled: Story = {
         await expect(button).toBeDisabled()
         // Disabled buttons use pointer-events: none; user-event cannot click them.
         await expect(args.onClick).not.toHaveBeenCalled()
+    },
+}
+
+export const Loading: Story = {
+    render: () => {
+        const [loading, setLoading] = useState(false)
+
+        return (
+            <div className="flex max-w-md flex-col gap-3">
+                <p className="text-sm text-foreground-medium">
+                    Click to load for 2 seconds. Only the spinner is visible;
+                    width matches the idle label.
+                </p>
+                <Button
+                    loading={loading}
+                    onClick={() => {
+                        setLoading(true)
+                        window.setTimeout(() => setLoading(false), 2000)
+                    }}
+                >
+                    Submit
+                </Button>
+            </div>
+        )
     },
 }
 

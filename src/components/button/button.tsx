@@ -1,5 +1,6 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+import { Loader2 } from "lucide-react"
 import { Slot } from "radix-ui"
 
 import { cn } from "@/lib/utils"
@@ -15,6 +16,7 @@ const buttonVariants = cva(
         "aria-invalid:border-border-invalid aria-invalid:ring-3 aria-invalid:ring-invalid-ring",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         "cursor-pointer",
+        "data-loading:pointer-events-none data-loading:cursor-wait",
     ],
     {
         variants: {
@@ -65,21 +67,56 @@ function Button({
     variant = "primary",
     size = "md",
     asChild = false,
+    loading = false,
+    children,
+    "aria-label": ariaLabel,
     ...props
 }: React.ComponentProps<"button"> &
     VariantProps<typeof buttonVariants> & {
         asChild?: boolean
+        loading?: boolean
     }) {
     const Comp = asChild ? Slot.Root : "button"
+
+    const ariaLabelResolved =
+        ariaLabel ??
+        (loading && !asChild && typeof children === "string"
+            ? children
+            : undefined)
+
+    const content =
+        loading && !asChild ? (
+            <span className="relative inline-flex max-w-full items-stretch">
+                <span
+                    aria-hidden
+                    className="invisible flex max-w-full items-center justify-center gap-[inherit]"
+                >
+                    {children}
+                </span>
+                <span className="absolute inset-0 flex max-w-full items-center justify-center">
+                    <Loader2
+                        aria-hidden
+                        className="shrink-0 animate-spin [&:not([class*='size-'])]:size-4"
+                    />
+                </span>
+            </span>
+        ) : (
+            children
+        )
 
     return (
         <Comp
             data-slot="button"
             data-variant={variant}
             data-size={size}
+            data-loading={loading ? "" : undefined}
+            aria-busy={loading ? true : undefined}
+            aria-label={ariaLabelResolved}
             className={cn(buttonVariants({ variant, size, className }))}
             {...props}
-        />
+        >
+            {content}
+        </Comp>
     )
 }
 
