@@ -153,6 +153,7 @@ Do **not** prefix utilities with `dark:` (e.g. `dark:bg-card-1`). Semantic color
 | ----------------------------------------- | ------------------------------------------------- |
 | Color opacity `/` + number                | Not used                                          |
 | `#` / `rgb` / arbitrary colors in classes | Not used (tokens only)                            |
+| `color-mix()` in `theme.css`              | Not used (use explicit tokens, e.g. `border-*`)   |
 | `rounded-[...]`                           | Not used                                          |
 | `text-[...]` for font size                | Not used                                          |
 | `font-[...]`                              | Not used                                          |

@@ -5,7 +5,7 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-    "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-focus focus-visible:ring-3 focus-visible:ring-focus-ring active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-danger aria-invalid:ring-3 aria-invalid:ring-invalid-ring dark:aria-invalid:border-invalid-border-muted dark:aria-invalid:ring-invalid-ring [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+    "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-focus focus-visible:ring-3 focus-visible:ring-focus-ring active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-border-invalid aria-invalid:ring-3 aria-invalid:ring-invalid-ring dark:aria-invalid:border-border-invalid-muted dark:aria-invalid:ring-invalid-ring [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
     {
         variants: {
             variant: {
@@ -17,7 +17,7 @@ const buttonVariants = cva(
                     "bg-secondary text-secondary-foreground hover:bg-secondary-hover aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
                 ghost: "hover:bg-fill-low hover:text-foreground-high aria-expanded:bg-fill-low aria-expanded:text-foreground-high dark:hover:bg-transparent-hover",
                 destructive:
-                    "border-danger-button-border bg-danger-muted text-danger hover:border-danger-button-border-hover hover:bg-danger-button-bg-hover focus-visible:border-danger-button-focus-border focus-visible:ring-danger-button-focus-ring dark:bg-danger-muted dark:hover:bg-danger-button-bg-hover dark:focus-visible:ring-danger-button-focus-ring",
+                    "border-border-danger bg-danger-muted text-danger hover:border-border-danger-hover hover:bg-fill-danger-hover focus-visible:border-border-danger-focus focus-visible:ring-danger-ring dark:bg-danger-muted dark:hover:bg-fill-danger-hover dark:focus-visible:ring-danger-ring",
                 link: "text-primary underline-offset-4 hover:underline",
             },
             size: {
