@@ -1,73 +1,56 @@
-# React + TypeScript + Vite
+# Alpha Design System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Alpha Design System** is a React component library and token layer for building accessible product UI. It ships with **Storybook** as the single place to browse components, read MDX documentation, and watch **design tokens** update live when you switch theme or light/dark mode in the toolbar.
 
-Currently, two official plugins are available:
+If you landed here from GitHub, the fastest way to understand the system is to run Storybook locally: you get interactive controls, accessibility checks, and docs pages (including a **Welcome** overview and token galleries) without wiring anything into an app first.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Why open Storybook?
 
-## React Compiler
+- **See components in isolation** — Button, Input, Textarea, Label, and FormField with variants, sizes, loading states, and composition patterns (`asChild`, form layouts).
+- **Token-driven visuals** — Colors, typography, and radius resolve from CSS variables; switch **Theme** and **Mode** in the Storybook toolbar to compare Theme 1 / Theme 2 and light / dark without touching code.
+- **Documentation in one surface** — MDX pages explain adoption, token usage, and guardrails next to live Canvas examples.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run storybook
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then open **http://localhost:6006** (default port). Start from **Welcome** in the sidebar, then explore **Components** and **Design Tokens**.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Overview
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+| Area | What it is |
+| --- | --- |
+| **Stack** | React 19, TypeScript, Vite 8, Tailwind CSS 4, Radix primitives, CVA, Storybook 10 |
+| **Styling** | Semantic tokens in `src/styles/theme.css` and Tailwind `@theme` — prefer tokens over ad-hoc colors and `dark:` sprawl |
+| **Accessibility** | Radix-based patterns, Storybook a11y addon, and components wired for labels, hints, and invalid states |
+| **Testing** | Vitest with the Storybook project (`npm run test:storybook`) |
+
+Components live under `src/components/`. Docs and token showcases live under `src/docs/`.
+
+## Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Vite dev server for the app shell |
+| `npm run storybook` | Storybook dev server on port **6006** |
+| `npm run build-storybook` | Static Storybook build |
+| `npm run test:storybook` | Vitest (Storybook project) |
+| `npm run build` | Production build (`tsc` + Vite) |
+| `npm run lint` | ESLint |
+
+## Adopting in your own project (short version)
+
+1. Load the theme stylesheet (e.g. `src/styles/theme.css` via your CSS entry).
+2. Import components from the paths used in this repo (see stories for examples).
+3. Mirror `data-theme` / `.dark` on the document root if you want the same theme switching as Storybook.
+
+For token naming and conventions, the design-token reference used in this workspace is documented in-repo (see `src/docs/` and related scripts under `scripts/`).
+
+## License
+
+This repository is **private** (`"private": true` in `package.json`). Adjust licensing and distribution when you publish or open-source it.
+
+---
+
+_Built with Vite + React + TypeScript. ESLint is configured for type-aware rules where applicable; extend `eslint.config.js` as your product grows._
