@@ -76,6 +76,19 @@ const preview: Preview = {
     parameters: {
         layout: "centered",
 
+        options: {
+            storySort: {
+                order: [
+                    "Welcome",
+                    [
+                        "Design Tokens",
+                        ["Colors", "Typography", "Border Radius"],
+                    ],
+                    "Components",
+                ],
+            },
+        },
+
         docs: {
             // Story canvas: bottom panel with generated usage source (replaces addon-storysource).
             codePanel: true,

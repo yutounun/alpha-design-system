@@ -1,0 +1,15 @@
+import { Meta, Title } from "@storybook/addon-docs/blocks"
+
+import { ColorGrid } from "@/docs/token-display/color-grid"
+
+<Meta title="Design Tokens/Colors" />
+
+<Title>Colors</Title>
+
+The values shown here are CSS custom properties as resolved on the **current root element** (`document.documentElement`). When you change Storybook **Theme** / **Mode**, `data-theme` and `class` update and the swatches below **reload automatically**.
+
+Canonical definitions live in `src/styles/theme.css`. Theme 2 overrides are in `.storybook/themes/theme2.css` under the `[data-theme="theme2"]` block.
+
+Semantic `--color-*` tokens are grouped below, including focus, interaction, and inverse palettes. Swatch backgrounds use `var(--token)` directly, so they always match the active theme.
+
+<ColorGrid />

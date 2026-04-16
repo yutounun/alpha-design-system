@@ -1,0 +1,15 @@
+import { Meta, Title } from "@storybook/addon-docs/blocks"
+
+import { RadiusSample } from "@/docs/token-display/radius-sample"
+
+<Meta title="Design Tokens/Border Radius" />
+
+<Title>Border radius</Title>
+
+The values shown here are CSS custom properties as resolved on the **current root element** (`document.documentElement`). When you change Storybook **Theme** / **Mode**, `data-theme` and `class` update and the samples below **reload automatically**.
+
+Canonical definitions live in `src/styles/theme.css`. Theme 2 overrides are in `.storybook/themes/theme2.css` under the `[data-theme="theme2"]` block.
+
+Subtle radii for interactive elements (`--radius-action-*`) and pill-like rounding (`--radius-full`).
+
+<RadiusSample />
