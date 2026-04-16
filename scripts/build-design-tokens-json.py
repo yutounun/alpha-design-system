@@ -79,6 +79,8 @@ DESCRIPTIONS: dict[str, str] = {
     "--color-danger-text": "Error copy and danger-tinted text.",
     "--color-danger-ring": "Focus ring color for destructive controls (explicit rgba).",
     "--color-invalid-ring": "Form validation error focus ring.",
+    "--color-border-invalid-focus": "Border on invalid fields while focused (ruby; overrides default purple focus border).",
+    "--color-invalid-focus-ring": "Focus ring on invalid fields while focused (stronger than resting invalid ring).",
     "--color-success": "Success green for positive states and badges.",
     "--color-success-foreground": "Text on solid success backgrounds.",
     "--color-success-muted": "Soft success backgrounds for toasts and badges.",

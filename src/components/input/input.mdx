@@ -1,0 +1,43 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as InputStories from "./input.stories"
+
+<Meta of={InputStories} />
+
+<Title />
+
+The **Input** is a styled native text field with `sm` / `md` / `lg` sizes, token-based borders and focus rings, and `aria-invalid` styling for validation.
+
+## Usage
+
+```tsx
+import { Input } from "@/components/input"
+
+export function Example() {
+    return <Input placeholder="Search…" />
+}
+```
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={InputStories.Default} />
+
+## Examples
+
+### Invalid
+
+<Canvas of={InputStories.Invalid} />
+
+### All sizes
+
+<Canvas of={InputStories.AllSizes} />

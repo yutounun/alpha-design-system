@@ -1,0 +1,49 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as LabelStories from "./label.stories"
+
+<Meta of={LabelStories} />
+
+<Title />
+
+The **Label** associates helper text with a control using `htmlFor` / `id`. It uses Radix `Label.Root` for accessibility. Set `aria-invalid` when the related field has errors so the label picks up danger-colored text.
+
+## Usage
+
+```tsx
+import { Input } from "@/components/input"
+import { Label } from "@/components/label"
+
+export function Example() {
+    return (
+        <div className="flex flex-col gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" type="email" />
+        </div>
+    )
+}
+```
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={LabelStories.Primary} />
+
+## Examples
+
+### Required
+
+<Canvas of={LabelStories.Required} />
+
+### Invalid
+
+<Canvas of={LabelStories.Invalid} />

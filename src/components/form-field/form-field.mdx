@@ -1,0 +1,43 @@
+import { Canvas, Meta, Primary, Title } from "@storybook/addon-docs/blocks"
+
+import * as FormFieldStories from "./form-field.stories"
+
+<Meta of={FormFieldStories} />
+
+<Title />
+
+**FormField** groups a **Label**, optional description, a single control (**Input** or **Textarea**), and an optional error region. It sets `id` / `htmlFor`, merges `aria-describedby`, and toggles `aria-invalid` when `error` is provided.
+
+## Usage
+
+```tsx
+import { FormField } from "@/components/form-field"
+import { Input } from "@/components/input"
+
+export function Example() {
+    return (
+        <FormField
+            label="Name"
+            required
+            description="Visible to customers."
+            error="Name is required."
+        >
+            <Input />
+        </FormField>
+    )
+}
+```
+
+## Stories
+
+<Primary />
+
+## Examples
+
+### Required validation
+
+<Canvas of={FormFieldStories.RequiredError} />
+
+### Textarea
+
+<Canvas of={FormFieldStories.WithTextarea} />

@@ -1,0 +1,43 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as TextareaStories from "./textarea.stories"
+
+<Meta of={TextareaStories} />
+
+<Title />
+
+The **Textarea** mirrors **Input** tokens and states for multi-line content. It defaults to a modest minimum height and allows vertical resizing.
+
+## Usage
+
+```tsx
+import { Textarea } from "@/components/textarea"
+
+export function Example() {
+    return <Textarea placeholder="Notes" />
+}
+```
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={TextareaStories.Default} />
+
+## Examples
+
+### Invalid
+
+<Canvas of={TextareaStories.Invalid} />
+
+### All sizes
+
+<Canvas of={TextareaStories.AllSizes} />
