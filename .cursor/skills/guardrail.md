@@ -1,6 +1,6 @@
 ---
 name: guardrail
-description: Design-system styling rules for alpha-design-system. Apply when implementing or reviewing UI. No opacity /N in className; no hardcoded colors, radius, text size, or font weight; use theme.css tokens and Tailwind primitives only.
+description: Design-system styling rules for alpha-design-system. Apply when implementing or reviewing UI. No opacity /N in className; no dark: in className; no hardcoded colors, radius, text size, or font weight; use theme.css tokens and Tailwind primitives only.
 version: 1.0.0
 source: project-convention
 ---
@@ -138,6 +138,15 @@ If the design does not map cleanly, **align with `DESIGN.md` and pick the closes
 
 ---
 
+## 7. No `dark:` variant in `className`
+
+Do **not** prefix utilities with `dark:` (e.g. `dark:bg-card-1`). Semantic colors and related tokens already resolve via CSS variables. Use the same `text-*` / `bg-*` / `border-*` utilities in both modes.
+
+**Bad**: `className="bg-background-1 dark:bg-card-1"`  
+**Good**: `className="bg-background-1"`
+
+---
+
 ## Implementation checklist
 
 | Check                                     | Pass criteria                                     |
@@ -146,7 +155,8 @@ If the design does not map cleanly, **align with `DESIGN.md` and pick the closes
 | `#` / `rgb` / arbitrary colors in classes | Not used (tokens only)                            |
 | `rounded-[...]`                           | Not used                                          |
 | `text-[...]` for font size                | Not used                                          |
-| `font-[...]`                              | N5ot used                                         |
+| `font-[...]`                              | Not used                                          |
+| `dark:*` in `className`                   | Not used (`.dark` retokens in `theme.css`)        |
 | Redundant `font-body` on body copy        | Not added                                         |
 | Missing token                             | Do not implement ad hoc; add to `theme.css` first |
 
