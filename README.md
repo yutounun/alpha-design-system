@@ -1,5 +1,7 @@
 # Alpha Design System
 
+![Storybook docs and UI previews for Alpha Design System](public/readme-img.png)
+
 **Alpha Design System** is a React component library and token layer for building accessible product UI. It ships with **Storybook** as the single place to browse components, read MDX documentation, and watch **design tokens** update live when you switch theme or light/dark mode in the toolbar.
 
 If you landed here from GitHub, the fastest way to understand the system is to run Storybook locally: you get interactive controls, accessibility checks, and docs pages (including a **Welcome** overview and token galleries) without wiring anything into an app first.

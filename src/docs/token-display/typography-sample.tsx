@@ -1,42 +1,19 @@
 import { cn } from "@/lib/utils"
 
+import {
+    getFontTokenRows,
+    getLineHeightVarNames,
+    getTextScaleVarNames,
+    getTypographyCssVarNames,
+    textVarToUtilityClass,
+} from "./parse-theme-tokens"
 import { useCssVars } from "./use-css-var"
 
-const FONT_ROWS = [
-    { label: "Display", className: "font-display", varName: "--font-display" },
-    { label: "Heading", className: "font-heading", varName: "--font-heading" },
-    { label: "Body", className: "font-body", varName: "--font-body" },
-    { label: "Mono", className: "font-mono", varName: "--font-mono" },
-] as const
-
-const TEXT_STEPS = [
-    { step: "3xs", className: "text-3xs" },
-    { step: "2xs", className: "text-2xs" },
-    { step: "xs", className: "text-xs" },
-    { step: "sm", className: "text-sm" },
-    { step: "md", className: "text-md" },
-    { step: "lg", className: "text-lg" },
-    { step: "xl", className: "text-xl" },
-    { step: "2xl", className: "text-2xl" },
-    { step: "3xl", className: "text-3xl" },
-    { step: "4xl", className: "text-4xl" },
-    { step: "5xl", className: "text-5xl" },
-    { step: "6xl", className: "text-6xl" },
-    { step: "7xl", className: "text-7xl" },
-] as const
-
-const TYPO_VAR_NAMES: readonly string[] = [
-    "--font-display",
-    "--font-heading",
-    "--font-body",
-    "--font-mono",
-    ...TEXT_STEPS.map((s) => `--text-${s.step}`),
-    "--text-3xs--line-height",
-    "--text-2xs--line-height",
-]
-
 export function TypographySample() {
-    const values = useCssVars(TYPO_VAR_NAMES)
+    const values = useCssVars(getTypographyCssVarNames())
+    const fontRows = getFontTokenRows()
+    const textSteps = getTextScaleVarNames()
+    const lineHeightVars = getLineHeightVarNames()
 
     return (
         <div className="flex flex-col gap-8">
@@ -50,7 +27,7 @@ export function TypographySample() {
                     Font families
                 </h3>
                 <div className="flex flex-col gap-3">
-                    {FONT_ROWS.map((row) => (
+                    {fontRows.map((row) => (
                         <div
                             key={row.varName}
                             className={cn(
@@ -92,11 +69,12 @@ export function TypographySample() {
                     Type scale
                 </h3>
                 <div className="flex flex-col gap-2">
-                    {TEXT_STEPS.map((s) => {
-                        const varName = `--text-${s.step}`
+                    {textSteps.map((varName) => {
+                        const utility = textVarToUtilityClass(varName)
+                        const step = varName.replace(/^--text-/, "")
                         return (
                             <div
-                                key={s.step}
+                                key={varName}
                                 className={cn(
                                     "flex flex-wrap items-baseline gap-3",
                                     "rounded-lg border border-border-low",
@@ -109,11 +87,11 @@ export function TypographySample() {
                                         "text-foreground-medium"
                                     )}
                                 >
-                                    {s.step}
+                                    {step}
                                 </span>
                                 <span
                                     className={cn(
-                                        s.className,
+                                        utility,
                                         "text-foreground-high"
                                     )}
                                 >
@@ -131,15 +109,19 @@ export function TypographySample() {
                         )
                     })}
                 </div>
-                <p className="mt-3 text-xs text-foreground-medium">
-                    Line-height tokens:{" "}
-                    <span className="font-mono text-2xs">
-                        --text-3xs--line-height:{" "}
-                        {values["--text-3xs--line-height"] || "—"};{" "}
-                        --text-2xs--line-height:{" "}
-                        {values["--text-2xs--line-height"] || "—"}
-                    </span>
-                </p>
+                {lineHeightVars.length > 0 ? (
+                    <p className="mt-3 text-xs text-foreground-medium">
+                        Line-height tokens:{" "}
+                        <span className="font-mono text-2xs">
+                            {lineHeightVars.map((vn, i) => (
+                                <span key={vn}>
+                                    {i > 0 ? "; " : ""}
+                                    {vn}: {values[vn] || "—"}
+                                </span>
+                            ))}
+                        </span>
+                    </p>
+                ) : null}
             </section>
         </div>
     )

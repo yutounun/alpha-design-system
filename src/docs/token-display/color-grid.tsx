@@ -1,17 +1,17 @@
 import { cn } from "@/lib/utils"
 
 import {
-    ALL_COLOR_CSS_VAR_NAMES,
-    COLOR_TOKEN_GROUPS,
-} from "./color-token-groups"
+    getColorGridCssVarNames,
+    getColorTokenGroups,
+} from "./parse-theme-tokens"
 import { useCssVars } from "./use-css-var"
 
 export function ColorGrid() {
-    const values = useCssVars(ALL_COLOR_CSS_VAR_NAMES)
+    const values = useCssVars(getColorGridCssVarNames())
 
     return (
         <div className="flex flex-col gap-8">
-            {COLOR_TOKEN_GROUPS.map((group) => (
+            {getColorTokenGroups().map((group) => (
                 <section key={group.title}>
                     <h3
                         className={cn(

@@ -1,21 +1,16 @@
 import { cn } from "@/lib/utils"
 
+import { getRadiusCssVarNames, getRadiusTokenRows } from "./parse-theme-tokens"
 import { useCssVars } from "./use-css-var"
 
-const RADII = [
-    { label: "action-1", varName: "--radius-action-1" },
-    { label: "action-2", varName: "--radius-action-2" },
-    { label: "full", varName: "--radius-full" },
-] as const
-
-const RADIUS_VAR_NAMES = RADII.map((r) => r.varName)
-
 export function RadiusSample() {
-    const values = useCssVars(RADIUS_VAR_NAMES)
+    const varNames = getRadiusCssVarNames()
+    const values = useCssVars(varNames)
+    const rows = getRadiusTokenRows()
 
     return (
         <div className="flex flex-col gap-4">
-            {RADII.map((r) => (
+            {rows.map((r) => (
                 <div
                     key={r.varName}
                     className={cn(
@@ -38,6 +33,10 @@ export function RadiusSample() {
                         </p>
                         <p className="font-mono text-2xs text-foreground-low">
                             {values[r.varName] || "—"}
+                        </p>
+                        <p className="mt-1 text-2xs text-foreground-medium">
+                            Utility:{" "}
+                            <span className="font-mono">{r.roundedClass}</span>
                         </p>
                     </div>
                 </div>

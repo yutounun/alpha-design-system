@@ -1,10 +1,13 @@
 import { Meta, Title } from "@storybook/addon-docs/blocks"
 
+import { ThemeSwitcher } from "@/docs/theme-switcher"
 import { TypographySample } from "@/docs/token-display/typography-sample"
 
 <Meta title="Design Tokens/Typography" />
 
 <Title>Typography</Title>
+
+<ThemeSwitcher />
 
 The values shown here are CSS custom properties as resolved on the **current root element** (`document.documentElement`). When you change Storybook **Theme** / **Mode**, `data-theme` and `class` update and the samples below **reload automatically**.
 
