@@ -42,6 +42,13 @@ const meta = {
         },
         loading: {
             control: "boolean",
+            description:
+                "Shows a centered spinner while keeping the button width stable (label is mirrored invisibly for layout). Sets `aria-busy`, blocks interaction, and reuses string `children` as `aria-label` when no explicit `aria-label` is passed. Ignored when `asChild` is true.",
+        },
+        asChild: {
+            control: "boolean",
+            description:
+                "Renders the Radix `Slot` root so styles and props merge onto the single child (e.g. render as `<a>` or router `Link`). The child must be one element that accepts `className` and `ref`. Loading spinner behavior is disabled in this mode.",
         },
     },
 } satisfies Meta<typeof Button>

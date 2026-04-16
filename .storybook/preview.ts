@@ -8,6 +8,15 @@ const preview: Preview = {
     parameters: {
         layout: "centered",
 
+        docs: {
+            // Story canvas: bottom panel with generated usage source (replaces addon-storysource).
+            codePanel: true,
+            canvas: {
+                // Docs tab: Canvas block source expanded by default.
+                sourceState: "shown",
+            },
+        },
+
         controls: {
             matchers: {
                 color: /(background|color)$/i,

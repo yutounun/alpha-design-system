@@ -62,6 +62,23 @@ const buttonVariants = cva(
     }
 )
 
+/**
+ * Primary action control with variants, sizes, optional loading state, and Radix `Slot`
+ * composition for links or custom hosts (`asChild`).
+ *
+ * Icons: there is no dedicated `icon` prop. Pass SVG icons as `children` (for example from
+ * `lucide-react`). For correct padding with text at each `size`, set `data-icon="inline-start"`
+ * or `data-icon="inline-end"` on the icon element.
+ *
+ * Loading: when `loading` is true and `asChild` is false, the label stays in the layout
+ * (invisible mirror) while a centered spinner is shown, width stays stable, interaction is
+ * blocked (`data-loading`), and `aria-busy` is set. If `children` is a string and `aria-label`
+ * is omitted, that string is reused as `aria-label` while loading.
+ *
+ * asChild: when true, the component renders `Slot.Root` so `className` and event props merge
+ * onto the single child (for example `<a>` or a framework `Link`). The child must accept
+ * `className` and `ref`. The loading spinner branch is not used in this mode.
+ */
 function Button({
     className,
     variant = "primary",
