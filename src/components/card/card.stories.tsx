@@ -42,11 +42,11 @@ export const Default: Story = {
                     spacing.
                 </p>
             </CardContent>
-            <CardFooter className="border-t border-border-low">
-                <Button variant="outline" size="sm">
+            <CardFooter>
+                <Button variant="outline" size="md" className="flex-1">
                     Cancel
                 </Button>
-                <Button size="sm" className="ml-auto">
+                <Button size="md" className="flex-1">
                     Save
                 </Button>
             </CardFooter>
@@ -90,7 +90,7 @@ export const WithAction: Story = {
 export const ContentOnly: Story = {
     render: () => (
         <Card className="w-80">
-            <CardContent className="pt-6">
+            <CardContent>
                 <p className="text-sm text-foreground-medium">
                     Only body content, no header or footer.
                 </p>
