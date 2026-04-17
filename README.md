@@ -32,28 +32,81 @@ Then open **http://localhost:6006** (default port). Start from **Getting Started
 
 Components live under `src/components/`. Docs and token showcases live under `src/docs/`.
 
+## Distribution (npm and shadcn registry)
+
+This repo ships the same components in two ways.
+
+### npm package
+
+Peers: `react`, `react-dom`, and Tailwind CSS v4.
+
+```bash
+pnpm add alpha-design-system
+```
+
+Import tokens in your app CSS entry (example):
+
+```css
+@import "alpha-design-system/styles.css";
+```
+
+Usage:
+
+```tsx
+import { Button } from "alpha-design-system";
+// or subpath imports
+import { Button } from "alpha-design-system/button";
+```
+
+### shadcn registry (copy files into a project)
+
+After deploy (e.g. Vercel), registry files are served at `/r/<name>.json`. Merging to `main` rebuilds them.
+
+```bash
+npx shadcn@latest add https://alpha-design-system-five.vercel.app/r/button.json
+```
+
+Components that use `cn` depend on the `utils` registry item via `registryDependencies`.
+
+## Adding a component
+
+1. Add `src/components/<name>/<name>.tsx` and `index.ts` (same layout as existing folders).
+2. Run `pnpm run build:lib` or `node scripts/build-registry.mjs` to refresh `registry.json`, `package.json` exports, and `src/index.ts` from the filesystem.
+3. If the change should ship on npm, include a Changeset: `pnpm changeset` and commit `.changeset/*.md` in your PR.
+
+## Releases (Changesets + GitHub Actions)
+
+- After merges to `main`, a **Version Packages** PR is opened or updated; merging it runs `npm publish` and creates a GitHub Release.
+- Manual: GitHub **Actions → Release → Run workflow**, or locally `pnpm release` after versions are bumped.
+
+Add an **`NPM_TOKEN`** secret (npm automation token) to the repository.
+
 ## Scripts
 
 | Command | Description |
 | --- | --- |
-| `npm run dev` | Vite dev server for the app shell |
-| `npm run storybook` | Storybook dev server on port **6006** |
-| `npm run build-storybook` | Static Storybook build |
-| `npm run test:storybook` | Vitest (Storybook project) |
-| `npm run build` | Production build (`tsc` + Vite) |
-| `npm run lint` | ESLint |
+| `pnpm run dev` | Vite dev server for the app shell |
+| `pnpm run storybook` | Storybook dev server on port **6006** |
+| `pnpm run build-storybook` | Static Storybook build |
+| `pnpm run test:storybook` | Vitest (Storybook project) |
+| `pnpm run build:lib` | Registry sync + library build to `dist/` |
+| `pnpm run registry:build` | Registry sync + `shadcn build` → `public/r/*.json` |
+| `pnpm run build` | `build:lib` + `registry:build` + `build-storybook` |
+| `pnpm run build:app` | App shell: `tsc -b` + `vite build` |
+| `pnpm run lint` | ESLint |
+| `pnpm run typecheck` | `tsc -b` |
 
 ## Adopting in your own project (short version)
 
-1. Load the theme stylesheet (e.g. `src/styles/theme.css` via your CSS entry).
-2. Import components from the paths used in this repo (see stories for examples).
+1. Load the theme stylesheet (e.g. import `alpha-design-system/styles.css` or copy `src/styles/theme.css` from this repo).
+2. Import components from the npm package or via shadcn add URLs (see above).
 3. Mirror `data-theme` / `.dark` on the document root if you want the same theme switching as Storybook.
 
 For token naming and conventions, the design-token reference used in this workspace is documented in-repo (see `src/docs/` and related scripts under `scripts/`).
 
 ## License
 
-This repository is **private** (`"private": true` in `package.json`). Adjust licensing and distribution when you publish or open-source it.
+Published npm package and source are under the [MIT License](LICENSE) unless noted otherwise in specific files.
 
 ---
 

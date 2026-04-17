@@ -28,5 +28,6 @@ storybook-static
 
 # storybook
 .storybook-static/*
+public/r/
 .cursor/*
 .agents/*
