@@ -80,7 +80,13 @@ const preview: Preview = {
             storySort: {
                 order: [
                     "Getting Started",
-                    ["Overview", "Skills", "MCP Server", "Changelog"],
+                    [
+                        "Overview",
+                        "Installation",
+                        "Skills",
+                        "MCP Server",
+                        "Changelog",
+                    ],
                     "Design Tokens",
                     ["Colors", "Typography", "Border Radius"],
                     "Components",

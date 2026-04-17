@@ -1,0 +1,74 @@
+import { Meta, Title } from "@storybook/addon-docs/blocks"
+
+<Meta title="Getting Started/Installation" />
+
+<Title>Installation</Title>
+
+Source code, `registry.json`, and theme styles live in **[yutounun/alpha-design-system](https://github.com/yutounun/alpha-design-system)** on GitHub. Pick **shadcn CLI** (copy component source into your app) or the **npm package** (`alpha-design-system`).
+
+## Install with shadcn
+
+Use the hosted **shadcn registry** when you want files in your repo (same idea as shadcn/ui) instead of importing from npm.
+
+1. Use a project with the **shadcn** CLI and **Tailwind CSS v4** configured in line with this design system.
+2. Add a component by pointing at a registry manifest. Builds publish JSON under:
+
+ `https://alpha-design-system-five.vercel.app/r/<name>.json`
+
+ Replace `<name>` with a registry item (e.g. `button`, `input`, `utils`). The authoritative list of names is [`registry.json`](https://github.com/yutounun/alpha-design-system/blob/main/registry.json) in the repository.
+
+Example — **Button**:
+
+```bash
+npx shadcn@latest add https://alpha-design-system-five.vercel.app/r/button.json
+```
+
+Items that use `cn` depend on the **`utils`** registry entry; the CLI should pull it in via `registryDependencies`. If you wire manifests by hand, add **`utils`** before other UI pieces.
+
+**Styles after copy:** Either import tokens from the npm package (see below) or copy [`src/styles/theme.css`](https://github.com/yutounun/alpha-design-system/blob/main/src/styles/theme.css) from the repo into your app and load it from your CSS entry so variables and `@theme` match Storybook.
+
+## Install from npm
+
+Install **alpha-design-system** with your preferred package manager. Peers: **React** 18–19, **React DOM**, and **Tailwind CSS** v4.
+
+```bash
+pnpm add alpha-design-system
+```
+
+```bash
+npm install alpha-design-system
+```
+
+```bash
+yarn add alpha-design-system
+```
+
+## Styles
+
+Import the design tokens and base styles once from your app’s CSS entry (same graph Storybook uses):
+
+```css
+@import "alpha-design-system/styles.css";
+```
+
+In a Vite + React app, ensure that file is loaded from `main.tsx` (or your root layout) via `@import` in CSS or a side-effect import of a local `index.css` that contains the line above.
+
+If you adopted components **only** via shadcn and did not add the npm package, use the **theme stylesheet** from the GitHub repo instead of the line above.
+
+## Components (npm)
+
+Import from the package root or from stable subpaths:
+
+```tsx
+import { Button } from "alpha-design-system"
+```
+
+```tsx
+import { Button } from "alpha-design-system/button"
+```
+
+Other published subpaths are listed in the package `exports` field (e.g. `form-field`, `input`, `label`, `tabs`, `textarea`).
+
+## Next steps
+
+Open **Design Tokens** and **Components** in the sidebar, and use the **Theme** / **Mode** toolbar to match how you set `data-theme` and `.dark` in production.
