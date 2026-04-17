@@ -6,7 +6,6 @@ import { Progress } from "./progress"
 const meta = {
     title: "Components/Progress",
     component: Progress,
-    parameters: { layout: "padded" },
     argTypes: {
         value: {
             control: { type: "range", min: 0, max: 100, step: 1 },

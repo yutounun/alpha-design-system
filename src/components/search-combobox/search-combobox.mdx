@@ -1,0 +1,66 @@
+import {
+    Canvas,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as SearchComboboxStories from "./search-combobox.stories"
+
+<Meta of={SearchComboboxStories} />
+
+<Title />
+
+The **SearchCombobox** wraps [`cmdk`](https://cmdk.paco.me/) with design-token styling. Use it for grouped search results, command palettes, and similar patterns.
+
+**Search query**: control the text field with `SearchCombobox.Input`’s `value` / `onValueChange` (this is the search string).
+
+**Selected item**: the root `SearchCombobox.Root` (underlying `Command`) uses `value` / `onValueChange` for the **highlighted or selected list item**, not the search text.
+
+## Usage
+
+```tsx
+import {
+    SearchComboboxRoot,
+    SearchComboboxInput,
+    SearchComboboxList,
+    SearchComboboxEmpty,
+    SearchComboboxGroup,
+    SearchComboboxItem,
+} from "@/components/search-combobox"
+
+export function Example() {
+    const [search, setSearch] = useState("")
+    return (
+        <SearchComboboxRoot shouldFilter label="Search">
+            <SearchComboboxInput
+                placeholder="Search…"
+                value={search}
+                onValueChange={setSearch}
+            />
+            <SearchComboboxList>
+                <SearchComboboxEmpty>No results</SearchComboboxEmpty>
+                <SearchComboboxGroup heading="Go to">
+                    <SearchComboboxItem value="home">Home</SearchComboboxItem>
+                </SearchComboboxGroup>
+            </SearchComboboxList>
+        </SearchComboboxRoot>
+    )
+}
+```
+
+Dot-access is also available: `SearchCombobox.Root`, `SearchCombobox.Input`, etc.
+
+## Stories
+
+<Primary />
+
+## Examples
+
+### Grouped (global search pattern)
+
+<Canvas of={SearchComboboxStories.Grouped} />
+
+### With footer action
+
+<Canvas of={SearchComboboxStories.WithFooter} />

@@ -165,6 +165,43 @@
       ]
     },
     {
+      "name": "search-combobox",
+      "type": "registry:ui",
+      "dependencies": [
+        "cmdk",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "input",
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/search-combobox/search-combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "search-input",
+      "type": "registry:ui",
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/search-input/search-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "separator",
       "type": "registry:ui",
       "dependencies": [

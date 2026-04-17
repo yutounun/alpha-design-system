@@ -1,0 +1,54 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as SearchInputStories from "./search-input.stories"
+
+<Meta of={SearchInputStories} />
+
+<Title />
+
+The **SearchInput** wraps a native search field with optional leading icon (defaults to search), optional **Clear** control when `onClear` is provided, and an optional **end** adornment slot (for example a keyboard hint).
+
+It reuses `inputVariants` from **Input** for sizing, borders, and focus rings.
+
+## Usage
+
+```tsx
+import { SearchInput } from "@/components/search-input"
+
+export function Example() {
+    const [q, setQ] = useState("")
+    return (
+        <SearchInput
+            placeholder="Search…"
+            value={q}
+            onValueChange={setQ}
+            onClear={() => setQ("")}
+            aria-label="Search"
+        />
+    )
+}
+```
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={SearchInputStories.Default} />
+
+## Examples
+
+### With clear
+
+<Canvas of={SearchInputStories.WithClear} />
+
+### All sizes
+
+<Canvas of={SearchInputStories.AllSizes} />

@@ -49,6 +49,7 @@
     "dependencies": {
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
+        "cmdk": "^1.1.1",
         "lucide-react": "^0.577.0",
         "radix-ui": "^1.4.3",
         "tailwind-merge": "^3.5.0"
@@ -147,6 +148,14 @@
         "./progress": {
             "types": "./dist/components/progress/index.d.ts",
             "import": "./dist/components/progress/progress.js"
+        },
+        "./search-combobox": {
+            "types": "./dist/components/search-combobox/index.d.ts",
+            "import": "./dist/components/search-combobox/search-combobox.js"
+        },
+        "./search-input": {
+            "types": "./dist/components/search-input/index.d.ts",
+            "import": "./dist/components/search-input/search-input.js"
         },
         "./separator": {
             "types": "./dist/components/separator/index.d.ts",
