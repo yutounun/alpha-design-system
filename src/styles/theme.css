@@ -113,11 +113,11 @@
     --color-success-muted: rgba(21, 190, 83, 0.2);
     --color-success-text: #108c3d;
 
-    /* Warning / Lemon */
-    --color-warning: #9b6829;
+    /* Warning / Amber-Yellow */
+    --color-warning: #d97706;
     --color-warning-foreground: #ffffff;
-    --color-warning-muted: rgba(155, 104, 41, 0.1);
-    --color-warning-text: #9b6829;
+    --color-warning-muted: #fef3c7;
+    --color-warning-text: #92400e;
 
     /* Informative — Info Blue */
     --color-informative: #2874ad;
@@ -162,8 +162,8 @@
     --color-primary-active: #2e2b8c;
     --color-success-muted-hover: rgba(21, 190, 83, 0.3);
     --color-success-muted-active: rgba(21, 190, 83, 0.4);
-    --color-warning-muted-hover: rgba(155, 104, 41, 0.15);
-    --color-warning-muted-active: rgba(155, 104, 41, 0.2);
+    --color-warning-muted-hover: #fde68a;
+    --color-warning-muted-active: #fcd34d;
     --color-inv-primary-hover: rgba(255, 255, 255, 0.1);
     --color-inv-primary-active: rgba(255, 255, 255, 0.2);
     --color-link-hover: #4434d4;
@@ -256,10 +256,10 @@
     --color-success-muted: rgba(21, 190, 83, 0.2);
     --color-success-text: #7fd9a0;
     --color-visited: #b9b9f9;
-    --color-warning: #c8a060;
+    --color-warning: #f59e0b;
     --color-warning-foreground: #1c1e54;
-    --color-warning-muted: rgba(155, 104, 41, 0.25);
-    --color-warning-text: #e0c080;
+    --color-warning-muted: rgba(245, 158, 11, 0.18);
+    --color-warning-text: #fbbf24;
     --color-cancel: rgba(100, 116, 141, 0.6);
     --color-cancel-foreground: #ffffff;
     --color-secondary-hover: #ff8df2;
@@ -270,14 +270,14 @@
     --color-primary-text-active: #d9d6fe;
     --color-success-muted-hover: rgba(21, 190, 83, 0.3);
     --color-success-muted-active: rgba(21, 190, 83, 0.4);
-    --color-warning-muted-hover: rgba(155, 104, 41, 0.35);
-    --color-warning-muted-active: rgba(155, 104, 41, 0.45);
-    --color-warning-hover: #d4ac6a;
-    --color-warning-active: #e0c080;
+    --color-warning-muted-hover: rgba(245, 158, 11, 0.28);
+    --color-warning-muted-active: rgba(245, 158, 11, 0.38);
+    --color-warning-hover: #fbbf24;
+    --color-warning-active: #fcd34d;
     --color-success-text-hover: #94e4b4;
     --color-success-text-active: #aaecc6;
-    --color-warning-text-hover: #e8cc88;
-    --color-warning-text-active: #f0d8a0;
+    --color-warning-text-hover: #fcd34d;
+    --color-warning-text-active: #fde68a;
     --color-primary-hover: #7a6ffd;
     --color-primary-active: #8f85fe;
     --color-inv-primary-hover: rgba(255, 255, 255, 0.1);

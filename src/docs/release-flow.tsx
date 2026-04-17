@@ -9,6 +9,8 @@ import {
     Zap,
 } from "lucide-react"
 
+import { cn } from "@/lib/utils"
+
 // ── Types ────────────────────────────────────────────────────────────────────
 
 interface Step {
@@ -137,39 +139,32 @@ const PHASE_GROUPS: PhaseGroupProps[] = [
 
 // ── Accent maps ───────────────────────────────────────────────────────────────
 
-const PHASE_BORDER: Record<Step["accent"], string> = {
-    blue: "border-blue-500/30",
-    purple: "border-violet-500/30",
-    orange: "border-amber-500/30",
-    teal: "border-teal-500/30",
-}
-
 const PHASE_BG: Record<Step["accent"], string> = {
-    blue: "bg-blue-500/10",
-    purple: "bg-violet-500/10",
-    orange: "bg-amber-500/10",
-    teal: "bg-teal-500/10",
+    blue: "bg-informative-muted",
+    purple: "bg-primary-muted",
+    orange: "bg-warning-muted",
+    teal: "bg-success-muted",
 }
 
 const PHASE_ICON_BG: Record<Step["accent"], string> = {
-    blue: "bg-blue-500/15 text-blue-400",
-    purple: "bg-violet-500/15 text-violet-400",
-    orange: "bg-amber-500/15 text-amber-400",
-    teal: "bg-teal-500/15 text-teal-400",
+    blue: "bg-informative-muted text-informative",
+    purple: "bg-primary-muted text-primary-text",
+    orange: "bg-warning-muted text-warning",
+    teal: "bg-success-muted text-success-text",
 }
 
 const PHASE_BADGE: Record<Step["accent"], string> = {
-    blue: "bg-blue-500/15 text-blue-400 ring-blue-500/20",
-    purple: "bg-violet-500/15 text-violet-400 ring-violet-500/20",
-    orange: "bg-amber-500/15 text-amber-400 ring-amber-500/20",
-    teal: "bg-teal-500/15 text-teal-400 ring-teal-500/20",
+    blue: "bg-informative text-informative-foreground",
+    purple: "bg-primary text-primary-foreground",
+    orange: "bg-warning text-warning-foreground",
+    teal: "bg-success text-success-foreground",
 }
 
 const GROUP_BAR: Record<string, string> = {
-    "Local Development": "bg-blue-500",
-    "CI / Pull Request": "bg-violet-500",
-    "Automated Release": "bg-amber-500",
-    "Consumer Adoption": "bg-teal-500",
+    "Local Development": "bg-informative",
+    "CI / Pull Request": "bg-primary",
+    "Automated Release": "bg-warning",
+    "Consumer Adoption": "bg-success",
 }
 
 // ── Sub-components ────────────────────────────────────────────────────────────
@@ -196,10 +191,11 @@ function StepCard({ step, isLast }: { step: Step; isLast: boolean }) {
                     <div className="min-w-0 flex-1">
                         <div className="mb-0.5">
                             <span
-                                className={[
-                                    "inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase ring-1 ring-inset",
-                                    PHASE_BADGE[step.accent],
-                                ].join(" ")}
+                                className={cn(
+                                    "inline-flex items-center rounded-full",
+                                    "px-2 py-0.5 text-xs font-semibold tracking-wide uppercase",
+                                    PHASE_BADGE[step.accent]
+                                )}
                             >
                                 {step.phase}
                             </span>
@@ -217,7 +213,7 @@ function StepCard({ step, isLast }: { step: Step; isLast: boolean }) {
 
                 {/* Code snippet */}
                 {step.code && (
-                    <pre className="bg-background-3 mt-3 overflow-x-auto rounded-lg px-3 py-2 text-[11px] text-foreground-medium">
+                    <pre className="bg-background-3 mt-3 overflow-x-auto rounded-lg px-3 py-2 text-2xs text-foreground-medium">
                         <code>{step.code}</code>
                     </pre>
                 )}
@@ -245,7 +241,7 @@ function PhaseGroup({ label, steps }: PhaseGroupProps) {
 
             {/* Steps */}
             <div className="flex min-w-0 flex-1 flex-col gap-0">
-                <p className="mb-2 text-[11px] font-semibold tracking-widest text-foreground-low uppercase">
+                <p className="mb-2 text-2xs font-semibold tracking-widest text-foreground-low uppercase">
                     {label}
                 </p>
                 {steps.map((step, i) => (
