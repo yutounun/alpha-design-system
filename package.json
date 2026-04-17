@@ -38,7 +38,13 @@
     "peerDependencies": {
         "react": ">=18.0.0 <20.0.0",
         "react-dom": ">=18.0.0 <20.0.0",
+        "recharts": "^3.0.0",
         "tailwindcss": "^4.2.0"
+    },
+    "peerDependenciesMeta": {
+        "recharts": {
+            "optional": true
+        }
     },
     "dependencies": {
         "class-variance-authority": "^0.7.1",
@@ -84,6 +90,7 @@
         "prettier-plugin-tailwindcss": "^0.7.2",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
+        "recharts": "^3.8.1",
         "shadcn": "^4.2.0",
         "sonner": "^2.0.7",
         "storybook": "^10.3.5",
@@ -107,6 +114,14 @@
         "./button": {
             "types": "./dist/components/button/index.d.ts",
             "import": "./dist/components/button/button.js"
+        },
+        "./card": {
+            "types": "./dist/components/card/index.d.ts",
+            "import": "./dist/components/card/card.js"
+        },
+        "./chart": {
+            "types": "./dist/components/chart/index.d.ts",
+            "import": "./dist/components/chart/chart.js"
         },
         "./form-field": {
             "types": "./dist/components/form-field/index.d.ts",

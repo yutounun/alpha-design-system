@@ -141,6 +141,13 @@
     --color-badge-navy: #061b31;
     --color-badge-purple: #533afd;
 
+    /* Charts (Recharts / data visualization) */
+    --color-chart-1: #533afd;
+    --color-chart-2: #9967ff;
+    --color-chart-3: #f96bee;
+    --color-chart-4: #ea2261;
+    --color-chart-5: #15be53;
+
     /* Skeleton */
     --color-skeleton: rgba(6, 27, 49, 0.06);
 
@@ -195,6 +202,11 @@
     --color-background-2: #04050c;
     --color-badge-blue: #b9b9f9;
     --color-badge-purple: #b9b9f9;
+    --color-chart-1: #7a6ffd;
+    --color-chart-2: #b9b9f9;
+    --color-chart-3: #ff8df2;
+    --color-chart-4: #ff7fa8;
+    --color-chart-5: #7fd9a0;
     --color-border-high: rgba(255, 255, 255, 0.4);
     --color-border-low: rgba(255, 255, 255, 0.1);
     --color-border-medium: rgba(255, 255, 255, 0.2);

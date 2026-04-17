@@ -1,0 +1,69 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as CardStories from "./card.stories"
+
+<Meta of={CardStories} />
+
+<Title />
+
+The **Card** groups related content and actions in a bordered surface. Compose **CardHeader**, **CardTitle**, **CardDescription**, optional **CardAction**, **CardContent**, and **CardFooter** for common layouts.
+
+## Usage
+
+```tsx
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/card"
+
+export function Example() {
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Title</CardTitle>
+                <CardDescription>Supporting text.</CardDescription>
+            </CardHeader>
+            <CardContent>Main content.</CardContent>
+            <CardFooter>Footer actions.</CardFooter>
+        </Card>
+    )
+}
+```
+
+## Header and action
+
+When **CardAction** is present, **CardHeader** uses a two-column grid so the action aligns to the top-right.
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={CardStories.Default} />
+
+### With action
+
+<Canvas of={CardStories.WithAction} />
+
+### Content only
+
+<Canvas of={CardStories.ContentOnly} />
+
+### With form
+
+<Canvas of={CardStories.WithForm} />
+
+### Grid layout
+
+<Canvas of={CardStories.Grid} />

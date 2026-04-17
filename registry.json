@@ -37,6 +37,36 @@
       ]
     },
     {
+      "name": "card",
+      "type": "registry:ui",
+      "dependencies": [],
+      "registryDependencies": [
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/card/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "dependencies": [
+        "recharts"
+      ],
+      "registryDependencies": [
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/chart/chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "form-field",
       "type": "registry:ui",
       "dependencies": [

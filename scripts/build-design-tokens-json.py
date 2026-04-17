@@ -41,6 +41,11 @@ DESCRIPTIONS: dict[str, str] = {
     "--color-background-2": "Secondary surface; off-white in light, deep surface in dark.",
     "--color-card-1": "Primary card surface.",
     "--color-card-2": "Secondary card or subtle panel surface.",
+    "--color-chart-1": "Primary series color for charts (Stripe purple).",
+    "--color-chart-2": "Secondary series color for charts (violet).",
+    "--color-chart-3": "Tertiary series color for charts (magenta).",
+    "--color-chart-4": "Quaternary series color for charts (ruby).",
+    "--color-chart-5": "Quinary series color for charts (success green).",
     "--color-brand": "Brand dark indigo for footers and immersive sections; may shift to purple accent on dark UI.",
     "--color-foreground-high": "Highest-contrast text (deep navy) for primary headings and strong labels.",
     "--color-foreground-medium": "Labels and secondary headings (dark slate).",
@@ -195,6 +200,8 @@ def category_for(name: str) -> tuple[str, str]:
         return "cancel", "Cancel and neutral"
     if name.startswith("--color-badge"):
         return "badge", "Badges"
+    if name.startswith("--color-chart"):
+        return "chart", "Chart and data visualization"
     if name == "--color-skeleton":
         return "skeleton", "Skeleton loading"
     if name in ("--color-surface-deep",):
@@ -255,6 +262,7 @@ def main() -> None:
         "cta",
         "cancel",
         "badge",
+        "chart",
         "skeleton",
         "surface",
         "interaction",

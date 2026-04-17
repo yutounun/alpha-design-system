@@ -1,0 +1,96 @@
+import { Canvas, Meta, Primary, Title } from "@storybook/addon-docs/blocks"
+
+import * as ChartStories from "./chart.stories"
+
+<Meta of={ChartStories} />
+
+<Title />
+
+**Chart** primitives follow the [shadcn/ui Chart pattern](https://ui.shadcn.com/docs/components/radix/chart): compose **Recharts v3** components inside **ChartContainer**, and add **ChartTooltip** / **ChartLegend** only where needed. Chart series colors use design tokens such as `var(--color-chart-1)` (see `theme.css`).
+
+Consumers must install **recharts** (this package lists it as an optional `peerDependency`).
+
+## Usage
+
+```tsx
+import {
+    Bar,
+    BarChart,
+    CartesianGrid,
+    XAxis,
+    YAxis,
+} from "recharts"
+
+import {
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+    type ChartConfig,
+} from "@/components/chart"
+
+const chartData = [
+    { month: "Jan", desktop: 186 },
+    { month: "Feb", desktop: 305 },
+]
+
+const chartConfig = {
+    desktop: {
+        label: "Desktop",
+        color: "var(--color-chart-1)",
+    },
+} satisfies ChartConfig
+
+export function Example() {
+    return (
+        <ChartContainer config={chartConfig} className="min-h-48 w-full">
+            <BarChart accessibilityLayer data={chartData}>
+                <CartesianGrid vertical={false} />
+                <XAxis dataKey="month" tickLine={false} axisLine={false} />
+                <YAxis orientation="right" tickLine={false} axisLine={false} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+            </BarChart>
+        </ChartContainer>
+    )
+}
+```
+
+## Stories
+
+<Primary of={ChartStories.BillingOverview} />
+
+### Billing overview
+
+<Canvas of={ChartStories.BillingOverview} />
+
+### Bar (grouped)
+
+<Canvas of={ChartStories.Bar} />
+
+### Bar (stacked)
+
+<Canvas of={ChartStories.BarStacked} />
+
+### Area
+
+<Canvas of={ChartStories.Area} />
+
+### Area (gradient fill)
+
+<Canvas of={ChartStories.AreaGradient} />
+
+### Pie
+
+<Canvas of={ChartStories.Pie} />
+
+### Donut
+
+<Canvas of={ChartStories.Donut} />
+
+### Radar
+
+<Canvas of={ChartStories.Radar} />
+
+### Radial bar
+
+<Canvas of={ChartStories.RadialBar} />

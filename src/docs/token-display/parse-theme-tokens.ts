@@ -27,6 +27,7 @@ const COLOR_CATEGORY_ORDER = [
     "cta",
     "cancel",
     "badge",
+    "chart",
     "skeleton",
     "surface",
     "interaction",
@@ -54,6 +55,7 @@ const COLOR_CATEGORY_TITLE: Record<
     cta: "CTA accent",
     cancel: "Cancel and neutral",
     badge: "Badges",
+    chart: "Charts and data visualization",
     skeleton: "Skeleton loading",
     surface: "Surface depth",
     interaction: "Interaction (hover and active)",
@@ -145,6 +147,7 @@ function colorCategoryFor(name: string): (typeof COLOR_CATEGORY_ORDER)[number] {
     if (name.startsWith("--color-cta")) return "cta"
     if (name.startsWith("--color-cancel")) return "cancel"
     if (name.startsWith("--color-badge")) return "badge"
+    if (name.startsWith("--color-chart")) return "chart"
     if (name === "--color-skeleton") return "skeleton"
     if (name === "--color-surface-deep") return "surface"
     if (
