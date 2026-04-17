@@ -1,0 +1,41 @@
+/**
+ * Storybook Docs: make Markdown / MDX tables readable (GFM + HTML tables).
+ * Default Doc blocks keep table markup minimal; add borders and spacing.
+ */
+.sbdocs-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.875rem;
+    line-height: 1.45;
+}
+
+.sbdocs-content thead th {
+    font-weight: 600;
+    text-align: left;
+    background: color-mix(
+        in srgb,
+        var(--color-foreground-high, #111827) 6%,
+        transparent
+    );
+}
+
+.sbdocs-content th,
+.sbdocs-content td {
+    border: 1px solid
+        color-mix(
+            in srgb,
+            var(--color-foreground-high, #111827) 14%,
+            transparent
+        );
+    padding: 0.5rem 0.75rem;
+    vertical-align: top;
+}
+
+.sbdocs-content tbody tr:nth-child(even) td {
+    background: color-mix(
+        in srgb,
+        var(--color-foreground-high, #111827) 3%,
+        transparent
+    );
+}

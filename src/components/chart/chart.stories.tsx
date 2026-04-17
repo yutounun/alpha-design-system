@@ -37,9 +37,6 @@ import {
 
 const meta = {
     title: "Components/Chart",
-    parameters: {
-        layout: "padded",
-    },
 } satisfies Meta
 
 export default meta
@@ -90,6 +87,9 @@ const netVolume = DATE_AXIS.map((date, i) => ({
 }))
 
 export const BillingOverview: Story = {
+    parameters: {
+        layout: "padded",
+    },
     render: () => (
         <div className="w-full max-w-6xl space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-4">

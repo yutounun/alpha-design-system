@@ -2,6 +2,7 @@ import { useEffect, type ReactNode } from "react"
 import type { Preview } from "@storybook/react-vite"
 
 import "../src/styles/index.css"
+import "./docs-tables.css"
 import "./themes/theme2.css"
 
 function StorybookThemeRoot({
