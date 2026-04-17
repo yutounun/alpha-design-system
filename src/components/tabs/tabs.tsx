@@ -4,34 +4,25 @@ import { Tabs as TabsPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
-/**
- * Root container. Radix sets `data-orientation` automatically based on the
- * `orientation` prop ("horizontal" | "vertical"), which child components use
- * for orientation-aware styling.
- */
-function Tabs({
-    className,
-    ...props
-}: React.ComponentProps<typeof TabsPrimitive.Root>) {
+type TabsProps = Omit<
+    React.ComponentProps<typeof TabsPrimitive.Root>,
+    "orientation"
+>
+
+/** Root container. Horizontal tab layout only; `orientation` is not exposed. */
+function Tabs({ className, ...props }: TabsProps) {
     return (
         <TabsPrimitive.Root
             data-slot="tabs"
-            className={cn(
-                "flex gap-2",
-                "data-[orientation=horizontal]:flex-col",
-                "data-[orientation=vertical]:flex-row",
-                className
-            )}
+            orientation="horizontal"
+            className={cn("flex gap-2", "flex-col", className)}
             {...props}
         />
     )
 }
 
 const tabsListVariants = cva(
-    [
-        "group/tabs-list inline-flex shrink-0 items-center",
-        "data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch",
-    ],
+    ["group/tabs-list inline-flex w-fit shrink-0 items-center"],
     {
         variants: {
             variant: {
@@ -39,16 +30,14 @@ const tabsListVariants = cva(
                  * Segmented-control look: filled container, active tab lifts
                  * as a white card with subtle shadow.
                  */
-                pills: ["rounded-lg bg-background-2 p-1"],
+                pills: [
+                    "rounded-lg border border-border-low bg-background-1 p-1",
+                ],
                 /**
                  * Underline look: transparent container, active tab gets a
                  * 2 px primary-coloured bottom border.
                  */
-                line: [
-                    "gap-1 bg-transparent",
-                    "data-[orientation=horizontal]:border-b data-[orientation=horizontal]:border-border-low",
-                    "data-[orientation=vertical]:border-r data-[orientation=vertical]:border-border-low",
-                ],
+                line: ["gap-2 bg-transparent", "border-b border-border-low"],
             },
         },
         defaultVariants: {
@@ -87,9 +76,9 @@ function TabsTrigger({
             data-slot="tabs-trigger"
             className={cn(
                 // layout
-                "relative inline-flex items-center justify-center gap-1.5",
+                "relative inline-flex items-center justify-center gap-2",
                 // typography
-                "text-sm font-medium whitespace-nowrap",
+                "font-heading text-md font-medium whitespace-nowrap",
                 // interaction base
                 "cursor-pointer transition-all outline-none select-none",
                 // color — inactive
@@ -100,19 +89,19 @@ function TabsTrigger({
                 "disabled:pointer-events-none disabled:opacity-50",
                 // icons
                 "[&_svg]:pointer-events-none [&_svg]:shrink-0",
-                "[&_svg:not([class*='size-'])]:size-4",
+                "[&_svg:not([class*='size-'])]:size-4.5",
 
-                // ── pills variant ─────────────────────────────────────────
+                // ── pills variant ─────────────────────────────────────────545
                 // sizing + radius
                 "group-data-[variant=pills]/tabs-list:rounded-md",
-                "group-data-[variant=pills]/tabs-list:px-3 group-data-[variant=pills]/tabs-list:py-1",
+                "group-data-[variant=pills]/tabs-list:px-3 group-data-[variant=pills]/tabs-list:py-2",
                 // hover fill
                 "group-data-[variant=pills]/tabs-list:hover:bg-fill-low",
                 // active: lifted card
                 "group-data-[variant=pills]/tabs-list:data-[state=active]:bg-background-1",
-                "group-data-[variant=pills]/tabs-list:data-[state=active]:text-foreground-high",
+                "group-data-[variant=pills]/tabs-list:data-[state=active]:text-accent-foreground",
                 "group-data-[variant=pills]/tabs-list:data-[state=active]:shadow-sm",
-                "group-data-[variant=pills]/tabs-list:data-[state=active]:border group-data-[variant=pills]/tabs-list:data-[state=active]:border-border-low",
+                "group-data-[variant=pills]/tabs-list:data-[state=active]:bg-accent",
 
                 // ── line variant ──────────────────────────────────────────
                 // sizing — horizontal: pad below for the 2 px indicator
@@ -148,6 +137,7 @@ function TabsContent({
                 "flex-1 outline-none",
                 "text-sm text-foreground-high",
                 "focus-visible:ring-3 focus-visible:ring-focus-ring",
+                "pt-2",
                 className
             )}
             {...props}

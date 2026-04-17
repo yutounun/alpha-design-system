@@ -80,6 +80,9 @@
     --color-primary-foreground: #ffffff;
     --color-primary-muted: rgba(219, 39, 119, 0.1);
     --color-primary-text: #be185d;
+    /* Accent — near-black (light) / near-white (dark), tinted toward rose primary */
+    --color-accent: #10060b;
+    --color-accent-foreground: #ffffff;
 
     /* Secondary — coral */
     --color-secondary: #f97316;
@@ -226,6 +229,8 @@
     --color-primary-foreground: #ffffff;
     --color-primary-muted: rgba(244, 63, 94, 0.28);
     --color-primary-text: #fda4af;
+    --color-accent: #fef6f8;
+    --color-accent-foreground: #450a0a;
     --color-success: #34d399;
     --color-success-foreground: #4c0519;
     --color-success-muted: rgba(52, 211, 153, 0.22);

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Bell, Code, Globe, Settings } from "lucide-react"
+import { Bell, Code, Settings } from "lucide-react"
 import { expect, userEvent, within } from "storybook/test"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs"
@@ -10,13 +10,8 @@ const meta = {
     args: {
         defaultValue: "account",
     },
-    argTypes: {
-        orientation: {
-            control: "select",
-            options: ["horizontal", "vertical"],
-            description:
-                "Layout direction. Radix automatically sets `data-orientation` on all child components.",
-        },
+    parameters: {
+        layout: "padded",
     },
 } satisfies Meta<typeof Tabs>
 
@@ -78,18 +73,18 @@ export const Line: Story = {
                 <TabsTrigger value="password">Password</TabsTrigger>
                 <TabsTrigger value="billing">Billing</TabsTrigger>
             </TabsList>
-            <TabsContent value="account" className="pt-4">
+            <TabsContent value="account">
                 <p className="text-sm text-foreground-medium">
                     Manage your account settings and preferences.
                 </p>
             </TabsContent>
-            <TabsContent value="password" className="pt-4">
+            <TabsContent value="password">
                 <p className="text-sm text-foreground-medium">
                     Change your password here. After saving, you will be logged
                     out.
                 </p>
             </TabsContent>
-            <TabsContent value="billing" className="pt-4">
+            <TabsContent value="billing">
                 <p className="text-sm text-foreground-medium">
                     View and manage your billing information.
                 </p>
@@ -205,87 +200,6 @@ export const WithDisabled: Story = {
         const disabledTab = canvas.getByRole("tab", { name: "Password" })
         await expect(disabledTab).toBeDisabled()
     },
-}
-
-// ─── Vertical ─────────────────────────────────────────────────────────────────
-
-export const Vertical: Story = {
-    parameters: { layout: "padded" },
-    render: (args) => (
-        <div className="flex flex-col gap-8">
-            <Tabs
-                {...args}
-                orientation="vertical"
-                className="min-h-40 max-w-lg"
-            >
-                <TabsList variant="pills">
-                    <TabsTrigger value="account">
-                        <Globe />
-                        General
-                    </TabsTrigger>
-                    <TabsTrigger value="notifications">
-                        <Bell />
-                        Notifications
-                    </TabsTrigger>
-                    <TabsTrigger value="billing">
-                        <Settings />
-                        Billing
-                    </TabsTrigger>
-                </TabsList>
-                <TabsContent value="account" className="px-4">
-                    <p className="text-sm text-foreground-medium">
-                        General settings panel content.
-                    </p>
-                </TabsContent>
-                <TabsContent value="notifications" className="px-4">
-                    <p className="text-sm text-foreground-medium">
-                        Notification settings panel content.
-                    </p>
-                </TabsContent>
-                <TabsContent value="billing" className="px-4">
-                    <p className="text-sm text-foreground-medium">
-                        Billing settings panel content.
-                    </p>
-                </TabsContent>
-            </Tabs>
-
-            <Tabs
-                {...args}
-                orientation="vertical"
-                className="min-h-40 max-w-lg"
-            >
-                <TabsList variant="line">
-                    <TabsTrigger value="account">
-                        <Globe />
-                        General
-                    </TabsTrigger>
-                    <TabsTrigger value="notifications">
-                        <Bell />
-                        Notifications
-                    </TabsTrigger>
-                    <TabsTrigger value="billing">
-                        <Settings />
-                        Billing
-                    </TabsTrigger>
-                </TabsList>
-                <TabsContent value="account" className="px-4">
-                    <p className="text-sm text-foreground-medium">
-                        General settings panel content.
-                    </p>
-                </TabsContent>
-                <TabsContent value="notifications" className="px-4">
-                    <p className="text-sm text-foreground-medium">
-                        Notification settings panel content.
-                    </p>
-                </TabsContent>
-                <TabsContent value="billing" className="px-4">
-                    <p className="text-sm text-foreground-medium">
-                        Billing settings panel content.
-                    </p>
-                </TabsContent>
-            </Tabs>
-        </div>
-    ),
 }
 
 // ─── All Variants ─────────────────────────────────────────────────────────────

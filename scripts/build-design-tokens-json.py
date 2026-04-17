@@ -72,6 +72,8 @@ DESCRIPTIONS: dict[str, str] = {
     "--color-primary-foreground": "Text and icons on primary backgrounds (usually white).",
     "--color-primary-muted": "Ghost and soft primary-tint backgrounds before hover.",
     "--color-primary-text": "Primary-colored text and inline link styling on light surfaces.",
+    "--color-accent": "Near-black in light theme / near-white in dark theme, hand-tuned toward the primary hue for high-contrast accents.",
+    "--color-accent-foreground": "Text and icons on accent-filled surfaces (light on dark accent in light theme; deep surface on light accent in dark theme).",
     "--color-secondary": "Magenta accent for secondary actions, decoration, and gradients.",
     "--color-secondary-foreground": "Text on secondary fills (navy for contrast).",
     "--color-secondary-muted": "Muted magenta surface (magenta light).",

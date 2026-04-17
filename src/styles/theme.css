@@ -90,6 +90,9 @@
     --color-primary-foreground: #ffffff;
     --color-primary-muted: rgba(83, 58, 253, 0.08);
     --color-primary-text: #533afd;
+    /* Accent — near-black (light) / near-white (dark), hand-tuned toward primary hue */
+    --color-accent: #0b091a;
+    --color-accent-foreground: #ffffff;
 
     /* Secondary — Magenta */
     --color-secondary: #9967ff;
@@ -251,6 +254,8 @@
     --color-primary-foreground: #ffffff;
     --color-primary-muted: rgba(83, 58, 253, 0.25);
     --color-primary-text: #b9b9f9;
+    --color-accent: #f5f4fd;
+    --color-accent-foreground: #0a0c18;
     --color-success: #15be53;
     --color-success-foreground: #1c1e54;
     --color-success-muted: rgba(21, 190, 83, 0.2);
