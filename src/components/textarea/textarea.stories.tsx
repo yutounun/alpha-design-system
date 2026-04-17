@@ -35,11 +35,8 @@ export const Invalid: Story = {
 }
 
 export const AllSizes: Story = {
-    parameters: {
-        layout: "padded",
-    },
     render: () => (
-        <div className="flex max-w-md flex-col gap-3">
+        <div className="flex max-w-xl flex-col gap-3">
             <Textarea size="sm" placeholder="Small" />
             <Textarea size="md" placeholder="Medium" />
             <Textarea size="lg" placeholder="Large" />

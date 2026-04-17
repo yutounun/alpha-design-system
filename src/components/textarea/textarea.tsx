@@ -5,11 +5,11 @@ import { cn } from "@/lib/utils"
 
 const textareaVariants = cva(
     [
-        "flex field-sizing-content min-h-20 w-full rounded-md border",
+        "flex field-sizing-content min-h-20 w-full min-w-72 rounded-md border",
         "bg-background-1 px-3 py-2 text-foreground-high",
         "transition-colors",
         "placeholder:text-foreground-low",
-        "border-border-low",
+        "border-border-medium",
         "focus-ring-input focus-ring-input-invalid-focus",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "aria-invalid:border-border-invalid",

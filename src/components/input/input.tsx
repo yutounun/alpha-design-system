@@ -8,7 +8,7 @@ const inputVariants = cva(
         "flex w-full min-w-0 rounded-md border bg-background-1",
         "text-foreground-high transition-colors",
         "placeholder:text-foreground-low",
-        "border-border-low",
+        "border-border-medium",
         "focus-ring-input focus-ring-input-invalid-focus",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "aria-invalid:border-border-invalid",
