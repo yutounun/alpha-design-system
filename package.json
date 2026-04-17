@@ -112,6 +112,10 @@
         },
         "./styles.css": "./src/styles/theme.css",
         "./package.json": "./package.json",
+        "./avatar": {
+            "types": "./dist/components/avatar/index.d.ts",
+            "import": "./dist/components/avatar/avatar.js"
+        },
         "./button": {
             "types": "./dist/components/button/index.d.ts",
             "import": "./dist/components/button/button.js"
@@ -123,6 +127,10 @@
         "./chart": {
             "types": "./dist/components/chart/index.d.ts",
             "import": "./dist/components/chart/chart.js"
+        },
+        "./dropdown-menu": {
+            "types": "./dist/components/dropdown-menu/index.d.ts",
+            "import": "./dist/components/dropdown-menu/dropdown-menu.js"
         },
         "./form-field": {
             "types": "./dist/components/form-field/index.d.ts",
@@ -136,6 +144,22 @@
             "types": "./dist/components/label/index.d.ts",
             "import": "./dist/components/label/label.js"
         },
+        "./separator": {
+            "types": "./dist/components/separator/index.d.ts",
+            "import": "./dist/components/separator/separator.js"
+        },
+        "./sheet": {
+            "types": "./dist/components/sheet/index.d.ts",
+            "import": "./dist/components/sheet/sheet.js"
+        },
+        "./sidebar": {
+            "types": "./dist/components/sidebar/index.d.ts",
+            "import": "./dist/components/sidebar/sidebar.js"
+        },
+        "./skeleton": {
+            "types": "./dist/components/skeleton/index.d.ts",
+            "import": "./dist/components/skeleton/skeleton.js"
+        },
         "./tabs": {
             "types": "./dist/components/tabs/index.d.ts",
             "import": "./dist/components/tabs/tabs.js"
@@ -143,6 +167,10 @@
         "./textarea": {
             "types": "./dist/components/textarea/index.d.ts",
             "import": "./dist/components/textarea/textarea.js"
+        },
+        "./tooltip": {
+            "types": "./dist/components/tooltip/index.d.ts",
+            "import": "./dist/components/tooltip/tooltip.js"
         }
     }
 }
