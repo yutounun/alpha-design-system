@@ -1,11 +1,7 @@
-import { Meta, Title } from "@storybook/addon-docs/blocks"
+import { Markdown, Meta } from "@storybook/addon-docs/blocks"
+
+import changelogContent from "../../CHANGELOG.md?raw"
 
 <Meta title="Getting Started/Changelog" />
 
-<Title>Changelog</Title>
-
-When you create a commit whose **first line** starts with `feature:` (case-insensitive), a `post-commit` hook appends an entry below. The hook then creates a follow-up commit `chore(changelog): update`. Implementation: `scripts/update-changelog.mjs`.
-
-{/* CHANGELOG:START */}
-
-{/* CHANGELOG:END */}
+<Markdown>{changelogContent}</Markdown>

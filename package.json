@@ -144,6 +144,10 @@
             "types": "./dist/components/label/index.d.ts",
             "import": "./dist/components/label/label.js"
         },
+        "./progress": {
+            "types": "./dist/components/progress/index.d.ts",
+            "import": "./dist/components/progress/progress.js"
+        },
         "./separator": {
             "types": "./dist/components/separator/index.d.ts",
             "import": "./dist/components/separator/separator.js"
