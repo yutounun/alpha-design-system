@@ -1,0 +1,52 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as DropdownMenuStories from "./dropdown-menu.stories"
+
+<Meta of={DropdownMenuStories} />
+
+<Title />
+
+**DropdownMenu** is a keyboard-accessible menu anchored to a trigger.
+
+## Usage
+
+```tsx
+import { Button } from "@/components/button"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/dropdown-menu"
+
+export function Example() {
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="outline">Open</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+                <DropdownMenuLabel>My account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+```
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={DropdownMenuStories.Default} />

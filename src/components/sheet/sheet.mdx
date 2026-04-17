@@ -1,0 +1,64 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as SheetStories from "./sheet.stories"
+
+<Meta of={SheetStories} />
+
+<Title />
+
+The **Sheet** is a slide-over panel built on the **Dialog** primitive. Use **SheetContent** `side` for edge placement.
+
+## Usage
+
+```tsx
+import { Button } from "@/components/button"
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/sheet"
+
+export function Example() {
+    return (
+        <Sheet>
+            <SheetTrigger asChild>
+                <Button variant="outline">Open</Button>
+            </SheetTrigger>
+            <SheetContent>
+                <SheetHeader>
+                    <SheetTitle>Title</SheetTitle>
+                    <SheetDescription>Description.</SheetDescription>
+                </SheetHeader>
+                <SheetFooter>
+                    <SheetClose asChild>
+                        <Button variant="outline">Close</Button>
+                    </SheetClose>
+                </SheetFooter>
+            </SheetContent>
+        </Sheet>
+    )
+}
+```
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={SheetStories.Default} />
+
+### Left side
+
+<Canvas of={SheetStories.LeftSide} />

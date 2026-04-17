@@ -1,0 +1,43 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as SeparatorStories from "./separator.stories"
+
+<Meta of={SeparatorStories} />
+
+<Title />
+
+The **Separator** is a thin rule for grouping content horizontally or vertically.
+
+## Usage
+
+```tsx
+import { Separator } from "@/components/separator"
+
+export function Example() {
+    return (
+        <div className="flex flex-col gap-3">
+            <p>Above</p>
+            <Separator />
+            <p>Below</p>
+        </div>
+    )
+}
+```
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={SeparatorStories.Horizontal} />
+
+### Vertical
+
+<Canvas of={SeparatorStories.Vertical} />

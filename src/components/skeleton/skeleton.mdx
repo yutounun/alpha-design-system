@@ -1,0 +1,37 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as SkeletonStories from "./skeleton.stories"
+
+<Meta of={SkeletonStories} />
+
+<Title />
+
+**Skeleton** is a neutral pulse block for loading states.
+
+## Usage
+
+```tsx
+import { Skeleton } from "@/components/skeleton"
+
+export function Example() {
+    return <Skeleton className="h-8 w-40" />
+}
+```
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={SkeletonStories.Default} />
+
+### Card placeholder
+
+<Canvas of={SkeletonStories.CardPlaceholder} />

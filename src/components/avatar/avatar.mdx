@@ -1,0 +1,46 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as AvatarStories from "./avatar.stories"
+
+<Meta of={AvatarStories} />
+
+<Title />
+
+The **Avatar** displays a user or organization image with an accessible **AvatarFallback** when the image is missing or still loading.
+
+## Usage
+
+```tsx
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/avatar"
+
+export function Example() {
+    return (
+        <Avatar>
+            <AvatarImage src="/photo.jpg" alt="User" />
+            <AvatarFallback>AB</AvatarFallback>
+        </Avatar>
+    )
+}
+```
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={AvatarStories.Default} />
+
+### With image
+
+<Canvas of={AvatarStories.WithImage} />
+
+### Rounded full
+
+<Canvas of={AvatarStories.RoundedFull} />

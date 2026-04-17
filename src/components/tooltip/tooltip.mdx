@@ -1,0 +1,48 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as TooltipStories from "./tooltip.stories"
+
+<Meta of={TooltipStories} />
+
+<Title />
+
+**Tooltip** shows short hints on hover or focus. Wrap your app (or Storybook preview) with **TooltipProvider** to configure delay.
+
+## Usage
+
+```tsx
+import { Button } from "@/components/button"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/tooltip"
+
+export function Example() {
+    return (
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button variant="outline">Hover</Button>
+                </TooltipTrigger>
+                <TooltipContent>Helpful hint</TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
+    )
+}
+```
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={TooltipStories.Default} />
