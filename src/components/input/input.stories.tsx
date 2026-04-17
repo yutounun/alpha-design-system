@@ -36,9 +36,6 @@ export const Invalid: Story = {
 }
 
 export const AllSizes: Story = {
-    parameters: {
-        layout: "padded",
-    },
     render: () => (
         <div className="flex max-w-sm flex-col gap-3">
             <Input size="sm" placeholder="Small" />
