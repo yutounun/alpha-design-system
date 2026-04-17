@@ -18,6 +18,10 @@ concurrency:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      # setup-node writes .npmrc using NODE_AUTH_TOKEN; without it, publish is unauthenticated (E404).
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,4 +53,3 @@ jobs:
           title: "chore: release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
