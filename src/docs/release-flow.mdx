@@ -1,0 +1,158 @@
+import { Meta, Title } from "@storybook/addon-docs/blocks"
+
+import { ReleaseFlow } from "@/docs/release-flow"
+
+<Meta title="Contributing/Release Flow" />
+
+<Title>Release Flow</Title>
+
+This page walks you through the end-to-end journey of a change—from editing a design token or component in this repo all the way to a consumer app picking up the new version from npm.
+
+## Overview
+
+The pipeline has four stages. Each stage has a clear entry and exit condition so that no step is skipped accidentally.
+
+<ReleaseFlow />
+
+## Stage breakdown
+
+### 1 · Local Development
+
+All changes start in your editor.
+
+**Token changes** live in `src/styles/theme.css`. Add or adjust a CSS custom property, save, and Storybook's HMR picks it up instantly.
+
+**Component changes** live in `src/components/<name>/`. Edit the `.tsx` file and iterate against live Storybook stories.
+
+Before committing, create a changeset to record the semver intent:
+
+```bash
+pnpm changeset
+# follow the interactive prompts → patch / minor / major
+```
+
+The CLI writes a Markdown file inside `.changeset/`. Commit it together with your code changes.
+
+---
+
+### 2 · CI / Pull Request
+
+Open a pull request on GitHub. The **CI workflow** (`.github/workflows/ci.yml`) runs on every commit:
+
+<div className="not-prose my-4 overflow-x-auto rounded-lg border border-border-low">
+    <table className="w-full border-collapse text-left text-sm">
+        <thead>
+            <tr className="border-b border-border-low bg-background-2">
+                <th className="text-foreground px-4 py-3 font-semibold">Check</th>
+                <th className="text-foreground px-4 py-3 font-semibold">Command</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr className="border-b border-border-low">
+                <td className="px-4 py-2.5 font-medium text-foreground">Lint</td>
+                <td className="px-4 py-2.5 font-mono text-xs text-foreground-medium">pnpm lint</td>
+            </tr>
+            <tr className="border-b border-border-low">
+                <td className="px-4 py-2.5 font-medium text-foreground">Typecheck</td>
+                <td className="px-4 py-2.5 font-mono text-xs text-foreground-medium">pnpm typecheck</td>
+            </tr>
+            <tr className="border-b border-border-low">
+                <td className="px-4 py-2.5 font-medium text-foreground">Storybook tests</td>
+                <td className="px-4 py-2.5 font-mono text-xs text-foreground-medium">pnpm test:storybook</td>
+            </tr>
+            <tr>
+                <td className="px-4 py-2.5 font-medium text-foreground">Library build</td>
+                <td className="px-4 py-2.5 font-mono text-xs text-foreground-medium">pnpm build:lib</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+All four must be green before merging. The build step catches broken exports or type regressions that tests alone might miss.
+
+---
+
+### 3 · Automated Release
+
+Merging to `main` fires the **Release workflow** (`.github/workflows/release.yml`), which runs `changesets/action`:
+
+```
+main push
+  └─ changesets/action
+       ├─ pending changesets?
+       │    yes → open (or update) "chore: release" PR
+       │           bumps package.json version
+       │           generates CHANGELOG entry
+       │    no  → no-op
+       └─ "chore: release" PR merged?
+              yes → pnpm build:lib && changeset publish → npm
+```
+
+You never run `npm publish` manually. The bot handles versioning and publishing atomically.
+
+---
+
+### 4 · Consumer Adoption
+
+Once the new version appears on npm, any downstream project can update:
+
+```bash
+pnpm update alpha-design-system
+# or pin an exact version:
+pnpm add alpha-design-system@x.y.z
+```
+
+Then import as usual:
+
+```tsx
+import { Button } from "alpha-design-system"
+```
+
+Token updates flow in automatically once the CSS is re-imported—no extra configuration needed.
+
+## Semver guidelines
+
+<div className="not-prose my-4 overflow-x-auto rounded-lg border border-border-low">
+    <table className="w-full border-collapse text-left text-sm">
+        <thead>
+            <tr className="border-b border-border-low bg-background-2">
+                <th className="text-foreground px-4 py-3 font-semibold">Change type</th>
+                <th className="text-foreground px-4 py-3 font-semibold">Bump</th>
+                <th className="text-foreground px-4 py-3 font-semibold">Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr className="border-b border-border-low">
+                <td className="px-4 py-2.5 text-foreground">Bug fix, visual tweak</td>
+                <td className="px-4 py-2.5 font-mono text-xs text-amber-400 font-semibold">patch</td>
+                <td className="px-4 py-2.5 text-foreground-medium">Fix button focus ring color</td>
+            </tr>
+            <tr className="border-b border-border-low">
+                <td className="px-4 py-2.5 text-foreground">New component or token</td>
+                <td className="px-4 py-2.5 font-mono text-xs text-blue-400 font-semibold">minor</td>
+                <td className="px-4 py-2.5 text-foreground-medium">Add Tabs component</td>
+            </tr>
+            <tr>
+                <td className="px-4 py-2.5 text-foreground">Rename / remove public API</td>
+                <td className="px-4 py-2.5 font-mono text-xs text-red-400 font-semibold">major</td>
+                <td className="px-4 py-2.5 text-foreground-medium">Rename <code>--color-primary</code> token</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+When in doubt, prefer **minor** over patch. A minor bump signals that adopters can opt in to new things without breakage.
+
+## FAQ
+
+**What if I forget to add a changeset?**
+
+CI will still pass. The Release workflow simply produces no new PR until a changeset file lands on `main`. Add one in a follow-up commit if needed.
+
+**Can I ship multiple components in one release?**
+
+Yes. Accumulate several feature branches (each with a changeset file) and merge them all. The bot aggregates every pending changeset into a single Release PR with a combined changelog.
+
+**How do I do a pre-release?**
+
+Use `pnpm changeset pre enter next` to enter pre-release mode. All subsequent versions will be tagged `x.y.z-next.N` until you exit with `pnpm changeset pre exit`.
