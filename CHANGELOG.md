@@ -1,5 +1,11 @@
 # alpha-design-system
 
+## 0.3.0
+
+### Minor Changes
+
+- b1563cf: Add Sidebar with sandbox/account switcher footer story, plus prerequisite primitives (avatar, tooltip, separator, sheet, skeleton, dropdown-menu).
+
 ## 0.2.0
 
 ### Minor Changes
