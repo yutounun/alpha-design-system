@@ -1,0 +1,3 @@
+#!/bin/sh
+# Append changelog entry when the latest commit message starts with "feature:".
+node scripts/update-changelog.mjs

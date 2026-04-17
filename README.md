@@ -2,9 +2,11 @@
 
 ![Storybook docs and UI previews for Alpha Design System](public/readme-img.png)
 
-**Alpha Design System** is a React component library and token layer for building accessible product UI. It ships with [Storybook](https://alpha-design-system-five.vercel.app/?path=/docs/welcome--docs) as the single place to browse components, read MDX documentation, and watch **design tokens** update live when you switch theme or light/dark mode in the toolbar.
+**Alpha Design System** is a React component library and token layer for building accessible product UI. It ships with [Storybook](https://alpha-design-system-five.vercel.app/?path=/docs/getting-started-overview--docs) as the single place to browse components, read MDX documentation, and watch **design tokens** update live when you switch theme or light/dark mode in the toolbar.
 
-If you landed here from GitHub, the fastest way to understand the system is to run Storybook locally: you get interactive controls, accessibility checks, and docs pages (including a **Welcome** overview and token galleries) without wiring anything into an app first.
+If you landed here from GitHub, the fastest way to understand the system is to run Storybook locally: you get interactive controls, accessibility checks, and docs pages (including **Getting Started → Overview** and token galleries) without wiring anything into an app first.
+
+After `npm install` / `pnpm install`, Git uses `.githooks` via `core.hooksPath` (see the `prepare` script in `package.json`). Commits whose first line starts with `feature:` trigger a `post-commit` update to `src/docs/changelog.mdx`.
 
 ## Why open Storybook?
 
@@ -17,7 +19,7 @@ npm install
 npm run storybook
 ```
 
-Then open **http://localhost:6006** (default port). Start from **Welcome** in the sidebar, then explore **Components** and **Design Tokens**.
+Then open **http://localhost:6006** (default port). Start from **Getting Started → Overview** in the sidebar, then explore **Components** and **Design Tokens**.
 
 ## Overview
 

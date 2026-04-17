@@ -1,0 +1,109 @@
+import { Meta, Title } from "@storybook/addon-docs/blocks"
+
+import { ThemeSwitcher } from "@/docs/theme-switcher"
+import { FormShowcase } from "@/docs/welcome-showcase"
+
+<Meta title="Getting Started/Overview" />
+
+<Title>Overview</Title>
+
+<ThemeSwitcher />
+
+**Alpha Design System** is a token-driven React 19 UI layer for building accessible product interfaces with a calm, consistent rhythm—**design tokens**, **primitives**, and **Storybook docs** in one place.
+
+- **Typography & tokens** — Semantic colors, type, and radius from CSS variables and Tailwind `@theme`, so light/dark and multiple themes stay coherent.
+- **Layout-friendly adoption** — Import styles once, compose primitives, and iterate in Storybook without bolting on a separate CSS architecture.
+- **React & Storybook first** — Live token galleries, MDX reference, and toolbar theme switching mirror how you’ll run the system in a Vite app.
+
+## Why Alpha Design System?
+
+- **No bespoke CSS architecture required** — Layering, tokens, and naming conventions are centralized in `src/styles/theme.css` and related entrypoints; extend via theme overrides instead of one-off globals.
+- **Works by importing CSS** — Ship `theme.css` / `index.css` from your app root; no extra build plugin beyond your bundler’s CSS pipeline and Tailwind 4.
+- **Comfortable with React & Storybook** — Components, MDX docs, and **Theme** / **Mode** toolbar globals match how you’ll set `data-theme` and `.dark` in production.
+
+## Zero-build mental model
+
+You can treat the design system as **“import CSS + use components”**. In a Vite + React app, wire the same stylesheet Storybook uses:
+
+```tsx
+// e.g. src/main.tsx
+import "./styles/index.css"
+```
+
+For a plain HTML shell, link the built CSS or duplicate the import graph your app uses—there is no runtime framework inside the token layer.
+
+## Ecosystem
+
+{/* Pipe tables need remark-gfm; use a real table for reliable MDX rendering. */}
+
+<div className="not-prose my-6 overflow-x-auto rounded-lg border border-border-low">
+    <table className="w-full min-w-xl border-collapse text-left text-sm">
+        <thead>
+            <tr className="border-b border-border-low bg-background-2">
+                <th className="text-foreground px-4 py-3 font-semibold">
+                    Piece
+                </th>
+                <th className="text-foreground px-4 py-3 font-semibold">
+                    Description
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr className="border-b border-border-low">
+                <td className="text-foreground px-4 py-3 align-top font-medium">
+                    <strong>alpha-design-system</strong>
+                </td>
+                <td className="px-4 py-3 text-foreground-medium">
+                    This repo: tokens, primitives, Storybook, and guardrails for
+                    Tailwind usage.
+                </td>
+            </tr>
+            <tr className="border-b border-border-low">
+                <td className="text-foreground px-4 py-3 align-top font-medium">
+                    <strong>@/components/*</strong>
+                </td>
+                <td className="px-4 py-3 text-foreground-medium">
+                    React components (Button, Input, Textarea, Label, FormField,
+                    …) built on Radix patterns and CVA.
+                </td>
+            </tr>
+            <tr className="border-b border-border-low">
+                <td className="text-foreground px-4 py-3 align-top font-medium">
+                    <strong>scripts/build-design-tokens-json.py</strong>
+                </td>
+                <td className="px-4 py-3 text-foreground-medium">
+                    Exports token names for tooling and the design-tokens skill.
+                </td>
+            </tr>
+            <tr className="border-b border-border-low">
+                <td className="text-foreground px-4 py-3 align-top">
+                    <strong>Skills</strong>{" "}
+                    <span className="text-foreground-low">(soon)</span>
+                </td>
+                <td className="px-4 py-3 text-foreground-medium">
+                    Agent skills for consistent component and token usage.
+                </td>
+            </tr>
+            <tr>
+                <td className="text-foreground px-4 py-3 align-top">
+                    <strong>MCP Server</strong>{" "}
+                    <span className="text-foreground-low">(soon)</span>
+                </td>
+                <td className="px-4 py-3 text-foreground-medium">
+                    MCP integration for AI-assisted workflows.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+## Example
+
+<FormShowcase />
+
+## Inspirations
+
+- [shadcn/ui](https://ui.shadcn.com/) — Composable component style and copyable patterns.
+- [Radix UI](https://www.radix-ui.com/) — Accessible primitives and focus semantics.
+
+For token naming and JSON output, see **Design Tokens** in the sidebar and the **design-tokens** skill in this workspace.

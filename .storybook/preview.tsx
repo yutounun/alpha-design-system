@@ -79,11 +79,10 @@ const preview: Preview = {
         options: {
             storySort: {
                 order: [
-                    "Welcome",
-                    [
-                        "Design Tokens",
-                        ["Colors", "Typography", "Border Radius"],
-                    ],
+                    "Getting Started",
+                    ["Overview", "Skills", "MCP Server", "Changelog"],
+                    "Design Tokens",
+                    ["Colors", "Typography", "Border Radius"],
                     "Components",
                 ],
             },

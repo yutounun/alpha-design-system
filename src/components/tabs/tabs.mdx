@@ -1,0 +1,90 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as TabsStories from "./tabs.stories"
+
+<Meta of={TabsStories} />
+
+<Title />
+
+**Tabs** organise content into switchable panels without a page navigation. Built on [Radix UI Tabs](https://www.radix-ui.com/primitives/docs/components/tabs) — keyboard navigation, ARIA roles, and focus management are all handled by the primitive.
+
+## Usage
+
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/tabs"
+
+export function Example() {
+    return (
+        <Tabs defaultValue="account">
+            <TabsList>
+                <TabsTrigger value="account">Account</TabsTrigger>
+                <TabsTrigger value="password">Password</TabsTrigger>
+            </TabsList>
+            <TabsContent value="account">Account panel</TabsContent>
+            <TabsContent value="password">Password panel</TabsContent>
+        </Tabs>
+    )
+}
+```
+
+## Variants
+
+`TabsList` accepts a `variant` prop that controls the visual style of the tab bar.
+
+| Variant | Description |
+|---------|-------------|
+| `pills` (default) | Segmented-control look. Active tab lifts as a white card on a muted background. |
+| `line` | Underline look. Active tab shows a 2 px primary-coloured bottom border. |
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls />
+
+## Variant examples
+
+### Pills
+
+<Canvas of={TabsStories.Pills} />
+
+### Line
+
+<Canvas of={TabsStories.Line} />
+
+### All variants
+
+<Canvas of={TabsStories.AllVariants} />
+
+## With icons
+
+Pass icon components as siblings inside `TabsTrigger`. They receive `pointer-events-none` and are sized to `1rem` (16 px) automatically.
+
+<Canvas of={TabsStories.WithIcons} />
+
+## Disabled triggers
+
+Set the native `disabled` attribute on any `TabsTrigger` to prevent interaction and mute its appearance.
+
+<Canvas of={TabsStories.WithDisabled} />
+
+## Vertical orientation
+
+Pass `orientation="vertical"` to `Tabs` to arrange triggers in a column with the content panel beside them.
+
+<Canvas of={TabsStories.Vertical} />
+
+## Accessibility
+
+- The tab list is a `role="tablist"` element; each trigger is `role="tab"` and each content panel is `role="tabpanel"`.
+- Keyboard: **Arrow keys** move between triggers, **Space / Enter** activates the focused trigger.
+- Disabled triggers are properly inert and skipped during keyboard navigation.
+- Focus ring is rendered via `focus-visible:ring` — visible only on keyboard navigation, not on pointer click.
