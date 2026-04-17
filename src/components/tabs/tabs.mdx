@@ -76,6 +76,10 @@ Set the native `disabled` attribute on any `TabsTrigger` to prevent interaction 
 
 <Canvas of={TabsStories.WithDisabled} />
 
+## Motion
+
+The active highlight (pills fill or line underline) is a shared indicator that interpolates `transform` and `width` over **200 ms** when the selected tab changes. In environments with `prefers-reduced-motion: reduce`, transitions are disabled automatically.
+
 ## Accessibility
 
 - The tab list is a `role="tablist"` element; each trigger is `role="tab"` and each content panel is `role="tabpanel"`.

@@ -22,7 +22,7 @@ function Tabs({ className, ...props }: TabsProps) {
 }
 
 const tabsListVariants = cva(
-    ["group/tabs-list inline-flex w-fit shrink-0 items-center"],
+    ["group/tabs-list relative inline-flex w-fit shrink-0 items-center"],
     {
         variants: {
             variant: {
@@ -46,19 +46,139 @@ const tabsListVariants = cva(
     }
 )
 
+type TabsIndicatorRect = {
+    x: number
+    y: number
+    w: number
+    h: number
+}
+
 function TabsList({
     className,
     variant = "pills",
+    ref,
+    children,
     ...props
 }: React.ComponentProps<typeof TabsPrimitive.List> &
     VariantProps<typeof tabsListVariants>) {
+    const listRef = React.useRef<React.ComponentRef<
+        typeof TabsPrimitive.List
+    > | null>(null)
+    const [indicator, setIndicator] = React.useState<TabsIndicatorRect | null>(
+        null
+    )
+    const [ready, setReady] = React.useState(false)
+
+    const setRefs = React.useCallback(
+        (node: React.ComponentRef<typeof TabsPrimitive.List> | null) => {
+            listRef.current = node
+            if (typeof ref === "function") {
+                ref(node)
+            } else if (ref) {
+                ;(ref as React.MutableRefObject<typeof node>).current = node
+            }
+        },
+        [ref]
+    )
+
+    React.useLayoutEffect(() => {
+        const list = listRef.current
+        if (!list) return
+
+        let rafId = 0
+
+        const measure = () => {
+            const active = list.querySelector(
+                '[role="tab"][data-state="active"]'
+            ) as HTMLElement | null
+            if (!active) {
+                setIndicator(null)
+                return
+            }
+            setIndicator({
+                x: active.offsetLeft,
+                y: active.offsetTop,
+                w: active.offsetWidth,
+                h: active.offsetHeight,
+            })
+            requestAnimationFrame(() => {
+                setReady(true)
+            })
+        }
+
+        const scheduleMeasure = () => {
+            cancelAnimationFrame(rafId)
+            rafId = requestAnimationFrame(measure)
+        }
+
+        const ro = new ResizeObserver(scheduleMeasure)
+        ro.observe(list)
+
+        const observeAllTabs = () => {
+            list.querySelectorAll('[role="tab"]').forEach((el) => {
+                ro.observe(el)
+            })
+        }
+
+        const moActive = new MutationObserver(scheduleMeasure)
+        moActive.observe(list, {
+            subtree: true,
+            attributeFilter: ["data-state"],
+        })
+
+        const moTree = new MutationObserver(() => {
+            observeAllTabs()
+            scheduleMeasure()
+        })
+        moTree.observe(list, { childList: true, subtree: true })
+
+        observeAllTabs()
+        scheduleMeasure()
+
+        return () => {
+            cancelAnimationFrame(rafId)
+            moActive.disconnect()
+            moTree.disconnect()
+            ro.disconnect()
+        }
+    }, [variant])
+
     return (
         <TabsPrimitive.List
+            ref={setRefs}
             data-slot="tabs-list"
             data-variant={variant}
             className={cn(tabsListVariants({ variant }), className)}
             {...props}
-        />
+        >
+            {indicator ? (
+                <span
+                    aria-hidden
+                    data-slot="tabs-indicator"
+                    data-variant={variant}
+                    className={cn(
+                        "pointer-events-none absolute left-0 z-0",
+                        ready &&
+                            "transition-[transform,width,height] duration-200 ease-out motion-reduce:transition-none",
+                        "data-[variant=pills]:top-0 data-[variant=pills]:rounded-md data-[variant=pills]:bg-accent data-[variant=pills]:shadow-sm",
+                        "data-[variant=line]:top-auto data-[variant=line]:-bottom-px data-[variant=line]:h-0.5 data-[variant=line]:bg-primary"
+                    )}
+                    style={
+                        variant === "line"
+                            ? {
+                                  transform: `translateX(${indicator.x}px)`,
+                                  width: indicator.w,
+                              }
+                            : {
+                                  transform: `translate(${indicator.x}px, ${indicator.y}px)`,
+                                  width: indicator.w,
+                                  height: indicator.h,
+                              }
+                    }
+                />
+            ) : null}
+            {children}
+        </TabsPrimitive.List>
     )
 }
 
@@ -75,12 +195,13 @@ function TabsTrigger({
         <TabsPrimitive.Trigger
             data-slot="tabs-trigger"
             className={cn(
-                // layout
-                "relative inline-flex items-center justify-center gap-2",
+                // layout (z above sliding indicator)
+                "relative z-10 inline-flex items-center justify-center gap-2",
                 // typography
                 "font-heading text-md font-medium whitespace-nowrap",
-                // interaction base
-                "cursor-pointer transition-all outline-none select-none",
+                // interaction base — avoid transitioning background (pills hover fill)
+                // so the sliding indicator does not appear after a grey cross-fade.
+                "cursor-pointer transition-[color] outline-none select-none",
                 // color — inactive
                 "text-foreground-medium hover:text-foreground-high",
                 // focus ring (ring only; no side-border to keep line variant clean)
@@ -95,13 +216,11 @@ function TabsTrigger({
                 // sizing + radius
                 "group-data-[variant=pills]/tabs-list:rounded-md",
                 "group-data-[variant=pills]/tabs-list:px-3 group-data-[variant=pills]/tabs-list:py-2",
-                // hover fill
-                "group-data-[variant=pills]/tabs-list:hover:bg-fill-low",
-                // active: lifted card
-                "group-data-[variant=pills]/tabs-list:data-[state=active]:bg-background-1",
+                // hover fill only when inactive so :hover on the active tab does not
+                // paint grey over the accent indicator.
+                "group-data-[variant=pills]/tabs-list:data-[state=inactive]:hover:bg-fill-low",
+                // active: text colour (fill is the sliding indicator)
                 "group-data-[variant=pills]/tabs-list:data-[state=active]:text-accent-foreground",
-                "group-data-[variant=pills]/tabs-list:data-[state=active]:shadow-sm",
-                "group-data-[variant=pills]/tabs-list:data-[state=active]:bg-accent",
 
                 // ── line variant ──────────────────────────────────────────
                 // sizing — horizontal: pad below for the 2 px indicator
@@ -111,8 +230,7 @@ function TabsTrigger({
                 "group-data-[variant=line]/tabs-list:border-transparent",
                 // overlap the list's 1 px border to prevent double line
                 "group-data-[variant=line]/tabs-list:-mb-px",
-                // active: highlight
-                "group-data-[variant=line]/tabs-list:data-[state=active]:border-primary",
+                // active: text colour (underline is the sliding indicator)
                 "group-data-[variant=line]/tabs-list:data-[state=active]:text-foreground-high",
 
                 className
