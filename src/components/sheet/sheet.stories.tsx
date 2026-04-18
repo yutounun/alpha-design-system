@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, userEvent, within } from "storybook/test"
+import { expect, userEvent, waitFor, within } from "storybook/test"
 
 import { Button } from "@/components/button"
 
@@ -52,9 +52,11 @@ export const Default: Story = {
             await userEvent.click(
                 canvas.getByRole("button", { name: "Open sheet" })
             )
-            await expect(
-                doc.getByRole("dialog", { name: "Sheet title" })
-            ).toBeVisible()
+            await waitFor(() => {
+                expect(
+                    doc.getByRole("dialog", { name: "Sheet title" })
+                ).toBeVisible()
+            })
         })
     },
 }
