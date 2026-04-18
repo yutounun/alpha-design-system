@@ -18,6 +18,7 @@ import {
     Plus,
     Radar as RadarIcon,
     Receipt,
+    Search,
     Settings,
     SquareTerminal,
     User,
@@ -38,6 +39,7 @@ import {
 } from "recharts"
 
 import { cn } from "@/lib/utils"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/avatar"
 import { Button } from "@/components/button"
 import {
@@ -55,6 +57,13 @@ import {
     ChartTooltipContent,
     type ChartConfig,
 } from "@/components/chart"
+import {
+    Drawer,
+    DrawerContent,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/drawer"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -349,7 +358,7 @@ function SetupGuidePortal() {
     if (!open) return null
 
     return createPortal(
-        <div className="pointer-events-none fixed right-4 bottom-4 z-200 w-80 max-w-[calc(100vw-2rem)]">
+        <div className="pointer-events-none fixed right-4 bottom-4 z-10 w-80 max-w-[calc(100vw-2rem)]">
             <Card className="pointer-events-auto gap-3 border border-border-low py-4 shadow-lg">
                 <CardHeader className="px-4">
                     <CardTitle className="text-base">Setup guide</CardTitle>
@@ -389,6 +398,78 @@ function SetupGuidePortal() {
             </Card>
         </div>,
         document.body
+    )
+}
+
+function DashboardSearchComboboxSuggestions({
+    onSelectItem,
+    isMobile = false,
+}: {
+    onSelectItem: () => void
+    isMobile?: boolean
+}) {
+    return (
+        <div className={cn(isMobile && "flex flex-col gap-4 py-4")}>
+            <SearchComboboxEmpty>No results</SearchComboboxEmpty>
+            <SearchComboboxGroup heading="Go to">
+                <SearchComboboxItem
+                    isMobile={isMobile}
+                    value="balances"
+                    keywords={["balance", "balances", "money"]}
+                    onSelect={onSelectItem}
+                >
+                    Balances
+                </SearchComboboxItem>
+                <SearchComboboxItem
+                    isMobile={isMobile}
+                    value="reports-balance"
+                    keywords={["report", "balance", "reports"]}
+                    onSelect={onSelectItem}
+                >
+                    <span className="flex items-center gap-1">
+                        <span>Reports</span>
+                        <ChevronRight
+                            aria-hidden
+                            className="size-4 text-foreground-low"
+                        />
+                        <span>Balance Report</span>
+                    </span>
+                </SearchComboboxItem>
+                <SearchComboboxItem
+                    isMobile={isMobile}
+                    value="transactions-activity"
+                    keywords={["transactions", "activity", "all"]}
+                    onSelect={onSelectItem}
+                >
+                    <span className="flex items-center gap-1">
+                        <span>Transactions</span>
+                        <ChevronRight
+                            aria-hidden
+                            className="size-4 text-foreground-low"
+                        />
+                        <span>All activity</span>
+                    </span>
+                </SearchComboboxItem>
+            </SearchComboboxGroup>
+            <SearchComboboxSeparator alwaysRender />
+            <SearchComboboxGroup heading="Help">
+                <SearchComboboxItem
+                    isMobile={isMobile}
+                    value="help-payouts"
+                    keywords={["help", "payouts", "payout"]}
+                    onSelect={onSelectItem}
+                >
+                    <HelpCircle aria-hidden className="size-4" />
+                    <span>Help: Payouts</span>
+                </SearchComboboxItem>
+            </SearchComboboxGroup>
+            <SearchComboboxFooter
+                value="view-all-results"
+                onSelect={onSelectItem}
+            >
+                View all results
+            </SearchComboboxFooter>
+        </div>
     )
 }
 
@@ -448,61 +529,9 @@ function DashboardHeaderSearch() {
                             "border-border-low bg-background-1 p-1 shadow-md"
                         )}
                     >
-                        <SearchComboboxEmpty>No results</SearchComboboxEmpty>
-                        <SearchComboboxGroup heading="Go to">
-                            <SearchComboboxItem
-                                value="balances"
-                                keywords={["balance", "balances", "money"]}
-                                onSelect={closePanel}
-                            >
-                                Balances
-                            </SearchComboboxItem>
-                            <SearchComboboxItem
-                                value="reports-balance"
-                                keywords={["report", "balance", "reports"]}
-                                onSelect={closePanel}
-                            >
-                                <span className="flex items-center gap-1">
-                                    <span>Reports</span>
-                                    <ChevronRight
-                                        aria-hidden
-                                        className="size-4 text-foreground-low"
-                                    />
-                                    <span>Balance Report</span>
-                                </span>
-                            </SearchComboboxItem>
-                            <SearchComboboxItem
-                                value="transactions-activity"
-                                keywords={["transactions", "activity", "all"]}
-                                onSelect={closePanel}
-                            >
-                                <span className="flex items-center gap-1">
-                                    <span>Transactions</span>
-                                    <ChevronRight
-                                        aria-hidden
-                                        className="size-4 text-foreground-low"
-                                    />
-                                    <span>All activity</span>
-                                </span>
-                            </SearchComboboxItem>
-                        </SearchComboboxGroup>
-                        <SearchComboboxSeparator alwaysRender />
-                        <SearchComboboxGroup heading="Help">
-                            <SearchComboboxItem
-                                value="help-payouts"
-                                keywords={["help", "payouts", "payout"]}
-                                onSelect={closePanel}
-                            >
-                                <HelpCircle aria-hidden className="size-4" />
-                                <span>Help: Payouts</span>
-                            </SearchComboboxItem>
-                        </SearchComboboxGroup>
-                        <SearchComboboxFooter
-                            value="view-all-results"
-                            onSelect={closePanel}
-                        >
-                            View all results
-                        </SearchComboboxFooter>
+                        <DashboardSearchComboboxSuggestions
+                            onSelectItem={closePanel}
+                        />
                     </SearchComboboxList>
                 ) : null}
             </SearchComboboxRoot>
@@ -510,9 +539,66 @@ function DashboardHeaderSearch() {
     )
 }
 
+function DashboardHeaderSearchMobile() {
+    const [open, setOpen] = useState(false)
+    const [search, setSearch] = useState("")
+
+    const closeDrawer = () => setOpen(false)
+
+    return (
+        <Drawer direction="bottom" open={open} onOpenChange={setOpen}>
+            <DrawerTrigger asChild>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-lg"
+                    aria-label="Search"
+                    className="shrink-0"
+                >
+                    <Search />
+                </Button>
+            </DrawerTrigger>
+            <DrawerContent className="h-[calc(100vh-4rem)] px-4 pb-6">
+                <DrawerHeader className="text-left">
+                    <DrawerTitle className="sr-only">Search</DrawerTitle>
+                </DrawerHeader>
+                <SearchComboboxRoot
+                    shouldFilter
+                    label="Search"
+                    className={cn(
+                        "relative z-50 overflow-visible border-0",
+                        "bg-transparent shadow-none",
+                        "**:data-[slot=search-combobox-input-wrap]:border-0"
+                    )}
+                    onKeyDown={(event) => {
+                        if (event.key === "Escape") {
+                            event.preventDefault()
+                            closeDrawer()
+                        }
+                    }}
+                >
+                    <SearchComboboxInput
+                        value={search}
+                        onValueChange={setSearch}
+                        aria-label="Search"
+                        aria-expanded
+                        aria-haspopup="listbox"
+                        className="rounded-md border border-border-medium"
+                    />
+                    <DashboardSearchComboboxSuggestions
+                        isMobile={true}
+                        onSelectItem={closeDrawer}
+                    />
+                </SearchComboboxRoot>
+            </DrawerContent>
+        </Drawer>
+    )
+}
+
 export const StripeDashboard: Story = {
     render: () => {
         const [showRecommendations, setShowRecommendations] = useState(true)
+        const isMobile = useIsMobile()
         return (
             <>
                 <TooltipProvider>
@@ -775,31 +861,20 @@ export const StripeDashboard: Story = {
                             <SidebarInset>
                                 <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border-low px-4">
                                     <SidebarTrigger />
-                                    <div className="relative mx-auto max-w-xl flex-1">
-                                        <DashboardHeaderSearch />
-                                    </div>
-                                    <div className="ml-auto flex items-center gap-1">
+                                    {!isMobile ? (
+                                        <div className="relative mx-auto max-w-xl flex-1">
+                                            <DashboardHeaderSearch />
+                                        </div>
+                                    ) : null}
+                                    <div className="ml-auto flex shrink-0 items-center gap-1">
+                                        {isMobile ? (
+                                            <DashboardHeaderSearchMobile />
+                                        ) : null}
                                         <Tooltip>
                                             <TooltipTrigger asChild>
                                                 <Button
                                                     variant="ghost"
-                                                    size="icon-md"
-                                                    aria-label="Command palette"
-                                                >
-                                                    <span className="text-2xs font-medium text-foreground-medium">
-                                                        {"\u2318"}K
-                                                    </span>
-                                                </Button>
-                                            </TooltipTrigger>
-                                            <TooltipContent side="bottom">
-                                                {`Command palette (\u2318K)`}
-                                            </TooltipContent>
-                                        </Tooltip>
-                                        <Tooltip>
-                                            <TooltipTrigger asChild>
-                                                <Button
-                                                    variant="ghost"
-                                                    size="icon-md"
+                                                    size="icon-lg"
                                                     aria-label="Help"
                                                 >
                                                     <HelpCircle />
@@ -813,7 +888,7 @@ export const StripeDashboard: Story = {
                                             <TooltipTrigger asChild>
                                                 <Button
                                                     variant="ghost"
-                                                    size="icon-md"
+                                                    size="icon-lg"
                                                     aria-label="Notifications"
                                                 >
                                                     <Bell />
@@ -827,7 +902,7 @@ export const StripeDashboard: Story = {
                                             <TooltipTrigger asChild>
                                                 <Button
                                                     variant="ghost"
-                                                    size="icon-md"
+                                                    size="icon-lg"
                                                     aria-label="Settings"
                                                 >
                                                     <Settings />
@@ -841,7 +916,7 @@ export const StripeDashboard: Story = {
                                             <TooltipTrigger asChild>
                                                 <Button
                                                     variant="ghost"
-                                                    size="icon-md"
+                                                    size="icon-lg"
                                                     aria-label="Create"
                                                 >
                                                     <Plus />

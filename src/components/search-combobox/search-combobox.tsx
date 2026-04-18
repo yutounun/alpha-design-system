@@ -97,8 +97,9 @@ function SearchComboboxGroup({
 
 function SearchComboboxItem({
     className,
+    isMobile,
     ...props
-}: ComponentProps<typeof Command.Item>) {
+}: ComponentProps<typeof Command.Item> & { isMobile?: boolean }) {
     return (
         <Command.Item
             className={cn(
@@ -108,6 +109,7 @@ function SearchComboboxItem({
                 "aria-selected:bg-fill-low",
                 "disabled:pointer-events-none disabled:opacity-50",
                 "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+                isMobile && "items-center py-2 text-md",
                 className
             )}
             {...props}

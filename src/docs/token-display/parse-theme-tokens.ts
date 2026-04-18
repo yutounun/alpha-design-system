@@ -149,7 +149,8 @@ function colorCategoryFor(name: string): (typeof COLOR_CATEGORY_ORDER)[number] {
     if (name.startsWith("--color-badge")) return "badge"
     if (name.startsWith("--color-chart")) return "chart"
     if (name === "--color-skeleton") return "skeleton"
-    if (name === "--color-surface-deep") return "surface"
+    if (name === "--color-surface-deep" || name === "--color-overlay-scrim")
+        return "surface"
     if (
         name.startsWith("--color-transparent") ||
         name.startsWith("--color-inv-transparent")

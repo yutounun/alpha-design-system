@@ -129,6 +129,10 @@
             "types": "./dist/components/chart/index.d.ts",
             "import": "./dist/components/chart/chart.js"
         },
+        "./drawer": {
+            "types": "./dist/components/drawer/index.d.ts",
+            "import": "./dist/components/drawer/drawer.js"
+        },
         "./dropdown-menu": {
             "types": "./dist/components/dropdown-menu/index.d.ts",
             "import": "./dist/components/dropdown-menu/dropdown-menu.js"

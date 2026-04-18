@@ -1,0 +1,64 @@
+import {
+    Canvas,
+    Controls,
+    Meta,
+    Primary,
+    Title,
+} from "@storybook/addon-docs/blocks"
+
+import * as DrawerStories from "./drawer.stories"
+
+<Meta of={DrawerStories} />
+
+<Title />
+
+The **Drawer** is a slide-over panel built on **Vaul**. Set **Drawer** `direction` for edge placement (`bottom` is the default).
+
+## Usage
+
+```tsx
+import { Button } from "@/components/button"
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/drawer"
+
+export function Example() {
+    return (
+        <Drawer direction="bottom">
+            <DrawerTrigger asChild>
+                <Button variant="outline">Open</Button>
+            </DrawerTrigger>
+            <DrawerContent>
+                <DrawerHeader>
+                    <DrawerTitle>Title</DrawerTitle>
+                    <DrawerDescription>Description.</DrawerDescription>
+                </DrawerHeader>
+                <DrawerFooter>
+                    <DrawerClose asChild>
+                        <Button variant="outline">Close</Button>
+                    </DrawerClose>
+                </DrawerFooter>
+            </DrawerContent>
+        </Drawer>
+    )
+}
+```
+
+## Stories
+
+<Primary />
+
+## Interactive props
+
+<Controls of={DrawerStories.Default} />
+
+### Left side
+
+<Canvas of={DrawerStories.LeftSide} />

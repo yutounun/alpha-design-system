@@ -83,6 +83,23 @@
       ]
     },
     {
+      "name": "drawer",
+      "type": "registry:ui",
+      "dependencies": [
+        "lucide-react",
+        "vaul"
+      ],
+      "registryDependencies": [
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "src/components/drawer/drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "dropdown-menu",
       "type": "registry:ui",
       "dependencies": [
