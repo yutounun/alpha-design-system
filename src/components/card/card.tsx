@@ -12,6 +12,7 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
             className={cn(
                 "flex flex-col gap-4 rounded-xl border border-border-low",
                 "bg-card-1 py-6 text-foreground-high",
+                "min-h-40",
                 className
             )}
             {...props}

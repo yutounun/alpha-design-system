@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
     Banknote,
@@ -545,81 +545,119 @@ function SetupGuidePortal() {
 
 function DashboardHeaderSearch() {
     const [search, setSearch] = useState("")
+    const [open, setOpen] = useState(false)
+    const rootRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        if (!open) return
+        const onPointerDown = (event: PointerEvent) => {
+            const root = rootRef.current
+            if (root && !root.contains(event.target as Node)) {
+                setOpen(false)
+            }
+        }
+        document.addEventListener("pointerdown", onPointerDown, true)
+        return () =>
+            document.removeEventListener("pointerdown", onPointerDown, true)
+    }, [open])
+
+    const closePanel = () => setOpen(false)
 
     return (
-        <SearchComboboxRoot
-            shouldFilter
-            label="Search"
-            className={cn(
-                "relative z-50 overflow-visible border-0 bg-transparent",
-                "p-0 shadow-none",
-                "**:data-[slot=search-combobox-input-wrap]:border-0"
-            )}
-        >
-            <SearchComboboxInput
-                placeholder="Search"
-                value={search}
-                onValueChange={setSearch}
-                aria-label="Search"
-                className="rounded-md border border-border-medium"
-            />
-            <SearchComboboxList
+        <div ref={rootRef} className="relative w-full">
+            <SearchComboboxRoot
+                shouldFilter
+                label="Search"
                 className={cn(
-                    "absolute top-full right-0 left-0 z-50 mt-1",
-                    "max-h-80 overflow-y-auto rounded-md border",
-                    "border-border-low bg-background-1 p-1 shadow-md"
+                    "relative z-50 overflow-visible border-0 bg-transparent",
+                    "p-0 shadow-none",
+                    "**:data-[slot=search-combobox-input-wrap]:border-0"
                 )}
+                onKeyDown={(event) => {
+                    if (event.key === "Escape") {
+                        event.preventDefault()
+                        closePanel()
+                    }
+                }}
             >
-                <SearchComboboxEmpty>No results</SearchComboboxEmpty>
-                <SearchComboboxGroup heading="Go to">
-                    <SearchComboboxItem
-                        value="balances"
-                        keywords={["balance", "balances", "money"]}
+                <SearchComboboxInput
+                    placeholder="Search"
+                    value={search}
+                    onValueChange={setSearch}
+                    aria-label="Search"
+                    aria-expanded={open}
+                    aria-haspopup="listbox"
+                    className="rounded-md border border-border-medium"
+                    onFocus={() => setOpen(true)}
+                    onClick={() => setOpen(true)}
+                />
+                {open ? (
+                    <SearchComboboxList
+                        className={cn(
+                            "absolute top-full right-0 left-0 z-50 mt-1",
+                            "max-h-80 overflow-y-auto rounded-md border",
+                            "border-border-low bg-background-1 p-1 shadow-md"
+                        )}
                     >
-                        Balances
-                    </SearchComboboxItem>
-                    <SearchComboboxItem
-                        value="reports-balance"
-                        keywords={["report", "balance", "reports"]}
-                    >
-                        <span className="flex items-center gap-1">
-                            <span>Reports</span>
-                            <ChevronRight
-                                aria-hidden
-                                className="size-4 text-foreground-low"
-                            />
-                            <span>Balance Report</span>
-                        </span>
-                    </SearchComboboxItem>
-                    <SearchComboboxItem
-                        value="transactions-activity"
-                        keywords={["transactions", "activity", "all"]}
-                    >
-                        <span className="flex items-center gap-1">
-                            <span>Transactions</span>
-                            <ChevronRight
-                                aria-hidden
-                                className="size-4 text-foreground-low"
-                            />
-                            <span>All activity</span>
-                        </span>
-                    </SearchComboboxItem>
-                </SearchComboboxGroup>
-                <SearchComboboxSeparator alwaysRender />
-                <SearchComboboxGroup heading="Help">
-                    <SearchComboboxItem
-                        value="help-payouts"
-                        keywords={["help", "payouts", "payout"]}
-                    >
-                        <HelpCircle aria-hidden className="size-4" />
-                        <span>Help: Payouts</span>
-                    </SearchComboboxItem>
-                </SearchComboboxGroup>
-                <SearchComboboxFooter value="view-all-results">
-                    View all results
-                </SearchComboboxFooter>
-            </SearchComboboxList>
-        </SearchComboboxRoot>
+                        <SearchComboboxEmpty>No results</SearchComboboxEmpty>
+                        <SearchComboboxGroup heading="Go to">
+                            <SearchComboboxItem
+                                value="balances"
+                                keywords={["balance", "balances", "money"]}
+                                onSelect={closePanel}
+                            >
+                                Balances
+                            </SearchComboboxItem>
+                            <SearchComboboxItem
+                                value="reports-balance"
+                                keywords={["report", "balance", "reports"]}
+                                onSelect={closePanel}
+                            >
+                                <span className="flex items-center gap-1">
+                                    <span>Reports</span>
+                                    <ChevronRight
+                                        aria-hidden
+                                        className="size-4 text-foreground-low"
+                                    />
+                                    <span>Balance Report</span>
+                                </span>
+                            </SearchComboboxItem>
+                            <SearchComboboxItem
+                                value="transactions-activity"
+                                keywords={["transactions", "activity", "all"]}
+                                onSelect={closePanel}
+                            >
+                                <span className="flex items-center gap-1">
+                                    <span>Transactions</span>
+                                    <ChevronRight
+                                        aria-hidden
+                                        className="size-4 text-foreground-low"
+                                    />
+                                    <span>All activity</span>
+                                </span>
+                            </SearchComboboxItem>
+                        </SearchComboboxGroup>
+                        <SearchComboboxSeparator alwaysRender />
+                        <SearchComboboxGroup heading="Help">
+                            <SearchComboboxItem
+                                value="help-payouts"
+                                keywords={["help", "payouts", "payout"]}
+                                onSelect={closePanel}
+                            >
+                                <HelpCircle aria-hidden className="size-4" />
+                                <span>Help: Payouts</span>
+                            </SearchComboboxItem>
+                        </SearchComboboxGroup>
+                        <SearchComboboxFooter
+                            value="view-all-results"
+                            onSelect={closePanel}
+                        >
+                            View all results
+                        </SearchComboboxFooter>
+                    </SearchComboboxList>
+                ) : null}
+            </SearchComboboxRoot>
+        </div>
     )
 }
 
@@ -627,13 +665,6 @@ export const StripeDashboard: Story = {
     render: () => (
         <>
             <div className="flex min-h-svh flex-col bg-background-1">
-                <div
-                    className="flex h-8 shrink-0 items-center justify-center bg-brand px-4 text-xs text-inv-foreground-high"
-                    role="status"
-                >
-                    You&apos;re testing in a sandbox. Data may be simulated.
-                </div>
-
                 <SidebarProvider className="min-h-0 flex-1">
                     <Sidebar collapsible="icon">
                         <SidebarHeader>
@@ -959,35 +990,37 @@ export const StripeDashboard: Story = {
 
                                     <Card className="gap-3 py-4">
                                         <CardHeader className="pb-2">
-                                            <div className="flex items-start justify-between gap-2">
-                                                <CardTitle className="text-base">
-                                                    Recommendations
-                                                </CardTitle>
-                                                <CardAction>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon-sm"
-                                                        aria-label="Dismiss"
-                                                    >
-                                                        <X />
-                                                    </Button>
-                                                </CardAction>
-                                            </div>
+                                            <CardTitle className="text-base">
+                                                Recommendations
+                                            </CardTitle>
                                             <CardDescription>
                                                 Finish setup to go live faster.
                                             </CardDescription>
+                                            <CardAction>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon-sm"
+                                                    aria-label="Dismiss"
+                                                >
+                                                    <X />
+                                                </Button>
+                                            </CardAction>
                                         </CardHeader>
                                         <CardContent className="space-y-3 text-sm">
-                                            <Button
-                                                variant="link"
-                                                className="h-auto p-0 text-primary-text"
-                                            >
-                                                Use Payment Links to sell
-                                                without code
-                                            </Button>
+                                            <div className="flex items-center gap-1">
+                                                Use
+                                                <Button
+                                                    variant="link"
+                                                    size="sm"
+                                                    className="h-auto p-0 text-primary-text"
+                                                >
+                                                    Payment Links
+                                                </Button>
+                                                to sell without code
+                                            </div>
                                             <Separator />
                                             <div className="space-y-2">
-                                                <p className="text-2xs font-medium tracking-wide text-foreground-low uppercase">
+                                                <p className="uppercase">
                                                     API keys
                                                 </p>
                                                 <div className="flex items-center justify-between gap-2 text-xs">
@@ -1019,37 +1052,41 @@ export const StripeDashboard: Story = {
                                 </div>
 
                                 <div className="grid gap-4 sm:grid-cols-2">
-                                    <div className="flex flex-wrap items-end justify-between gap-4 rounded-xl border border-border-low bg-card-1 px-6 py-4">
-                                        <div>
-                                            <p className="text-2xs text-foreground-low">
-                                                CAD balance
-                                            </p>
-                                            <p className="text-xl font-semibold tabular-nums">
+                                    <Card>
+                                        <CardHeader>
+                                            <CardTitle>
+                                                Payout schedule
+                                            </CardTitle>
+                                            <CardDescription>
+                                                Manual · Next review in 2 days
+                                            </CardDescription>
+                                            <CardAction>
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                >
+                                                    Configure
+                                                </Button>
+                                            </CardAction>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div className="flex items-center justify-between gap-2 text-xs">
+                                                <span className="text-foreground-medium">
+                                                    Payout schedule
+                                                </span>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                    <Card>
+                                        <CardHeader>
+                                            <CardTitle>CAD balance</CardTitle>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <p className="text-xl font-semibold text-foreground-high tabular-nums">
                                                 CA$12,119.12
                                             </p>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <Button variant="link" size="sm">
-                                                View
-                                            </Button>
-                                            <Button variant="link" size="sm">
-                                                Payouts
-                                            </Button>
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-wrap items-end justify-between gap-4 rounded-xl border border-dashed border-border-low bg-background-1 px-6 py-4">
-                                        <div>
-                                            <p className="text-2xs text-foreground-low">
-                                                Payout schedule
-                                            </p>
-                                            <p className="text-sm text-foreground-medium">
-                                                Manual · Next review in 2 days
-                                            </p>
-                                        </div>
-                                        <Button variant="outline" size="sm">
-                                            Configure
-                                        </Button>
-                                    </div>
+                                        </CardContent>
+                                    </Card>
                                 </div>
                             </section>
 

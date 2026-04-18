@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@500;700&display=swap");
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -8,14 +8,16 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    /* Font Variant: Stripe-inspired */
+    /* Font Variant: SaaS dashboard-inspired */
     --font-*: initial;
     --font-display:
-        "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
+        "Inter", "Inter var", "Geist Variable", "SF Pro Display", system-ui,
+        sans-serif;
     --font-heading:
-        "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
+        "DM Sans", "Inter", "Geist Variable", "SF Pro Display", system-ui,
+        sans-serif;
     --font-body:
-        "sohne-var", "Geist Variable", "SF Pro Display", system-ui, sans-serif;
+        "Geist Variable", "Geist", "Inter", "SF Pro Text", system-ui, sans-serif;
     --font-mono: "Source Code Pro", "SFMono-Regular", "SF Mono", monospace;
 
     /* Type Scale — based on DESIGN.md */
