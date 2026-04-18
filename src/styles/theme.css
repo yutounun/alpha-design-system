@@ -327,5 +327,5 @@
 }
 
 body {
-    @apply bg-background-1 font-body text-foreground-high;
+    @apply bg-background-1 font-body text-md text-foreground-high;
 }
