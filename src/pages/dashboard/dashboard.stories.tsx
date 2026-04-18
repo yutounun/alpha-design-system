@@ -27,20 +27,12 @@ import {
 } from "lucide-react"
 import { createPortal } from "react-dom"
 import {
-    Area,
-    AreaChart,
     Bar,
     BarChart,
     CartesianGrid,
     Cell,
     LineChart,
-    Pie,
-    PieChart,
-    PolarAngleAxis,
-    PolarGrid,
-    RadarChart,
     Line as RechartsLine,
-    Radar as RechartsRadar,
     XAxis,
     YAxis,
 } from "recharts"
@@ -101,6 +93,12 @@ import {
     SidebarTrigger,
 } from "@/components/sidebar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/tabs"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/tooltip"
 
 const meta = {
     title: "Pages/Dashboard",
@@ -174,43 +172,8 @@ const barDailyDelta = DATE_AXIS.map((date, i) => ({
     delta: [8, -12, 22, 5, 38, -15, 28][i] ?? 0,
 }))
 
-const areaVisits = DATE_AXIS.map((date, i) => ({
-    date,
-    visits: 120 + i * 15 + Math.round(Math.sin(i * 0.9) * 22),
-}))
-
-const pieShare: { channel: string; value: number; fill: string }[] = [
-    { channel: "cards", value: 58, fill: "var(--color-chart-1)" },
-    { channel: "links", value: 24, fill: "var(--color-chart-2)" },
-    { channel: "other", value: 18, fill: "var(--color-chart-3)" },
-]
-
-const radarQuality = [
-    { metric: "Latency", current: 88, baseline: 74 },
-    { metric: "Success", current: 92, baseline: 85 },
-    { metric: "Coverage", current: 76, baseline: 70 },
-    { metric: "Errors", current: 82, baseline: 68 },
-    { metric: "Cost", current: 71, baseline: 79 },
-]
-
 const barConfig = {
     delta: { label: "Daily delta", color: "var(--color-chart-1)" },
-} satisfies ChartConfig
-
-const areaConfig = {
-    visits: { label: "Visits", color: "var(--color-chart-1)" },
-} satisfies ChartConfig
-
-const pieConfig = {
-    value: { label: "Share" },
-    cards: { label: "Cards", color: "var(--color-chart-1)" },
-    links: { label: "Links", color: "var(--color-chart-2)" },
-    other: { label: "Other", color: "var(--color-chart-3)" },
-} satisfies ChartConfig
-
-const radarConfig = {
-    current: { label: "Current", color: "var(--color-chart-1)" },
-    baseline: { label: "Baseline", color: "var(--color-border-medium)" },
 } satisfies ChartConfig
 
 type MiniLineChartProps = {
@@ -336,123 +299,6 @@ function MiniBarChart({
     )
 }
 
-function MiniAreaChart({
-    className,
-    heightClass = "h-40",
-}: {
-    className?: string
-    heightClass?: string
-}) {
-    return (
-        <ChartContainer
-            config={areaConfig}
-            className={cn("aspect-auto w-full", heightClass, className)}
-        >
-            <AreaChart
-                accessibilityLayer
-                data={areaVisits}
-                margin={{ left: 4, right: 8, top: 4, bottom: 0 }}
-            >
-                <CartesianGrid vertical={false} />
-                <XAxis
-                    dataKey="date"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={6}
-                    tick={{
-                        fill: "var(--color-foreground-low)",
-                        fontSize: 10,
-                    }}
-                />
-                <YAxis
-                    orientation="right"
-                    tickLine={false}
-                    axisLine={false}
-                    width={32}
-                    tick={{
-                        fill: "var(--color-foreground-low)",
-                        fontSize: 10,
-                    }}
-                />
-                <ChartTooltip
-                    content={<ChartTooltipContent indicator="line" />}
-                />
-                <Area
-                    dataKey="visits"
-                    type="monotone"
-                    fill="var(--color-visits)"
-                    fillOpacity={0.22}
-                    stroke="var(--color-visits)"
-                />
-            </AreaChart>
-        </ChartContainer>
-    )
-}
-
-function MiniPieChart({
-    className,
-    heightClass = "h-40",
-}: {
-    className?: string
-    heightClass?: string
-}) {
-    return (
-        <ChartContainer
-            config={pieConfig}
-            className={cn("aspect-auto w-full", heightClass, className)}
-        >
-            <PieChart accessibilityLayer>
-                <ChartTooltip
-                    content={
-                        <ChartTooltipContent nameKey="channel" hideLabel />
-                    }
-                />
-                <Pie
-                    data={pieShare}
-                    dataKey="value"
-                    nameKey="channel"
-                    innerRadius={36}
-                    outerRadius={56}
-                    strokeWidth={1}
-                />
-            </PieChart>
-        </ChartContainer>
-    )
-}
-
-function MiniRadarChart({
-    className,
-    heightClass = "min-h-44",
-}: {
-    className?: string
-    heightClass?: string
-}) {
-    return (
-        <ChartContainer
-            config={radarConfig}
-            className={cn("aspect-auto w-full", heightClass, className)}
-        >
-            <RadarChart accessibilityLayer data={radarQuality}>
-                <PolarGrid />
-                <PolarAngleAxis dataKey="metric" />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <RechartsRadar
-                    dataKey="baseline"
-                    fill="var(--color-baseline)"
-                    fillOpacity={0.12}
-                    stroke="var(--color-baseline)"
-                />
-                <RechartsRadar
-                    dataKey="current"
-                    fill="var(--color-current)"
-                    fillOpacity={0.28}
-                    stroke="var(--color-current)"
-                />
-            </RadarChart>
-        </ChartContainer>
-    )
-}
-
 type KpiLineCardProps = {
     label: string
     value: string
@@ -499,34 +345,37 @@ function KpiLineCard({
 }
 
 function SetupGuidePortal() {
+    const [open, setOpen] = useState(true)
+    if (!open) return null
+
     return createPortal(
         <div className="pointer-events-none fixed right-4 bottom-4 z-200 w-80 max-w-[calc(100vw-2rem)]">
             <Card className="pointer-events-auto gap-3 border border-border-low py-4 shadow-lg">
-                <CardHeader className="pb-2">
-                    <div className="flex items-start justify-between gap-2">
-                        <CardTitle className="text-base">Setup guide</CardTitle>
-                        <CardAction className="flex gap-0">
-                            <Button
-                                variant="ghost"
-                                size="icon-sm"
-                                aria-label="Expand setup guide"
-                            >
-                                <Maximize2 />
-                            </Button>
-                            <Button
-                                variant="ghost"
-                                size="icon-sm"
-                                aria-label="Close setup guide"
-                            >
-                                <X />
-                            </Button>
-                        </CardAction>
-                    </div>
+                <CardHeader className="px-4">
+                    <CardTitle className="text-base">Setup guide</CardTitle>
+                    <CardAction className="flex gap-0">
+                        <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            aria-label="Expand setup guide"
+                        >
+                            <Maximize2 />
+                        </Button>
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-sm"
+                            aria-label="Close setup guide"
+                            onClick={() => setOpen(false)}
+                        >
+                            <X />
+                        </Button>
+                    </CardAction>
                     <CardDescription>
                         Complete the checklist to finish onboarding.
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-3">
+                <CardContent className="px-4">
                     <Progress value={40} aria-label="Setup progress" />
                     <div>
                         <p className="text-2xs font-medium text-foreground-low">
@@ -662,714 +511,728 @@ function DashboardHeaderSearch() {
 }
 
 export const StripeDashboard: Story = {
-    render: () => (
-        <>
-            <div className="flex min-h-svh flex-col bg-background-1">
-                <SidebarProvider className="min-h-0 flex-1">
-                    <Sidebar collapsible="icon">
-                        <SidebarHeader>
-                            <SidebarMenu>
-                                <SidebarMenuItem>
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <SidebarMenuButton
-                                                size="lg"
-                                                aria-label="Open workspace menu"
-                                                className="data-[state=open]:bg-fill-low"
-                                            >
-                                                <Avatar className="size-8 rounded-md">
-                                                    <AvatarImage
-                                                        src=""
-                                                        alt=""
-                                                    />
-                                                    <AvatarFallback className="rounded-md text-xs">
-                                                        AC
-                                                    </AvatarFallback>
-                                                </Avatar>
-                                                <div className="grid flex-1 text-left text-sm leading-tight">
-                                                    <span className="truncate font-semibold">
-                                                        Acme Payments
-                                                    </span>
-                                                    <span className="truncate text-xs text-foreground-medium">
-                                                        Sandbox
-                                                    </span>
-                                                </div>
-                                                <ChevronsUpDown className="ml-auto size-4 text-foreground-low" />
-                                            </SidebarMenuButton>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent
-                                            className="w-72"
-                                            align="start"
-                                            side="right"
-                                            sideOffset={8}
-                                        >
-                                            <div className="flex flex-col items-center gap-2 px-2 py-3">
-                                                <Avatar className="size-12 rounded-md">
-                                                    <AvatarImage
-                                                        src=""
-                                                        alt=""
-                                                    />
-                                                    <AvatarFallback className="rounded-md">
-                                                        AC
-                                                    </AvatarFallback>
-                                                </Avatar>
-                                                <div className="text-center">
-                                                    <p className="text-sm font-semibold text-foreground-high">
-                                                        Acme Payments
-                                                    </p>
-                                                    <p className="text-xs text-foreground-medium">
-                                                        Sandbox environment
-                                                    </p>
-                                                </div>
-                                                <Button
-                                                    variant="outline"
-                                                    className="w-full"
+    render: () => {
+        const [showRecommendations, setShowRecommendations] = useState(true)
+        return (
+            <>
+                <TooltipProvider>
+                    <div className="flex min-h-svh flex-col bg-background-1">
+                        <SidebarProvider className="min-h-0 flex-1">
+                            <Sidebar collapsible="icon">
+                                <SidebarHeader>
+                                    <SidebarMenu>
+                                        <SidebarMenuItem>
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <SidebarMenuButton
+                                                        size="lg"
+                                                        aria-label="Open workspace menu"
+                                                        className="data-[state=open]:bg-fill-low"
+                                                    >
+                                                        <Avatar className="size-8 rounded-md">
+                                                            <AvatarImage
+                                                                src=""
+                                                                alt=""
+                                                            />
+                                                            <AvatarFallback className="rounded-md text-xs">
+                                                                AC
+                                                            </AvatarFallback>
+                                                        </Avatar>
+                                                        <div className="grid flex-1 text-left text-sm leading-tight">
+                                                            <span className="truncate font-semibold">
+                                                                Acme Payments
+                                                            </span>
+                                                            <span className="truncate text-xs text-foreground-medium">
+                                                                Sandbox
+                                                            </span>
+                                                        </div>
+                                                        <ChevronsUpDown className="ml-auto size-4 text-foreground-low" />
+                                                    </SidebarMenuButton>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent
+                                                    className="w-72"
+                                                    align="start"
+                                                    side="right"
+                                                    sideOffset={8}
                                                 >
-                                                    Exit sandbox
-                                                </Button>
-                                            </div>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem>
-                                                <Settings />
-                                                Settings
-                                            </DropdownMenuItem>
-                                            <DropdownMenuSub>
-                                                <DropdownMenuSubTrigger>
-                                                    <Layers />
-                                                    Switch workspace
-                                                </DropdownMenuSubTrigger>
-                                                <DropdownMenuSubContent>
+                                                    <div className="flex flex-col items-center gap-2 px-2 py-3">
+                                                        <Avatar className="size-12 rounded-md">
+                                                            <AvatarImage
+                                                                src=""
+                                                                alt=""
+                                                            />
+                                                            <AvatarFallback className="rounded-md">
+                                                                AC
+                                                            </AvatarFallback>
+                                                        </Avatar>
+                                                        <div className="text-center">
+                                                            <p className="text-sm font-semibold text-foreground-high">
+                                                                Acme Payments
+                                                            </p>
+                                                            <p className="text-xs text-foreground-medium">
+                                                                Sandbox
+                                                                environment
+                                                            </p>
+                                                        </div>
+                                                        <Button
+                                                            variant="outline"
+                                                            className="w-full"
+                                                        >
+                                                            Exit sandbox
+                                                        </Button>
+                                                    </div>
+                                                    <DropdownMenuSeparator />
                                                     <DropdownMenuItem>
-                                                        Acme Payments
+                                                        <Settings />
+                                                        Settings
                                                     </DropdownMenuItem>
+                                                    <DropdownMenuSub>
+                                                        <DropdownMenuSubTrigger>
+                                                            <Layers />
+                                                            Switch workspace
+                                                        </DropdownMenuSubTrigger>
+                                                        <DropdownMenuSubContent>
+                                                            <DropdownMenuItem>
+                                                                Acme Payments
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem>
+                                                                Beta Labs
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuSubContent>
+                                                    </DropdownMenuSub>
+                                                    <DropdownMenuSub>
+                                                        <DropdownMenuSubTrigger>
+                                                            <Building2 />
+                                                            Other accounts
+                                                        </DropdownMenuSubTrigger>
+                                                        <DropdownMenuSubContent>
+                                                            <DropdownMenuItem>
+                                                                Northwind
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem>
+                                                                Contoso
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuSubContent>
+                                                    </DropdownMenuSub>
+                                                    <DropdownMenuSeparator />
                                                     <DropdownMenuItem>
-                                                        Beta Labs
+                                                        <User />
+                                                        Alex Rivera
+                                                        <Info className="ml-auto size-4" />
                                                     </DropdownMenuItem>
-                                                </DropdownMenuSubContent>
-                                            </DropdownMenuSub>
-                                            <DropdownMenuSub>
-                                                <DropdownMenuSubTrigger>
-                                                    <Building2 />
-                                                    Other accounts
-                                                </DropdownMenuSubTrigger>
-                                                <DropdownMenuSubContent>
-                                                    <DropdownMenuItem>
-                                                        Northwind
+                                                    <DropdownMenuItem variant="destructive">
+                                                        <LogOut />
+                                                        Sign out
                                                     </DropdownMenuItem>
-                                                    <DropdownMenuItem>
-                                                        Contoso
-                                                    </DropdownMenuItem>
-                                                </DropdownMenuSubContent>
-                                            </DropdownMenuSub>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem>
-                                                <User />
-                                                Alex Rivera
-                                                <Info className="ml-auto size-4" />
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem variant="destructive">
-                                                <LogOut />
-                                                Sign out
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </SidebarMenuItem>
-                            </SidebarMenu>
-                        </SidebarHeader>
-
-                        <SidebarContent>
-                            <SidebarGroup>
-                                <SidebarGroupContent>
-                                    <SidebarMenu>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton
-                                                tooltip="Home"
-                                                isActive
-                                            >
-                                                <Home />
-                                                <span>Home</span>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Balances">
-                                                <Wallet />
-                                                <span>Balances</span>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Transactions">
-                                                <Receipt />
-                                                <span>Transactions</span>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Customers">
-                                                <Users />
-                                                <span>Customers</span>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Product catalog">
-                                                <Package />
-                                                <span>Product catalog</span>
-                                            </SidebarMenuButton>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
                                         </SidebarMenuItem>
                                     </SidebarMenu>
-                                </SidebarGroupContent>
-                            </SidebarGroup>
+                                </SidebarHeader>
 
-                            <SidebarGroup>
-                                <SidebarGroupLabel>Shortcuts</SidebarGroupLabel>
-                                <SidebarGroupContent>
+                                <SidebarContent>
+                                    <SidebarGroup>
+                                        <SidebarGroupContent>
+                                            <SidebarMenu>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton
+                                                        tooltip="Home"
+                                                        isActive
+                                                    >
+                                                        <Home />
+                                                        <span>Home</span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Balances">
+                                                        <Wallet />
+                                                        <span>Balances</span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Transactions">
+                                                        <Receipt />
+                                                        <span>
+                                                            Transactions
+                                                        </span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Customers">
+                                                        <Users />
+                                                        <span>Customers</span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Product catalog">
+                                                        <Package />
+                                                        <span>
+                                                            Product catalog
+                                                        </span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                            </SidebarMenu>
+                                        </SidebarGroupContent>
+                                    </SidebarGroup>
+
+                                    <SidebarGroup>
+                                        <SidebarGroupLabel>
+                                            Shortcuts
+                                        </SidebarGroupLabel>
+                                        <SidebarGroupContent>
+                                            <SidebarMenu>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Subscriptions">
+                                                        <CreditCard />
+                                                        <span>
+                                                            Subscriptions
+                                                        </span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Billing overview">
+                                                        <Banknote />
+                                                        <span>
+                                                            Billing overview
+                                                        </span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Terminal">
+                                                        <SquareTerminal />
+                                                        <span>Terminal</span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Payment Links">
+                                                        <Layers />
+                                                        <span>
+                                                            Payment Links
+                                                        </span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Radar">
+                                                        <RadarIcon />
+                                                        <span>Radar</span>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                            </SidebarMenu>
+                                        </SidebarGroupContent>
+                                    </SidebarGroup>
+
+                                    <SidebarGroup>
+                                        <SidebarGroupLabel>
+                                            Products
+                                        </SidebarGroupLabel>
+                                        <SidebarGroupContent>
+                                            <SidebarMenu>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Payments">
+                                                        <CreditCard />
+                                                        <span>Payments</span>
+                                                        <ChevronRight className="ml-auto size-4 text-foreground-low" />
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Billing">
+                                                        <FileText />
+                                                        <span>Billing</span>
+                                                        <ChevronRight className="ml-auto size-4 text-foreground-low" />
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="Reporting">
+                                                        <Layers />
+                                                        <span>Reporting</span>
+                                                        <ChevronRight className="ml-auto size-4 text-foreground-low" />
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                                <SidebarMenuItem>
+                                                    <SidebarMenuButton tooltip="More">
+                                                        <Package />
+                                                        <span>More</span>
+                                                        <ChevronRight className="ml-auto size-4 text-foreground-low" />
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                            </SidebarMenu>
+                                        </SidebarGroupContent>
+                                    </SidebarGroup>
+                                </SidebarContent>
+
+                                <SidebarFooter>
                                     <SidebarMenu>
                                         <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Subscriptions">
-                                                <CreditCard />
-                                                <span>Subscriptions</span>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Billing overview">
-                                                <Banknote />
-                                                <span>Billing overview</span>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Terminal">
+                                            <SidebarMenuButton tooltip="Developers">
                                                 <SquareTerminal />
-                                                <span>Terminal</span>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Payment Links">
-                                                <Layers />
-                                                <span>Payment Links</span>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Radar">
-                                                <RadarIcon />
-                                                <span>Radar</span>
+                                                <span>Developers</span>
                                             </SidebarMenuButton>
                                         </SidebarMenuItem>
                                     </SidebarMenu>
-                                </SidebarGroupContent>
-                            </SidebarGroup>
+                                </SidebarFooter>
+                            </Sidebar>
 
-                            <SidebarGroup>
-                                <SidebarGroupLabel>Products</SidebarGroupLabel>
-                                <SidebarGroupContent>
-                                    <SidebarMenu>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Payments">
-                                                <CreditCard />
-                                                <span>Payments</span>
-                                                <ChevronRight className="ml-auto size-4 text-foreground-low" />
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Billing">
-                                                <FileText />
-                                                <span>Billing</span>
-                                                <ChevronRight className="ml-auto size-4 text-foreground-low" />
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="Reporting">
-                                                <Layers />
-                                                <span>Reporting</span>
-                                                <ChevronRight className="ml-auto size-4 text-foreground-low" />
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                        <SidebarMenuItem>
-                                            <SidebarMenuButton tooltip="More">
-                                                <Package />
-                                                <span>More</span>
-                                                <ChevronRight className="ml-auto size-4 text-foreground-low" />
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                    </SidebarMenu>
-                                </SidebarGroupContent>
-                            </SidebarGroup>
-                        </SidebarContent>
-
-                        <SidebarFooter>
-                            <SidebarMenu>
-                                <SidebarMenuItem>
-                                    <SidebarMenuButton tooltip="Developers">
-                                        <SquareTerminal />
-                                        <span>Developers</span>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            </SidebarMenu>
-                        </SidebarFooter>
-                    </Sidebar>
-
-                    <SidebarInset>
-                        <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border-low px-4">
-                            <SidebarTrigger />
-                            <div className="relative mx-auto max-w-xl flex-1">
-                                <DashboardHeaderSearch />
-                            </div>
-                            <div className="ml-auto flex items-center gap-1">
-                                <Button
-                                    variant="ghost"
-                                    size="icon-md"
-                                    aria-label="Command palette"
-                                >
-                                    <span className="text-2xs font-medium text-foreground-medium">
-                                        {"\u2318"}K
-                                    </span>
-                                </Button>
-                                <Button
-                                    variant="ghost"
-                                    size="icon-md"
-                                    aria-label="Help"
-                                >
-                                    <HelpCircle />
-                                </Button>
-                                <Button
-                                    variant="ghost"
-                                    size="icon-md"
-                                    aria-label="Notifications"
-                                >
-                                    <Bell />
-                                </Button>
-                                <Button
-                                    variant="ghost"
-                                    size="icon-md"
-                                    aria-label="Settings"
-                                >
-                                    <Settings />
-                                </Button>
-                                <Button
-                                    variant="ghost"
-                                    size="icon-md"
-                                    aria-label="Create"
-                                >
-                                    <Plus />
-                                </Button>
-                                <Avatar className="size-8">
-                                    <AvatarImage src="" alt="" />
-                                    <AvatarFallback className="text-xs">
-                                        AR
-                                    </AvatarFallback>
-                                </Avatar>
-                            </div>
-                        </header>
-
-                        <div className="flex-1 space-y-8 overflow-auto p-6">
-                            <section className="space-y-4">
-                                <h1 className="font-heading text-2xl font-semibold text-foreground-high">
-                                    Today
-                                </h1>
-                                <div className="grid gap-4 lg:grid-cols-3">
-                                    <Card className="gap-4 py-5 lg:col-span-2">
-                                        <CardHeader className="pb-0">
-                                            <div className="flex flex-wrap items-start justify-between gap-4">
-                                                <div>
-                                                    <CardTitle className="text-base">
-                                                        Gross volume
-                                                    </CardTitle>
-                                                    <CardDescription>
-                                                        Yesterday · CA$0.00
-                                                    </CardDescription>
-                                                </div>
-                                                <p className="text-2xl font-semibold text-foreground-high tabular-nums">
-                                                    CA$300.00
-                                                </p>
-                                            </div>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <MiniLineChart
-                                                data={todaySparkline}
-                                                heightClass="h-32"
-                                            />
-                                        </CardContent>
-                                    </Card>
-
-                                    <Card className="gap-3 py-4">
-                                        <CardHeader className="pb-2">
-                                            <CardTitle className="text-base">
-                                                Recommendations
-                                            </CardTitle>
-                                            <CardDescription>
-                                                Finish setup to go live faster.
-                                            </CardDescription>
-                                            <CardAction>
+                            <SidebarInset>
+                                <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border-low px-4">
+                                    <SidebarTrigger />
+                                    <div className="relative mx-auto max-w-xl flex-1">
+                                        <DashboardHeaderSearch />
+                                    </div>
+                                    <div className="ml-auto flex items-center gap-1">
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
                                                 <Button
                                                     variant="ghost"
-                                                    size="icon-sm"
-                                                    aria-label="Dismiss"
+                                                    size="icon-md"
+                                                    aria-label="Command palette"
                                                 >
-                                                    <X />
-                                                </Button>
-                                            </CardAction>
-                                        </CardHeader>
-                                        <CardContent className="space-y-3 text-sm">
-                                            <div className="flex items-center gap-1">
-                                                Use
-                                                <Button
-                                                    variant="link"
-                                                    size="sm"
-                                                    className="h-auto p-0 text-primary-text"
-                                                >
-                                                    Payment Links
-                                                </Button>
-                                                to sell without code
-                                            </div>
-                                            <Separator />
-                                            <div className="space-y-2">
-                                                <p className="uppercase">
-                                                    API keys
-                                                </p>
-                                                <div className="flex items-center justify-between gap-2 text-xs">
-                                                    <span className="text-foreground-medium">
-                                                        Publishable
+                                                    <span className="text-2xs font-medium text-foreground-medium">
+                                                        {"\u2318"}K
                                                     </span>
-                                                    <code className="truncate font-mono text-foreground-low">
-                                                        pk_test_••••8f2a
-                                                    </code>
-                                                </div>
-                                                <div className="flex items-center justify-between gap-2 text-xs">
-                                                    <span className="text-foreground-medium">
-                                                        Secret
-                                                    </span>
-                                                    <code className="truncate font-mono text-foreground-low">
-                                                        sk_test_••••91c4
-                                                    </code>
-                                                </div>
-                                                <Button
-                                                    variant="link"
-                                                    size="sm"
-                                                    className="h-auto p-0"
-                                                >
-                                                    View docs
                                                 </Button>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                </div>
-
-                                <div className="grid gap-4 sm:grid-cols-2">
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle>
-                                                Payout schedule
-                                            </CardTitle>
-                                            <CardDescription>
-                                                Manual · Next review in 2 days
-                                            </CardDescription>
-                                            <CardAction>
+                                            </TooltipTrigger>
+                                            <TooltipContent side="bottom">
+                                                {`Command palette (\u2318K)`}
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
                                                 <Button
-                                                    variant="outline"
-                                                    size="sm"
+                                                    variant="ghost"
+                                                    size="icon-md"
+                                                    aria-label="Help"
                                                 >
-                                                    Configure
+                                                    <HelpCircle />
                                                 </Button>
-                                            </CardAction>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <div className="flex items-center justify-between gap-2 text-xs">
-                                                <span className="text-foreground-medium">
-                                                    Payout schedule
-                                                </span>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle>CAD balance</CardTitle>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <p className="text-xl font-semibold text-foreground-high tabular-nums">
-                                                CA$12,119.12
-                                            </p>
-                                        </CardContent>
-                                    </Card>
-                                </div>
-                            </section>
-
-                            <Separator />
-
-                            <section className="space-y-4">
-                                <h2 className="font-heading text-xl font-semibold text-foreground-high">
-                                    Chart gallery
-                                </h2>
-                                <p className="text-sm text-foreground-medium">
-                                    Five chart types plus one empty state
-                                    (sample data for Storybook only).
-                                </p>
-                                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                                    <Card className="gap-3 py-4">
-                                        <CardHeader className="pb-0">
-                                            <CardTitle className="text-sm font-medium">
-                                                Line — gross trend
-                                            </CardTitle>
-                                            <CardDescription>
-                                                Current vs previous period
-                                            </CardDescription>
-                                        </CardHeader>
-                                        <CardContent className="pt-2">
-                                            <MiniLineChart
-                                                data={grossVolumeSeries}
-                                                heightClass="h-36"
-                                            />
-                                        </CardContent>
-                                    </Card>
-
-                                    <Card className="gap-3 py-4">
-                                        <CardHeader className="pb-0">
-                                            <CardTitle className="text-sm font-medium">
-                                                Bar — daily net change
-                                            </CardTitle>
-                                            <CardDescription>
-                                                Positive and negative days
-                                            </CardDescription>
-                                        </CardHeader>
-                                        <CardContent className="pt-2">
-                                            <MiniBarChart heightClass="h-36" />
-                                        </CardContent>
-                                    </Card>
-
-                                    <Card className="gap-3 py-4">
-                                        <CardHeader className="pb-0">
-                                            <CardTitle className="text-sm font-medium">
-                                                Area — traffic
-                                            </CardTitle>
-                                            <CardDescription>
-                                                Smoothed visit volume
-                                            </CardDescription>
-                                        </CardHeader>
-                                        <CardContent className="pt-2">
-                                            <MiniAreaChart heightClass="h-36" />
-                                        </CardContent>
-                                    </Card>
-
-                                    <Card className="gap-3 py-4">
-                                        <CardHeader className="pb-0">
-                                            <CardTitle className="text-sm font-medium">
-                                                Pie — checkout mix
-                                            </CardTitle>
-                                            <CardDescription>
-                                                Share by payment surface
-                                            </CardDescription>
-                                        </CardHeader>
-                                        <CardContent className="pt-2">
-                                            <MiniPieChart heightClass="h-36" />
-                                        </CardContent>
-                                    </Card>
-
-                                    <Card className="gap-3 py-4">
-                                        <CardHeader className="pb-0">
-                                            <CardTitle className="text-sm font-medium">
-                                                Radar — health snapshot
-                                            </CardTitle>
-                                            <CardDescription>
-                                                Current vs baseline
-                                            </CardDescription>
-                                        </CardHeader>
-                                        <CardContent className="pt-2">
-                                            <MiniRadarChart heightClass="min-h-40" />
-                                        </CardContent>
-                                    </Card>
-
-                                    <Card className="gap-3 py-8">
-                                        <CardHeader>
-                                            <CardTitle className="text-sm font-medium">
-                                                No data
-                                            </CardTitle>
-                                            <CardDescription>
-                                                Waiting for first events
-                                            </CardDescription>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <div className="flex min-h-36 items-center justify-center rounded-lg border border-dashed border-border-low bg-background-2 text-sm text-foreground-low">
-                                                No data
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                </div>
-                            </section>
-
-                            <Separator />
-
-                            <section className="space-y-4">
-                                <Tabs
-                                    defaultValue="charts"
-                                    className="w-full gap-4"
-                                >
-                                    <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                                        <h2 className="font-heading text-xl font-semibold text-foreground-high">
-                                            Your overview
-                                        </h2>
-                                        <TabsList
-                                            variant="line"
-                                            className="w-full justify-start lg:w-auto"
-                                        >
-                                            <TabsTrigger value="charts">
-                                                Charts
-                                            </TabsTrigger>
-                                            <TabsTrigger value="table">
-                                                Table
-                                            </TabsTrigger>
-                                        </TabsList>
+                                            </TooltipTrigger>
+                                            <TooltipContent side="bottom">
+                                                Help
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon-md"
+                                                    aria-label="Notifications"
+                                                >
+                                                    <Bell />
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent side="bottom">
+                                                Notifications
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon-md"
+                                                    aria-label="Settings"
+                                                >
+                                                    <Settings />
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent side="bottom">
+                                                Settings
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon-md"
+                                                    aria-label="Create"
+                                                >
+                                                    <Plus />
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent side="bottom">
+                                                Create
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <button
+                                                    type="button"
+                                                    className={cn(
+                                                        "inline-flex shrink-0 rounded-full outline-none",
+                                                        "focus-visible:ring-ring focus-visible:ring-3"
+                                                    )}
+                                                    aria-label="Account"
+                                                >
+                                                    <Avatar className="size-8">
+                                                        <AvatarImage
+                                                            src=""
+                                                            alt=""
+                                                        />
+                                                        <AvatarFallback className="text-xs">
+                                                            AR
+                                                        </AvatarFallback>
+                                                    </Avatar>
+                                                </button>
+                                            </TooltipTrigger>
+                                            <TooltipContent side="bottom">
+                                                Account
+                                            </TooltipContent>
+                                        </Tooltip>
                                     </div>
+                                </header>
 
-                                    <div className="flex flex-wrap items-center justify-between gap-3">
-                                        <div className="flex flex-wrap gap-2">
-                                            <Button variant="outline" size="sm">
-                                                Date range · Last 7 days
-                                            </Button>
-                                            <Button variant="outline" size="sm">
-                                                Daily
-                                            </Button>
-                                            <Button variant="outline" size="sm">
-                                                Compare · Previous period
-                                            </Button>
+                                <div className="flex-1 space-y-8 overflow-auto p-6">
+                                    <section className="space-y-4">
+                                        <h1 className="font-heading text-2xl font-semibold text-foreground-high">
+                                            Today
+                                        </h1>
+                                        <div className="grid gap-4 lg:grid-cols-3">
+                                            <Card
+                                                className={cn(
+                                                    showRecommendations
+                                                        ? "lg:col-span-2"
+                                                        : "lg:col-span-3"
+                                                )}
+                                            >
+                                                <CardHeader className="pb-0">
+                                                    <div className="flex flex-wrap items-start justify-between gap-4">
+                                                        <div>
+                                                            <CardTitle className="text-base">
+                                                                Gross volume
+                                                            </CardTitle>
+                                                            <CardDescription>
+                                                                Yesterday ·
+                                                                CA$0.00
+                                                            </CardDescription>
+                                                        </div>
+                                                        <p className="text-2xl font-semibold text-foreground-high tabular-nums">
+                                                            CA$300.00
+                                                        </p>
+                                                    </div>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <MiniLineChart
+                                                        data={todaySparkline}
+                                                        heightClass="h-32"
+                                                    />
+                                                </CardContent>
+                                            </Card>
+                                            {showRecommendations && (
+                                                <Card className="gap-3 py-4">
+                                                    <CardHeader className="pb-2">
+                                                        <CardTitle className="text-base">
+                                                            Recommendations
+                                                        </CardTitle>
+                                                        <CardDescription>
+                                                            Finish setup to go
+                                                            live faster.
+                                                        </CardDescription>
+                                                        <CardAction>
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon-sm"
+                                                                aria-label="Dismiss"
+                                                                onClick={() => {
+                                                                    setShowRecommendations(
+                                                                        false
+                                                                    )
+                                                                }}
+                                                            >
+                                                                <X />
+                                                            </Button>
+                                                        </CardAction>
+                                                    </CardHeader>
+                                                    <CardContent className="space-y-3 text-sm">
+                                                        <div className="flex items-center gap-1">
+                                                            Use
+                                                            <Button
+                                                                variant="link"
+                                                                size="sm"
+                                                                className="h-auto p-0 text-primary-text"
+                                                            >
+                                                                Payment Links
+                                                            </Button>
+                                                            to sell without code
+                                                        </div>
+                                                        <Separator />
+                                                        <div className="space-y-2">
+                                                            <p className="uppercase">
+                                                                API keys
+                                                            </p>
+                                                            <div className="flex items-center justify-between gap-2 text-xs">
+                                                                <span className="text-foreground-medium">
+                                                                    Publishable
+                                                                </span>
+                                                                <code className="truncate font-mono text-foreground-low">
+                                                                    pk_test_••••8f2a
+                                                                </code>
+                                                            </div>
+                                                            <div className="flex items-center justify-between gap-2 text-xs">
+                                                                <span className="text-foreground-medium">
+                                                                    Secret
+                                                                </span>
+                                                                <code className="truncate font-mono text-foreground-low">
+                                                                    sk_test_••••91c4
+                                                                </code>
+                                                            </div>
+                                                            <Button
+                                                                variant="link"
+                                                                size="sm"
+                                                                className="h-auto p-0"
+                                                            >
+                                                                View docs
+                                                            </Button>
+                                                        </div>
+                                                    </CardContent>
+                                                </Card>
+                                            )}
                                         </div>
-                                        <div className="flex gap-2">
-                                            <Button variant="outline" size="sm">
-                                                Add
-                                            </Button>
-                                            <Button variant="outline" size="sm">
-                                                Edit
-                                            </Button>
-                                        </div>
-                                    </div>
 
-                                    <TabsContent
-                                        value="charts"
-                                        className="mt-0"
-                                    >
-                                        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                            <Card className="gap-3 py-8">
+                                        <div className="grid gap-4 sm:grid-cols-2">
+                                            <Card>
                                                 <CardHeader>
-                                                    <CardTitle className="text-sm font-medium">
-                                                        Payments
+                                                    <CardTitle>
+                                                        Payout schedule
+                                                    </CardTitle>
+                                                    <CardDescription>
+                                                        Manual · Next review in
+                                                        2 days
+                                                    </CardDescription>
+                                                    <CardAction>
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
+                                                        >
+                                                            Configure
+                                                        </Button>
+                                                    </CardAction>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <div className="flex items-center justify-between gap-2 text-xs">
+                                                        <span className="text-foreground-medium">
+                                                            Payout schedule
+                                                        </span>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                            <Card>
+                                                <CardHeader>
+                                                    <CardTitle>
+                                                        CAD balance
                                                     </CardTitle>
                                                 </CardHeader>
                                                 <CardContent>
-                                                    <div className="flex min-h-36 items-center justify-center rounded-lg border border-dashed border-border-low bg-background-2 text-sm text-foreground-low">
-                                                        No data
-                                                    </div>
+                                                    <p className="text-xl font-semibold text-foreground-high tabular-nums">
+                                                        CA$12,119.12
+                                                    </p>
                                                 </CardContent>
                                             </Card>
-
-                                            <KpiLineCard
-                                                label="Gross volume"
-                                                value="CA$1,032.19"
-                                                delta="-44.35%"
-                                                deltaPositive={false}
-                                                data={grossVolumeSeries}
-                                            />
-
-                                            <KpiLineCard
-                                                label="MRR"
-                                                value="CA$2,085.28"
-                                                delta="+3.12%"
-                                                data={mrrSeries}
-                                            />
-
-                                            <KpiLineCard
-                                                label="Net volume"
-                                                value="CA$892.40"
-                                                delta="-2.10%"
-                                                deltaPositive={false}
-                                                data={netVolumeSeries}
-                                            />
-
-                                            <Card className="gap-3 py-4">
-                                                <CardHeader className="pb-2">
-                                                    <div className="grid gap-1">
-                                                        <span className="text-2xs text-foreground-low">
-                                                            Failed payments
-                                                        </span>
-                                                        <span className="text-xl font-semibold text-foreground-high tabular-nums">
-                                                            3
-                                                        </span>
-                                                        <span className="text-2xs font-medium text-success-text">
-                                                            -18% vs previous
-                                                        </span>
-                                                    </div>
-                                                </CardHeader>
-                                                <CardContent className="pt-0">
-                                                    <MiniBarChart heightClass="h-32" />
-                                                </CardContent>
-                                            </Card>
-
-                                            <KpiLineCard
-                                                label="New customers"
-                                                value="18"
-                                                delta="+12.5%"
-                                                data={newCustomersSeries}
-                                            />
                                         </div>
-                                    </TabsContent>
+                                    </section>
 
-                                    <TabsContent value="table" className="mt-0">
+                                    <Separator />
+
+                                    <section className="space-y-4">
+                                        <Tabs
+                                            defaultValue="charts"
+                                            className="w-full gap-4"
+                                        >
+                                            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                                                <h2 className="font-heading text-xl font-semibold text-foreground-high">
+                                                    Your overview
+                                                </h2>
+                                                <TabsList
+                                                    variant="line"
+                                                    className="w-full justify-start lg:w-auto"
+                                                >
+                                                    <TabsTrigger value="charts">
+                                                        Charts
+                                                    </TabsTrigger>
+                                                    <TabsTrigger value="table">
+                                                        Table
+                                                    </TabsTrigger>
+                                                </TabsList>
+                                            </div>
+
+                                            <div className="flex flex-wrap items-center justify-between gap-3">
+                                                <div className="flex flex-wrap gap-2">
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                    >
+                                                        Date range · Last 7 days
+                                                    </Button>
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                    >
+                                                        Daily
+                                                    </Button>
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                    >
+                                                        Compare · Previous
+                                                        period
+                                                    </Button>
+                                                </div>
+                                                <div className="flex gap-2">
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                    >
+                                                        Add
+                                                    </Button>
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                </div>
+                                            </div>
+
+                                            <TabsContent
+                                                value="charts"
+                                                className="mt-0"
+                                            >
+                                                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                                                    <Card className="gap-3 py-8">
+                                                        <CardHeader>
+                                                            <CardTitle className="text-sm font-medium">
+                                                                Payments
+                                                            </CardTitle>
+                                                        </CardHeader>
+                                                        <CardContent>
+                                                            <div className="flex min-h-36 items-center justify-center rounded-lg border border-dashed border-border-low bg-background-2 text-sm text-foreground-low">
+                                                                No data
+                                                            </div>
+                                                        </CardContent>
+                                                    </Card>
+
+                                                    <KpiLineCard
+                                                        label="Gross volume"
+                                                        value="CA$1,032.19"
+                                                        delta="-44.35%"
+                                                        deltaPositive={false}
+                                                        data={grossVolumeSeries}
+                                                    />
+
+                                                    <KpiLineCard
+                                                        label="MRR"
+                                                        value="CA$2,085.28"
+                                                        delta="+3.12%"
+                                                        data={mrrSeries}
+                                                    />
+
+                                                    <KpiLineCard
+                                                        label="Net volume"
+                                                        value="CA$892.40"
+                                                        delta="-2.10%"
+                                                        deltaPositive={false}
+                                                        data={netVolumeSeries}
+                                                    />
+
+                                                    <Card className="gap-3 py-4">
+                                                        <CardHeader className="pb-2">
+                                                            <div className="grid gap-1">
+                                                                <span className="text-2xs text-foreground-low">
+                                                                    Failed
+                                                                    payments
+                                                                </span>
+                                                                <span className="text-xl font-semibold text-foreground-high tabular-nums">
+                                                                    3
+                                                                </span>
+                                                                <span className="text-2xs font-medium text-success-text">
+                                                                    -18% vs
+                                                                    previous
+                                                                </span>
+                                                            </div>
+                                                        </CardHeader>
+                                                        <CardContent className="pt-0">
+                                                            <MiniBarChart heightClass="h-32" />
+                                                        </CardContent>
+                                                    </Card>
+
+                                                    <KpiLineCard
+                                                        label="New customers"
+                                                        value="18"
+                                                        delta="+12.5%"
+                                                        data={
+                                                            newCustomersSeries
+                                                        }
+                                                    />
+                                                </div>
+                                            </TabsContent>
+
+                                            <TabsContent
+                                                value="table"
+                                                className="mt-0"
+                                            >
+                                                <Card>
+                                                    <CardContent className="py-12 text-center text-sm text-foreground-medium">
+                                                        Table view is a
+                                                        placeholder for this
+                                                        showcase story.
+                                                    </CardContent>
+                                                </Card>
+                                            </TabsContent>
+                                        </Tabs>
+                                    </section>
+
+                                    <div className="grid gap-4 lg:grid-cols-2">
                                         <Card>
-                                            <CardContent className="py-12 text-center text-sm text-foreground-medium">
-                                                Table view is a placeholder for
-                                                this showcase story.
+                                            <CardHeader>
+                                                <CardTitle className="text-base">
+                                                    Top customers by spend
+                                                </CardTitle>
+                                                <CardDescription>
+                                                    Last 7 days · ranked by
+                                                    gross volume
+                                                </CardDescription>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <div className="flex min-h-40 items-center justify-center rounded-lg border border-dashed border-border-low bg-background-2 text-sm text-foreground-low">
+                                                    No customers yet
+                                                </div>
+                                            </CardContent>
+                                            <CardFooter>
+                                                <Button
+                                                    variant="outline"
+                                                    size="md"
+                                                >
+                                                    View all customers
+                                                </Button>
+                                            </CardFooter>
+                                        </Card>
+
+                                        <Card className="gap-3 py-4">
+                                            <CardHeader className="pb-2">
+                                                <div className="grid gap-1">
+                                                    <span className="text-2xs text-foreground-low">
+                                                        Active subscribers
+                                                    </span>
+                                                    <span className="text-2xl font-semibold text-foreground-high tabular-nums">
+                                                        37
+                                                    </span>
+                                                    <span className="text-2xs font-medium text-success-text">
+                                                        +5.7% vs previous period
+                                                    </span>
+                                                </div>
+                                            </CardHeader>
+                                            <CardContent className="pt-0">
+                                                <MiniLineChart
+                                                    data={subscribersSparkline}
+                                                    heightClass="h-32"
+                                                />
                                             </CardContent>
                                         </Card>
-                                    </TabsContent>
-                                </Tabs>
-                            </section>
-
-                            <div className="grid gap-4 lg:grid-cols-2">
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle className="text-base">
-                                            Top customers by spend
-                                        </CardTitle>
-                                        <CardDescription>
-                                            Last 7 days · ranked by gross volume
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="flex min-h-40 items-center justify-center rounded-lg border border-dashed border-border-low bg-background-2 text-sm text-foreground-low">
-                                            No customers yet
-                                        </div>
-                                    </CardContent>
-                                    <CardFooter className="border-t border-border-low">
-                                        <Button
-                                            variant="link"
-                                            className="h-auto p-0"
-                                        >
-                                            View all customers
-                                        </Button>
-                                    </CardFooter>
-                                </Card>
-
-                                <Card className="gap-3 py-4">
-                                    <CardHeader className="pb-2">
-                                        <div className="grid gap-1">
-                                            <span className="text-2xs text-foreground-low">
-                                                Active subscribers
-                                            </span>
-                                            <span className="text-2xl font-semibold text-foreground-high tabular-nums">
-                                                37
-                                            </span>
-                                            <span className="text-2xs font-medium text-success-text">
-                                                +5.7% vs previous period
-                                            </span>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent className="pt-0">
-                                        <MiniLineChart
-                                            data={subscribersSparkline}
-                                            heightClass="h-32"
-                                        />
-                                    </CardContent>
-                                </Card>
-                            </div>
-                        </div>
-                    </SidebarInset>
-                </SidebarProvider>
-            </div>
-            <SetupGuidePortal />
-        </>
-    ),
+                                    </div>
+                                </div>
+                            </SidebarInset>
+                        </SidebarProvider>
+                    </div>
+                </TooltipProvider>
+                <SetupGuidePortal />
+            </>
+        )
+    },
 }

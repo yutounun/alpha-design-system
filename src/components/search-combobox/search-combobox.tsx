@@ -104,9 +104,9 @@ function SearchComboboxItem({
             className={cn(
                 "flex cursor-default items-center gap-2",
                 "rounded-sm px-2 py-1.5 text-sm outline-none",
-                "text-foreground-high select-none",
+                "text-foreground-medium select-none",
                 "aria-selected:bg-fill-low",
-                "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+                "disabled:pointer-events-none disabled:opacity-50",
                 "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
                 className
             )}
