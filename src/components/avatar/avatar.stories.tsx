@@ -22,8 +22,11 @@ export const Default: Story = {
 
 export const WithImage: Story = {
     render: () => (
-        <Avatar className="size-10">
-            <AvatarImage src="https://github.com/shadcn.png" alt="Avatar" />
+        <Avatar>
+            <AvatarImage
+                src="https://images.unsplash.com/photo-1559821137-4d09fb04686c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGdpdGx8ZW58MHx8MHx8fDA%3D"
+                alt="Avatar"
+            />
             <AvatarFallback>CN</AvatarFallback>
         </Avatar>
     ),
@@ -31,7 +34,7 @@ export const WithImage: Story = {
 
 export const RoundedFull: Story = {
     render: () => (
-        <Avatar className="size-10 rounded-full">
+        <Avatar className="rounded-full">
             <AvatarImage src="" alt="User" />
             <AvatarFallback>JD</AvatarFallback>
         </Avatar>
