@@ -196,8 +196,7 @@
     --color-inv-foreground-high-hover: rgba(255, 255, 255, 0.9);
     --color-inv-foreground-high-active: rgba(255, 255, 255, 0.8);
 
-    /* Surface & Shadow */
-    --color-surface-deep: #0d253d;
+    /* Overlay & shadow */
     /* Drawer / modal backdrop — translucent black (light UI). */
     --color-overlay-scrim: rgba(0, 0, 0, 0.36);
     --shadow-sm-top: rgba(0, 55, 112, 0.08);
@@ -310,7 +309,6 @@
     --color-inv-foreground-high-hover: #273951;
     --color-inv-foreground-high-active: #1a2940;
     --color-skeleton: rgba(255, 255, 255, 0.08);
-    --color-surface-deep: #020308;
     --color-overlay-scrim: rgba(0, 0, 0, 0.55);
 }
 

@@ -30,7 +30,6 @@ What truly distinguishes Stripe is its shadow system. Rather than the flat or si
 ### Brand & Dark
 
 - **Brand Dark** (`#1c1e54`): `--color-brand`. Deep indigo for dark sections, footer backgrounds, and immersive brand moments.
-- **Dark Navy** (`#0d253d`): `--color-surface-deep`. The darkest neutral -- almost-black with a blue undertone for maximum depth without harshness.
 
 ### Accent Colors
 

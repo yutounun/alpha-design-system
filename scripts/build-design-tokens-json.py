@@ -141,7 +141,6 @@ DESCRIPTIONS: dict[str, str] = {
     "--color-foreground-high-active": "foreground-high text active.",
     "--color-inv-foreground-high-hover": "Inverse high-contrast text hover.",
     "--color-inv-foreground-high-active": "Inverse high-contrast text active.",
-    "--color-surface-deep": "Deepest dark navy surface for maximum depth.",
     "--color-overlay-scrim": "Translucent black backdrop scrim for drawers and overlays.",
     "--shadow-sm-top": "Top-edge shadow for sticky headers and toolbars.",
     "--color-inv-fill-high": "Strong inverse fill for cards on brand-dark sections.",
@@ -207,7 +206,7 @@ def category_for(name: str) -> tuple[str, str]:
         return "chart", "Chart and data visualization"
     if name == "--color-skeleton":
         return "skeleton", "Skeleton loading"
-    if name in ("--color-surface-deep", "--color-overlay-scrim"):
+    if name == "--color-overlay-scrim":
         return "surface", "Surface depth"
     if name.startswith("--color-transparent") or name.startswith("--color-inv-transparent"):
         return "interaction", "Interaction (transparent hover washes)"
