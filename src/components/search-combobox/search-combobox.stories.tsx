@@ -132,12 +132,16 @@ export const WithFooter: Story = {
                 <SearchComboboxInput placeholder="Search…" />
                 <SearchComboboxList>
                     <SearchComboboxEmpty>No results</SearchComboboxEmpty>
-                    <SearchComboboxItem value="one">
-                        First result
-                    </SearchComboboxItem>
-                    <SearchComboboxFooter value="view-all" onSelect={fn()}>
-                        View all results
-                    </SearchComboboxFooter>
+                    <SearchComboboxGroup>
+                        <SearchComboboxItem value="one">
+                            First result
+                        </SearchComboboxItem>
+                    </SearchComboboxGroup>
+                    <SearchComboboxGroup>
+                        <SearchComboboxFooter value="view-all" onSelect={fn()}>
+                            View all results
+                        </SearchComboboxFooter>
+                    </SearchComboboxGroup>
                 </SearchComboboxList>
             </SearchComboboxRoot>
         </div>

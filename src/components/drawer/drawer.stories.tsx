@@ -36,6 +36,11 @@ export const Default: Story = {
                         Supporting description for the drawer panel.
                     </DrawerDescription>
                 </DrawerHeader>
+                <ul>
+                    <li className="py-2 text-sm">Profile</li>
+                    <li className="py-2 text-sm">Settings</li>
+                    <li className="py-2 text-sm">Logout</li>
+                </ul>
                 <DrawerFooter>
                     <DrawerClose asChild>
                         <Button variant="outline">Close</Button>
@@ -57,22 +62,4 @@ export const Default: Story = {
             ).toBeVisible()
         })
     },
-}
-
-export const LeftSide: Story = {
-    render: () => (
-        <Drawer direction="left">
-            <DrawerTrigger asChild>
-                <Button variant="outline">Open left</Button>
-            </DrawerTrigger>
-            <DrawerContent>
-                <DrawerHeader>
-                    <DrawerTitle>Left panel</DrawerTitle>
-                    <DrawerDescription>
-                        Content from the left edge.
-                    </DrawerDescription>
-                </DrawerHeader>
-            </DrawerContent>
-        </Drawer>
-    ),
 }

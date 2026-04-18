@@ -463,12 +463,14 @@ function DashboardSearchComboboxSuggestions({
                     <span>Help: Payouts</span>
                 </SearchComboboxItem>
             </SearchComboboxGroup>
-            <SearchComboboxFooter
-                value="view-all-results"
-                onSelect={onSelectItem}
-            >
-                View all results
-            </SearchComboboxFooter>
+            <SearchComboboxGroup>
+                <SearchComboboxFooter
+                    value="view-all-results"
+                    onSelect={onSelectItem}
+                >
+                    View all results
+                </SearchComboboxFooter>
+            </SearchComboboxGroup>
         </div>
     )
 }
@@ -585,10 +587,12 @@ function DashboardHeaderSearchMobile() {
                         aria-haspopup="listbox"
                         className="rounded-md border border-border-medium"
                     />
-                    <DashboardSearchComboboxSuggestions
-                        isMobile={true}
-                        onSelectItem={closeDrawer}
-                    />
+                    <SearchComboboxList className="border-0 p-0 shadow-none">
+                        <DashboardSearchComboboxSuggestions
+                            isMobile={true}
+                            onSelectItem={closeDrawer}
+                        />
+                    </SearchComboboxList>
                 </SearchComboboxRoot>
             </DrawerContent>
         </Drawer>

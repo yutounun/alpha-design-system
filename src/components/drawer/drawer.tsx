@@ -4,10 +4,21 @@ import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@/lib/utils"
 
-function Drawer({
-    ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Root>) {
-    return <DrawerPrimitive.Root data-slot="drawer" {...props} />
+export type DrawerProps = Omit<
+    React.ComponentProps<typeof DrawerPrimitive.Root>,
+    "direction"
+> & {
+    /** Side panels use `Sheet` instead; only vertical sheet edges are supported here. */
+    direction?: "top" | "bottom"
+}
+
+function Drawer(props: DrawerProps) {
+    return (
+        <DrawerPrimitive.Root
+            data-slot="drawer"
+            {...(props as React.ComponentProps<typeof DrawerPrimitive.Root>)}
+        />
+    )
 }
 
 function DrawerTrigger({
@@ -66,6 +77,7 @@ function DrawerContent({
                 data-slot="drawer-content"
                 className={cn(
                     "group/drawer-content fixed z-50 flex h-auto flex-col",
+                    "min-h-60 px-4",
                     "bg-background-1 shadow-lg",
                     "data-[vaul-drawer-direction=top]:inset-x-0",
                     "data-[vaul-drawer-direction=top]:top-0",
@@ -79,20 +91,6 @@ function DrawerContent({
                     "data-[vaul-drawer-direction=bottom]:rounded-t-xl",
                     "data-[vaul-drawer-direction=bottom]:border-t",
                     "data-[vaul-drawer-direction=bottom]:border-border-low",
-                    "data-[vaul-drawer-direction=right]:inset-y-0",
-                    "data-[vaul-drawer-direction=right]:right-0",
-                    "data-[vaul-drawer-direction=right]:h-full",
-                    "data-[vaul-drawer-direction=right]:w-3/4",
-                    "data-[vaul-drawer-direction=right]:border-l",
-                    "data-[vaul-drawer-direction=right]:border-border-low",
-                    "data-[vaul-drawer-direction=right]:sm:max-w-sm",
-                    "data-[vaul-drawer-direction=left]:inset-y-0",
-                    "data-[vaul-drawer-direction=left]:left-0",
-                    "data-[vaul-drawer-direction=left]:h-full",
-                    "data-[vaul-drawer-direction=left]:w-3/4",
-                    "data-[vaul-drawer-direction=left]:border-r",
-                    "data-[vaul-drawer-direction=left]:border-border-low",
-                    "data-[vaul-drawer-direction=left]:sm:max-w-sm",
                     "outline-none focus-visible:ring-3",
                     "focus-visible:ring-focus-ring",
                     className

@@ -1,10 +1,4 @@
-import {
-    Canvas,
-    Controls,
-    Meta,
-    Primary,
-    Title,
-} from "@storybook/addon-docs/blocks"
+import { Controls, Meta, Primary, Title } from "@storybook/addon-docs/blocks"
 
 import * as DrawerStories from "./drawer.stories"
 
@@ -12,7 +6,7 @@ import * as DrawerStories from "./drawer.stories"
 
 <Title />
 
-The **Drawer** is a slide-over panel built on **Vaul**. Set **Drawer** `direction` for edge placement (`bottom` is the default).
+The **Drawer** is a bottom (or top) sheet built on **Vaul**. For side panels, use **Sheet** instead. `direction` accepts `top` or `bottom` (`bottom` is the default).
 
 ## Usage
 
@@ -58,7 +52,3 @@ export function Example() {
 ## Interactive props
 
 <Controls of={DrawerStories.Default} />
-
-### Left side
-
-<Canvas of={DrawerStories.LeftSide} />
