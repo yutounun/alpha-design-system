@@ -1,5 +1,13 @@
 # alpha-design-system
 
+## 0.4.0
+
+### Minor Changes
+
+- e4eb090: Add Drawer component backed by vaul, and use it on the dashboard mobile header to show search input and autocomplete from a bottom drawer.
+- fc4b130: Add Progress component (linear, determinate/indeterminate) built on Radix Progress.
+- b678554: Add `SearchInput` and `SearchCombobox` components (`cmdk`-based combobox with composable parts).
+
 ## 0.3.0
 
 ### Minor Changes
