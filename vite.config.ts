@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 
 // https://vite.dev/config/
+import { createRequire } from "node:module"
 import { fileURLToPath } from "node:url"
 import path from "path"
 
@@ -18,21 +19,25 @@ const dirname =
 
 const isLib = process.env.BUILD_MODE === "lib"
 
-/** Packages bundled into app code must not be externalized for the library build. */
+const requireFromRoot = createRequire(import.meta.url)
+const pkg = requireFromRoot("./package.json") as {
+    peerDependencies?: Record<string, string>
+    dependencies?: Record<string, string>
+}
+
+/** npm package names that stay external in the library build (peer + runtime deps + subpaths). */
+const libExternalPackageNames = new Set([
+    ...Object.keys(pkg.peerDependencies ?? {}),
+    ...Object.keys(pkg.dependencies ?? {}),
+])
+
+/** True when `id` is a package specifier that must not be bundled into dist. */
 function isLibExternal(id: string): boolean {
     if (id.startsWith(".") || path.isAbsolute(id)) return false
     if (id.startsWith("@/")) return false
-    const builtins = [
-        "react",
-        "react-dom",
-        "react/jsx-runtime",
-        "class-variance-authority",
-        "clsx",
-        "tailwind-merge",
-        "lucide-react",
-    ]
-    if (builtins.includes(id)) return true
-    if (id === "radix-ui" || id.startsWith("radix-ui/")) return true
+    for (const name of libExternalPackageNames) {
+        if (id === name || id.startsWith(`${name}/`)) return true
+    }
     return false
 }
 

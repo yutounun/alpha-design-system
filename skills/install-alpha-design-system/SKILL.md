@@ -26,11 +26,14 @@ Global CSS (e.g. `app/globals.css`):
 ```
 
 ```tsx
+// Prefer subpath imports so the bundler only resolves components you use:
+import { Button } from "alpha-design-system/button";
+
+// Root barrel import re-exports all public components; use only when you import many pieces.
 import { Button } from "alpha-design-system";
-// or: import { Button } from "alpha-design-system/button";
 ```
 
-Subpaths follow `package.json` `exports`.
+Subpaths follow `package.json` `exports` (e.g. `alpha-design-system/drawer`, `alpha-design-system/chart`).
 
 ## Theme
 

@@ -53,10 +53,14 @@ Import tokens in your app CSS entry (example):
 Usage:
 
 ```tsx
-import { Button } from "alpha-design-system";
-// or subpath imports
+// Prefer subpath imports so the bundler only resolves what you use:
 import { Button } from "alpha-design-system/button";
+
+// Barrel import (root) re-exports every public component; avoid it unless you need many at once.
+import { Button } from "alpha-design-system";
 ```
+
+Subpaths follow `package.json` `exports` (e.g. `alpha-design-system/drawer`, `alpha-design-system/chart`).
 
 ### shadcn registry (copy files into a project)
 
