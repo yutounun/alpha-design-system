@@ -1,12 +1,34 @@
 import { Meta, Title } from "@storybook/addon-docs/blocks"
 
-import { ComingSoon } from "@/docs/coming-soon"
-
 <Meta title="Getting Started/Skills" />
 
 <Title>Skills</Title>
 
-<ComingSoon
-  title="Skills"
-  description="AI agent skills for component patterns, token usage, and guardrails for Alpha Design System are in progress."
-/>
+Agent skills are plain **markdown** files named `SKILL.md`, each with YAML **frontmatter** (`name`, `description`) so clients can index and trigger them. This repo publishes **install-alpha-design-system** under `skills/install-alpha-design-system/` for consumers who want the same wiring guidance agents use.
+
+## install-alpha-design-system — install from GitHub
+
+### Steps
+
+1. In your agent client, open the **skills** location it documents (e.g. Cursor project skills: `.cursor/skills/install-alpha-design-system/`, or a user-level skills directory).
+2. Create the folder `install-alpha-design-system` and add **`SKILL.md`** inside it, using either:
+   - **Raw file:** [raw.githubusercontent.com/.../skills/install-alpha-design-system/SKILL.md](https://raw.githubusercontent.com/yutounun/alpha-design-system/main/skills/install-alpha-design-system/SKILL.md) (save as `SKILL.md`), or
+   - **Clone** [github.com/yutounun/alpha-design-system](https://github.com/yutounun/alpha-design-system) and copy the directory `skills/install-alpha-design-system/`.
+3. Do **not** strip or rename the frontmatter keys `name` / `description`; clients rely on them for discovery.
+4. **Reload** or rescan skills if your tool caches the skill list.
+
+### What’s inside `SKILL.md`
+
+| Topic | Content |
+| --- | --- |
+| Peers | React 18–19, Tailwind v4; optional `recharts` for Chart |
+| npm | `alpha-design-system` install, `styles.css` import, root vs subpath imports |
+| Theme | `data-theme`, `dark` class, subtree / import troubleshooting |
+| shadcn | Registry base URL, example `add` commands, link to `registry.json` and `theme.css` |
+| Agent | Pointers to this Storybook **Installation** page, package README, `build-alpha-component` for maintainers |
+
+For end-user app setup (not the skill file), open **Getting Started → Installation** in the sidebar.
+
+## Other skills (maintainers)
+
+Workflow and reference skills for working **in** this repository (e.g. `build-alpha-component`, `design-tokens`) live under **`.agents/skills/`** on GitHub. Install them the same way if your client loads skills from a cloned copy of the repo.
