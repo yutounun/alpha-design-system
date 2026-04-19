@@ -137,9 +137,11 @@
       "name": "input",
       "type": "registry:ui",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority",
+        "lucide-react"
       ],
       "registryDependencies": [
+        "button",
         "utils"
       ],
       "files": [

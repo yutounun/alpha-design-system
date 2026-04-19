@@ -1,3 +1,4 @@
+import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { Input } from "./input"
@@ -32,6 +33,21 @@ export const Invalid: Story = {
     args: {
         "aria-invalid": true,
         placeholder: "Required",
+    },
+}
+
+export const WithClear: Story = {
+    render: function WithClearStory() {
+        const [value, setValue] = useState("alpha-design-system")
+        return (
+            <Input
+                placeholder="Type something…"
+                value={value}
+                onValueChange={setValue}
+                showClear
+                onClear={() => setValue("")}
+            />
+        )
     },
 }
 

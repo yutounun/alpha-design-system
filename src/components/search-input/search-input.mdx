@@ -12,7 +12,7 @@ import * as SearchInputStories from "./search-input.stories"
 
 <Title />
 
-The **SearchInput** wraps a native search field with optional leading icon (defaults to search), optional **Clear** control when `onClear` is provided, and an optional **end** adornment slot (for example a keyboard hint).
+The **SearchInput** wraps a native search field with optional leading icon (defaults to search), optional **Clear** control when `showClear` is true (with `onClear` for the button press handler), and an optional **end** adornment slot (for example a keyboard hint).
 
 It reuses `inputVariants` from **Input** for sizing, borders, and focus rings.
 
@@ -28,6 +28,7 @@ export function Example() {
             placeholder="Search…"
             value={q}
             onValueChange={setQ}
+            showClear
             onClear={() => setQ("")}
             aria-label="Search"
         />

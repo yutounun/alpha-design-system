@@ -31,6 +31,7 @@ export const WithClear: Story = {
                 placeholder="Search…"
                 value={q}
                 onValueChange={setQ}
+                showClear
                 onClear={() => setQ("")}
                 aria-label="Search"
             />

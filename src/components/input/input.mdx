@@ -38,6 +38,12 @@ export function Example() {
 
 <Canvas of={InputStories.Invalid} />
 
+### With clear
+
+Set `showClear` to show a lucide **X** clear button when the value is non-empty. Use `onClear` for the button press handler; pair with controlled `value` / `onValueChange` (or rely on native `input` events when uncontrolled).
+
+<Canvas of={InputStories.WithClear} />
+
 ### All sizes
 
 <Canvas of={InputStories.AllSizes} />

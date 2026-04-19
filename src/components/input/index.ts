@@ -1,1 +1,1 @@
-export { Input, inputVariants } from "./input"
+export { Input, inputVariants, type InputProps } from "./input"

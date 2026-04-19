@@ -11,11 +11,19 @@ const startIconClassName = [
     "-translate-y-1/2 text-foreground-low",
 ].join(" ")
 
+/** Hides WebKit's built-in search clear/decoration so only our custom UI shows. */
+const webkitSearchInputReset = [
+    "[&::-webkit-search-cancel-button]:hidden",
+    "[&::-webkit-search-decoration]:hidden",
+].join(" ")
+
 type SearchInputProps = Omit<React.ComponentProps<"input">, "size"> &
     VariantProps<typeof inputVariants> & {
         /** Called when the text value changes (in addition to `onChange`). */
         onValueChange?: (value: string) => void
-        /** When set, a clear control is shown while the field has a non-empty value. */
+        /** When true, a clear control is shown while the field has a non-empty value. */
+        showClear?: boolean
+        /** Fired when the clear button is pressed. */
         onClear?: () => void
         /** Left icon; defaults to `Search`. Pass `null` to omit. */
         startIcon?: React.ReactNode
@@ -35,6 +43,7 @@ function SearchInput({
     defaultValue,
     onChange,
     onValueChange,
+    showClear = false,
     onClear,
     startIcon,
     endSlot,
@@ -67,7 +76,7 @@ function SearchInput({
             startIcon
         )
 
-    const showClear = Boolean(onClear) && currentValue.length > 0 && !disabled
+    const showClearButton = showClear && currentValue.length > 0 && !disabled
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!isControlled) setInternalValue(event.target.value)
@@ -87,15 +96,19 @@ function SearchInput({
             desc?.set?.call(el, "")
             el.dispatchEvent(new Event("input", { bubbles: true }))
         }
+        inputRef.current?.focus()
     }
 
-    const inputPadding = cn(
-        showStartIcon ? "pl-9" : null,
-        showClear && endSlot ? "pr-20" : null,
-        showClear && !endSlot ? "pr-9" : null,
-        !showClear && endSlot ? "pr-14" : null,
-        !showClear && !endSlot ? "pr-3" : null
-    )
+    const rightPadding =
+        showClear && endSlot
+            ? "pr-20"
+            : showClear
+              ? "pr-9"
+              : endSlot
+                ? "pr-14"
+                : "pr-3"
+
+    const inputPadding = cn(showStartIcon ? "pl-9" : null, rightPadding)
 
     return (
         <div data-slot="search-input" className="relative w-full">
@@ -134,25 +147,30 @@ function SearchInput({
                 ref={mergedRef}
                 type={type}
                 disabled={disabled}
+                {...props}
+                className={cn(
+                    inputVariants({ size }),
+                    inputPadding,
+                    type === "search" ? webkitSearchInputReset : null,
+                    className
+                )}
                 value={value}
                 defaultValue={defaultValue}
                 onChange={handleChange}
-                className={cn(inputVariants({ size }), inputPadding, className)}
-                {...props}
             />
-            {(showClear || endSlot) && (
+            {(showClearButton || endSlot) && (
                 <div
                     className={cn(
                         "absolute top-1/2 right-2 flex -translate-y-1/2",
                         "items-center gap-1"
                     )}
                 >
-                    {showClear && (
+                    {showClearButton && (
                         <Button
                             type="button"
                             variant="ghost"
                             size="icon-xs"
-                            aria-label="Clear search"
+                            aria-label="Clear"
                             disabled={disabled}
                             onClick={handleClear}
                         >
