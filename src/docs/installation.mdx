@@ -45,21 +45,37 @@ yarn add alpha-design-system
 
 ## Styles
 
-Import the design tokens and base styles once from your app’s CSS entry (same graph Storybook uses):
+Load tokens and Tailwind once from your app’s CSS entry. **Vite** and **Next.js** differ: Vite often uses a **copied** `theme.css` from this repo; Next.js typically imports **`alpha-design-system/styles.css`** from the package in the same file as `@import "tailwindcss"`.
+
+### Vite + React
+
+1. Install **Tailwind CSS v4** with the **@tailwindcss/vite** plugin ([Installing Tailwind CSS with Vite](https://tailwindcss.com/docs/installation/using-vite)).
+2. **Clean the starter:** delete `src/App.css`, remove `import "./App.css"` from `src/App.tsx`, and clear default rules from `src/index.css` (`:root`, `body`, demo styles).
+3. Copy [`src/styles/theme.css`](https://github.com/yutounun/alpha-design-system/blob/main/src/styles/theme.css) into your app as `src/styles/theme.css`. That file already includes `@import "tailwindcss"` and the design tokens — when using this copy, do **not** also `@import "alpha-design-system/styles.css"` in `index.css`.
+4. Set `src/index.css` to **only** (paths relative to that file):
 
 ```css
+@import "./styles/theme.css";
+@source "../node_modules/alpha-design-system/dist/**/*.js";
+```
+
+If your CSS entry is not `src/index.css`, add or remove `..` in `@source` until it resolves to `node_modules/alpha-design-system/dist/**/*.js`.
+
+Ensure `main.tsx` still imports `./index.css`.
+
+### Next.js / App Router (and package `styles.css`)
+
+In the global CSS entry (e.g. `app/globals.css`):
+
+```css
+@import "tailwindcss";
+/* Path is relative to THIS file — add/remove `..` until it reaches node_modules */
+@source "../node_modules/alpha-design-system/dist/**/*.js";
+
 @import "alpha-design-system/styles.css";
 ```
 
-In a Vite + React app, ensure that file is loaded from `main.tsx` (or your root layout) via `@import` in CSS or a side-effect import of a local `index.css` that contains the line above.
-
-### Tailwind v4: scan the package (`@source`)
-
-If your app uses **Tailwind CSS v4** in the same CSS entry as `@import "tailwindcss"`, add an `@source` rule.
-So Tailwind can see utility class names inside the pre-built package files under `node_modules`.
-The path must be **relative to that CSS file**, not a bare `node_modules` alias.
-
-Examples (adjust `..` segments to match your file layout):
+Examples (adjust `..` to match layout):
 
 | CSS entry location               | Example `@source`                                                |
 | -------------------------------- | ---------------------------------------------------------------- |
@@ -67,34 +83,40 @@ Examples (adjust `..` segments to match your file layout):
 | `src/app/globals.css`            | `@source "../../node_modules/alpha-design-system/dist/**/*.js";` |
 | `app/globals.css` (project root) | `@source "../node_modules/alpha-design-system/dist/**/*.js";`    |
 
-```css
-@import "tailwindcss";
-@source "../node_modules/alpha-design-system/dist/**/*.js";
+Keep `@import "tailwindcss"` first. If utilities from the package are missing, verify the relative `@source` path.
 
-// In case you want to use the styles.css file from the package
-@import "alpha-design-system/styles.css";
+### shadcn only (no npm package)
 
-// In case you want to use the local theme.css file
-@import "./theme.css";
-```
-
-Order: keep `@import "tailwindcss"` first; place `@source` after it (before or after the design-system import is fine as long as Tailwind processes the entry). If generated styles are missing, verify the relative path resolves from your CSS file to `node_modules/alpha-design-system/dist/`.
-
-If you adopted components **only** via shadcn and did not add the npm package, use the **theme stylesheet** from the GitHub repo instead of the line above.
+Use the **theme stylesheet** from the repo ([`theme.css`](https://github.com/yutounun/alpha-design-system/blob/main/src/styles/theme.css)) instead of `alpha-design-system/styles.css`. Point `@source` at the **files Tailwind should scan** (for example your copied `components/` tree). Use `@source` for `node_modules/alpha-design-system/dist/**/*.js` only when you **do** install the `alpha-design-system` package and import its pre-built components.
 
 ## Components (npm)
 
-Import from the package root or from stable subpaths:
-
-```tsx
-import { Button } from "alpha-design-system"
-```
+Prefer **subpath** imports so the bundler resolves only what you use:
 
 ```tsx
 import { Button } from "alpha-design-system/button"
 ```
 
-Other published subpaths are listed in the package `exports` field (e.g. `form-field`, `input`, `label`, `tabs`, `textarea`).
+```tsx
+// Use the root barrel only when you import many components:
+import { Button } from "alpha-design-system"
+```
+
+Example:
+
+```tsx
+import { Button } from "alpha-design-system/button"
+
+export function App() {
+    return (
+        <div className="p-6">
+            <Button variant="primary">Click me</Button>
+        </div>
+    )
+}
+```
+
+Variants, sizes, loading, and `asChild`: see **Components → Button** in the sidebar. Other published subpaths are listed in the package `exports` field (e.g. `form-field`, `input`, `label`, `tabs`, `textarea`).
 
 ## Next steps
 

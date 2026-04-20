@@ -22,7 +22,11 @@ Agent skills are plain **markdown** files named `SKILL.md`, each with YAML **fro
 | Topic | Content |
 | --- | --- |
 | Peers | React 18–19, Tailwind v4; optional `recharts` for Chart |
-| npm | `alpha-design-system` install, `styles.css` import, root vs subpath imports |
+| npm | `pnpm add alpha-design-system` |
+| Tailwind on Vite | Official **@tailwindcss/vite** setup first, then replace `src/index.css` per the Vite sections below (no default `App.css` / starter CSS left behind) |
+| Vite | Delete `App.css`, clean `App.tsx` / `index.css`; copy repo [`theme.css`](https://github.com/yutounun/alpha-design-system/blob/main/src/styles/theme.css) to `src/styles/theme.css`; `index.css` = `@import "./styles/theme.css"` + `@source` to `node_modules/alpha-design-system/dist/**/*.js` |
+| Next.js / other | Same CSS entry: `@import "tailwindcss"`, `@source` (path relative to that file), `@import "alpha-design-system/styles.css"` |
+| Imports / Button | Prefer `alpha-design-system/button`; example `App` with `<Button variant="primary">`; barrel import noted as optional |
 | Theme | `data-theme`, `dark` class, subtree / import troubleshooting |
 | shadcn | Registry base URL, example `add` commands, link to `registry.json` and `theme.css` |
 | Agent | Pointers to this Storybook **Installation** page, package README, `build-alpha-component` for maintainers |
