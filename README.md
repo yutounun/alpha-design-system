@@ -47,8 +47,13 @@ pnpm add alpha-design-system
 Import tokens in your app CSS entry (example):
 
 ```css
+@import "tailwindcss";
+@source "../node_modules/alpha-design-system/dist/**/*.js";
+
 @import "alpha-design-system/styles.css";
 ```
+
+Use a `@source` path **relative to the CSS file** so Tailwind v4 scans class names in the package’s built `dist/**/*.js` (e.g. `../../node_modules/...` from `src/app/globals.css`). See Storybook **Getting Started → Installation** for a short path table.
 
 Usage:
 

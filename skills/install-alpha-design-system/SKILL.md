@@ -22,8 +22,14 @@ pnpm add alpha-design-system
 Global CSS (e.g. `app/globals.css`):
 
 ```css
+@import "tailwindcss";
+/* Path is relative to THIS file — add/remove `..` until it reaches project node_modules */
+@source "../node_modules/alpha-design-system/dist/**/*.js";
+
 @import "alpha-design-system/styles.css";
 ```
+
+Examples: `src/index.css` → `@source "../node_modules/alpha-design-system/dist/**/*.js";` · `src/app/globals.css` → `@source "../../node_modules/alpha-design-system/dist/**/*.js";`
 
 ```tsx
 // Prefer subpath imports so the bundler only resolves components you use:
