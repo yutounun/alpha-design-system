@@ -1,5 +1,7 @@
 # Alpha Design System
 
+<img width="1774" height="887" alt="ChatGPT Image Apr 21, 2026, 02_38_56 PM" src="https://github.com/user-attachments/assets/76d14955-3ce4-48dd-9737-0a2b83dcf89a" />
+
 ![Storybook docs and UI previews for Alpha Design System](public/readme-img.png)
 
 **Alpha Design System** is a React component library and token layer for building accessible product UI. It ships with [Storybook](https://alpha-design-system-five.vercel.app/?path=/docs/getting-started-overview--docs) as the single place to browse components, read MDX documentation, and watch **design tokens** update live when you switch theme or light/dark mode in the toolbar.
